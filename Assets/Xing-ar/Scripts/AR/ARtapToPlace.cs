@@ -7,7 +7,12 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(ARRaycastManager))]
 public class ARtapToPlace : MonoBehaviour
 {
-    
+    //private const string OBJ_UNITY_TAG = "CubeObject"; //name of the prefab in unity
+    private const string kTAG = "ARtapToPlace";
+
+    //LOGGER
+    private static ILogger mLogger = Debug.unityLogger;
+
     public GameObject goToPlace; //obj to place
     private GameObject myGo;
     private ARRaycastManager _arRaymMn;
@@ -15,8 +20,16 @@ public class ARtapToPlace : MonoBehaviour
     static List<ARRaycastHit> hits =new List<ARRaycastHit>();
 
     // Start is called before the first frame update
+    private void Start()
+    {
+        mLogger = new Logger(new MyLogHandler());
+        //mLogger.Log(kTAG, "ARtapToPlace Start.");
+        //goToPlace = Resources.Load(OBJ_UNITY_TAG) as GameObject;
+    }
+
     private void Awake()
     {
+        mLogger.Log(kTAG, "ARtapToPlace Awake.");
         _arRaymMn = GetComponent<ARRaycastManager>();
     }
 
@@ -44,10 +57,12 @@ public class ARtapToPlace : MonoBehaviour
 
             if (myGo == null)
             {
-                myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation);
+                //create object on touch
+                myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
             }
             else
             {
+                //update object position on touch
                 myGo.transform.position = hitPose.position;
             }
         }

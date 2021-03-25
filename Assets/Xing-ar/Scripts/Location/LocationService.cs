@@ -2,14 +2,20 @@ using UnityEngine;
 using System.Collections;
 
 public class LocationService : MonoBehaviour
-{
-    public static LocationService Instance { set; get; }
+{    
+    private const string kTAG = "LocationService";
 
-    public float latitude, longitude;    
+    public static LocationService Instance { set; get; }
+    public float latitude, longitude;
+
+    //LOGGER
+    private static ILogger mLogger = Debug.unityLogger;
 
     private void Start()
     {
         Instance = this;
+        mLogger = new Logger(new MyLogHandler());
+        mLogger.Log(kTAG, "LocationService Start.");
         //Do not destroy the target Object when loading a new Scene.
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
@@ -34,20 +40,20 @@ public class LocationService : MonoBehaviour
         // Service didn't initialize in 20 seconds
         if (maxWait < 1)
         {
-            print("Timed out");
+            mLogger.Log(kTAG, "Timed out");
             yield break;
         }
 
         // Connection has failed
         if (Input.location.status == LocationServiceStatus.Failed)
         {
-            print("Unable to determine device location");
+            mLogger.Log(kTAG, "Unable to determine device location");
             yield break;
         }
         else
         {
             // Access granted and location value could be retrieved
-            print("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
+            mLogger.Log(kTAG, "Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
         }
 
         latitude = Input.location.lastData.latitude;
