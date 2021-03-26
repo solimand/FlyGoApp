@@ -19,7 +19,9 @@ public class UpdateGPScamera : MonoBehaviour
     void Update()
     {
         coordinates.text = "Lat: " + LocationService.Instance.latitude.ToString() + 
-            ", Lon: " + LocationService.Instance.longitude.ToString();
-
+            ", Lon: " + LocationService.Instance.longitude.ToString() +
+            ", Alt: " + LocationService.Instance.altitude.ToString() +
+            ", horizAccuracy: " + LocationService.Instance.horizAccuracy.ToString() +
+            ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString();
     }
 }

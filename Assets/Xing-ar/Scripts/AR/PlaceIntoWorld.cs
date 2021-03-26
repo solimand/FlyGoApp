@@ -6,8 +6,8 @@ using UnityEngine.Events;
 
 public class PlaceIntoWorld : MonoBehaviour
 {
-    [Serializable]
-    /*public class ObjectUpdatedEvent : UnityEvent<GameObject, Location, int>
+    /*[Serializable]
+    public class ObjectUpdatedEvent : UnityEvent<GameObject, Location, int>
     {
     }*/
 

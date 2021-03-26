@@ -1,2 +1,4 @@
 -Ask and set permission: Camera-Location-Storage
+-Try mapbox conversions
+-Find filetype of prefabs
 -

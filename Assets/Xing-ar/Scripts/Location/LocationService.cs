@@ -6,10 +6,14 @@ public class LocationService : MonoBehaviour
     private const string kTAG = "LocationService";
 
     public static LocationService Instance { set; get; }
-    public float latitude, longitude;
+    public float latitude, longitude, altitude;
+    public float horizAccuracy, vertAccuracy;
+    public Vector3 ucsTest;
 
     //LOGGER
     private static ILogger mLogger = Debug.unityLogger;
+    private LocationTrans locTrans = LocationTrans.GetInstance();
+    private int counter = 0; //execute only one transform [test]
 
     private void Start()
     {
@@ -20,6 +24,7 @@ public class LocationService : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());
     }
+
     private IEnumerator StartLocationService()
     {
         // First, check if user has location service enabled
@@ -53,12 +58,25 @@ public class LocationService : MonoBehaviour
         else
         {
             // Access granted and location value could be retrieved
-            mLogger.Log(kTAG, "Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
+            mLogger.Log(kTAG, "Location: Lat" + Input.location.lastData.latitude + 
+                "Lon: " + Input.location.lastData.longitude + 
+                "Alt: " + Input.location.lastData.altitude + 
+                "horizAccuracy: " + Input.location.lastData.horizontalAccuracy +
+                "verticalAccuracy: " + Input.location.lastData.verticalAccuracy +
+                "time: " + Input.location.lastData.timestamp);
         }
 
         latitude = Input.location.lastData.latitude;
         longitude = Input.location.lastData.longitude;
+        altitude = Input.location.lastData.altitude;
+        horizAccuracy = Input.location.lastData.horizontalAccuracy;
+        vertAccuracy = Input.location.lastData.verticalAccuracy;
 
+        if (counter==0)
+        {
+            //TODO LocationTrans.SetLocalOrigin()
+            //LocationTrans.GPSToUCS()
+        }
         // Stop service if there is no need to query location updates continuously
         //Input.location.Stop();
 
