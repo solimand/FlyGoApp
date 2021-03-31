@@ -22,6 +22,7 @@ public class UpdateGPScamera : MonoBehaviour
             ", Lon: " + LocationService.Instance.longitude.ToString() +
             ", Alt: " + LocationService.Instance.altitude.ToString() +
             ", horizAccuracy: " + LocationService.Instance.horizAccuracy.ToString() +
-            ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString();
+            ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString() +
+            ", UCS position of garage: " + LocationService.Instance.ucsTest.ToString();
     }
 }

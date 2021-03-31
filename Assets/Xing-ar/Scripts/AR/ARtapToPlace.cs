@@ -14,9 +14,10 @@ public class ARtapToPlace : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
 
     public GameObject goToPlace; //obj to place
-    private GameObject myGo;
+    private GameObject _myGo;
+    private GameObject _fixedGo;
     private ARRaycastManager _arRaymMn;
-    private Vector2 touchPos; 
+    //private Vector2 touchPos; 
     static List<ARRaycastHit> hits =new List<ARRaycastHit>();
 
     // Start is called before the first frame update
@@ -55,16 +56,21 @@ public class ARtapToPlace : MonoBehaviour
         {
             var hitPose = hits[0].pose;
 
-            if (myGo == null)
+            if (_myGo == null)
             {
                 //create object on touch
-                myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
+                _myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
+                // TODO fix altitude
+                _fixedGo = Instantiate(goToPlace, LocationService.Instance.ucsTest, Quaternion.identity) as GameObject;
             }
             else
             {
                 //update object position on touch
-                myGo.transform.position = hitPose.position;
+                _myGo.transform.position = hitPose.position;
             }
         }
+        
+        //Test instantiate fixedobj
+        
     }
 }

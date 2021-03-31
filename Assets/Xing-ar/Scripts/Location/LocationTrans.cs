@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO change to static class only methods
 public class LocationTrans
 {
 
@@ -11,17 +12,15 @@ public class LocationTrans
     private float metersPerLat;
     private float metersPerLon;
     
-    // TODO thread-safe singleton
     #region Singleton
+    // TODO thread-safe singleton
     private static LocationTrans _singleton;
 
-    private LocationTrans()
-    {
-
-    }
+    private LocationTrans() { }
 
     public static LocationTrans GetInstance()
     {
+        //return _singleton ??= new LocationTrans();
         if (_singleton == null)
         {
             _singleton = new LocationTrans();
@@ -95,7 +94,7 @@ public class LocationTrans
 
     #region ToTest
     /*
-    // TODO to test 
+    // TODO to test (a thin method)
     void SpawnObject()
     {
         // Real world position of object. Need to update with something near your own location.

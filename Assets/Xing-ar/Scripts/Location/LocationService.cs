@@ -12,7 +12,7 @@ public class LocationService : MonoBehaviour
 
     //LOGGER
     private static ILogger mLogger = Debug.unityLogger;
-    private LocationTrans locTrans = LocationTrans.GetInstance();
+    //private LocationTrans locTrans = LocationTrans.GetInstance();
     private int counter = 0; //execute only one transform [test]
 
     private void Start()
@@ -75,7 +75,8 @@ public class LocationService : MonoBehaviour
         if (counter==0)
         {
             //TODO LocationTrans.SetLocalOrigin()
-            //LocationTrans.GPSToUCS()
+            // TEST with fixed coordinates
+            ucsTest = LocationTrans.GPSToUCS((float)41.834171, (float)15.571149);
         }
         // Stop service if there is no need to query location updates continuously
         //Input.location.Stop();
