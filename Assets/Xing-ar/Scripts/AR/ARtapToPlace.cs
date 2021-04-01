@@ -13,7 +13,9 @@ public class ARtapToPlace : MonoBehaviour
     //LOGGER
     private static ILogger mLogger = Debug.unityLogger;
 
-    public GameObject goToPlace; //obj to place
+    public GameObject goToPlace; //obj to place with tap
+    public GameObject goPOI; //obj to place with tap
+
     private GameObject _myGo;
     private GameObject _fixedGo;
     private ARRaycastManager _arRaymMn;
@@ -25,7 +27,6 @@ public class ARtapToPlace : MonoBehaviour
     {
         mLogger = new Logger(new MyLogHandler());
         //mLogger.Log(kTAG, "ARtapToPlace Start.");
-        //goToPlace = Resources.Load(OBJ_UNITY_TAG) as GameObject;
     }
 
     private void Awake()
@@ -61,7 +62,7 @@ public class ARtapToPlace : MonoBehaviour
                 //create object on touch
                 _myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
                 // TODO fix altitude
-                _fixedGo = Instantiate(goToPlace, LocationService.Instance.ucsTest, Quaternion.identity) as GameObject;
+                _fixedGo = Instantiate(goPOI, LocationService.Instance.ucsTest, Quaternion.identity) as GameObject;
             }
             else
             {

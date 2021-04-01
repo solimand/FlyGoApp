@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+#if PLATFORM_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class LocationService : MonoBehaviour
 {    
@@ -14,14 +17,46 @@ public class LocationService : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
     //private LocationTrans locTrans = LocationTrans.GetInstance();
     private int counter = 0; //execute only one transform [test]
-
+    private GameObject dialog = null;
+    
     private void Start()
     {
         Instance = this;
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "LocationService Start.");
+        
+        // location permission
+        #if PLATFORM_ANDROID
+            if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            {
+                Permission.RequestUserPermission(Permission.FineLocation);
+                //dialog = new GameObject();
+            }
+        #endif
+        
         //Do not destroy the target Object when loading a new Scene.
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
+        
+        //TODO PermissionsRationaleDialog :
+        /*
+        #if PLATFORM_ANDROID
+            if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            {
+                // The user denied permission to use the location.
+                // Display a message explaining why you need it with Yes/No buttons.
+                // If the user says yes then present the request again
+                // Display a dialog here.
+                    // request again
+                    // quit if deny or if deny and dont ask again
+                //dialog.AddComponent<PermissionsRationaleDialog>();
+                //return;
+            }
+            else if (dialog != null)
+            {
+                Destroy(dialog);
+            }
+        #endif
+        */
         StartCoroutine(StartLocationService());
     }
 
@@ -29,11 +64,12 @@ public class LocationService : MonoBehaviour
     {
         // First, check if user has location service enabled
         if (!Input.location.isEnabledByUser)
+            //TODO make toast enable location
             yield break;
 
         // Start service before querying location
         Input.location.Start();
-
+        
         // Wait until service initializes
         int maxWait = 20;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
@@ -58,7 +94,8 @@ public class LocationService : MonoBehaviour
         else
         {
             // Access granted and location value could be retrieved
-            mLogger.Log(kTAG, "Location: Lat" + Input.location.lastData.latitude + 
+            //mLogger.Log(kTAG, "Location: Lat" + Input.location.lastData.latitude +
+            Debug.Log("Location: Lat" + Input.location.lastData.latitude +                  
                 "Lon: " + Input.location.lastData.longitude + 
                 "Alt: " + Input.location.lastData.altitude + 
                 "horizAccuracy: " + Input.location.lastData.horizontalAccuracy +
@@ -83,5 +120,35 @@ public class LocationService : MonoBehaviour
 
         yield break;
 
+    }
+}
+
+public class PermissionsRationaleDialog : MonoBehaviour
+{
+    const int kDialogWidth = 300;
+    const int kDialogHeight = 100;
+    private bool windowOpen = true;
+
+    void DoMyWindow(int windowID)
+    {
+        GUI.Label(new Rect(10, 20, kDialogWidth - 20, kDialogHeight - 50),
+            "Please let me use the location.");
+        GUI.Button(new Rect(10, kDialogHeight - 30, 100, 20), "No");
+        if (GUI.Button(new Rect(kDialogWidth - 110, kDialogHeight - 30, 100, 20), "Yes"))
+        {
+        #if PLATFORM_ANDROID
+            Permission.RequestUserPermission(Permission.FineLocation);
+        #endif
+            windowOpen = false;
+        }
+    }
+
+    void OnGUI ()
+    {
+        if (windowOpen)
+        {
+            Rect rect = new Rect((Screen.width / 2) - (kDialogWidth / 2), (Screen.height / 2) - (kDialogHeight / 2), kDialogWidth, kDialogHeight);
+            GUI.ModalWindow(0, rect, DoMyWindow, "Permissions Request Dialog");
+        }
     }
 }
