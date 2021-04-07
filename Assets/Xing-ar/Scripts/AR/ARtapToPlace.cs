@@ -61,7 +61,7 @@ public class ARtapToPlace : MonoBehaviour
             {
                 //create object on touch
                 _myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
-                // TODO fix altitude
+                // TODO test altitude of device
                 _fixedGo = Instantiate(goPOI, LocationService.Instance.ucsTest, Quaternion.identity) as GameObject;
             }
             else

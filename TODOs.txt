@@ -1,7 +1,11 @@
--Ask and set permission: Camera-Location-Storage
--Find filetype of prefabs
--Activation Area
--Reset button (when intercept click, avoid intercepting clicks on buttons)
--Check AR support
--IDEA: instance object when I am in the area of that object
--Exit app if dont give permission
+APP
+    -Ask and set permission: Camera-Location-Storage (FIX)
+    -Activation Area
+    -Reset button (when intercept click, avoid intercepting clicks on buttons)
+    -Check AR support
+    -IDEA: instance object when I am in the area of that object
+    -Exit app if dont give permission
+   
+GENERAL
+    -Find filetype of prefabs
+    -Search -> delete not used packages (reimport them in empty project and check which files to remove)

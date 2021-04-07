@@ -17,7 +17,7 @@ public class LocationService : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
     //private LocationTrans locTrans = LocationTrans.GetInstance();
     private int counter = 0; //execute only one transform [test]
-    private GameObject dialog = null;
+    //private GameObject dialog = null;
     
     private void Start()
     {
