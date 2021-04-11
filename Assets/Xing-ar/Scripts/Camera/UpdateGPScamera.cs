@@ -18,11 +18,11 @@ public class UpdateGPScamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coordinates.text = "Lat: " + LocationService.Instance.latitude.ToString() + 
+        coordinates.text = "Lat: " + LocationService.Instance.latitude.ToString() +
             ", Lon: " + LocationService.Instance.longitude.ToString() +
             ", Alt: " + LocationService.Instance.altitude.ToString() +
             ", horizAccuracy: " + LocationService.Instance.horizAccuracy.ToString() +
-            ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString() +
-            ", UCS position of garage: " + LocationService.Instance.ucsTest.ToString();
+            ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString();
+            //+ ", UCS position of garage: " + LocationService.Instance.ucsTest.ToString();
     }
 }

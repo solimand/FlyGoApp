@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Google.Maps.Coord;
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
 #endif
@@ -9,16 +10,20 @@ public class LocationService : MonoBehaviour
     private const string kTAG = "LocationService";
 
     public static LocationService Instance { set; get; }
+    public LatLng CurrPos { get => currPos; set => currPos = value; }
+
     public float latitude, longitude, altitude;
     public float horizAccuracy, vertAccuracy;
-    public Vector3 ucsTest;
+    //public Vector3 ucsTest;
 
     //LOGGER
     private static ILogger mLogger = Debug.unityLogger;
+
     //private LocationTrans locTrans = LocationTrans.GetInstance();
-    private int counter = 0; //execute only one transform [test]
     //private GameObject dialog = null;
-    
+    private LatLng currPos;
+    private bool getOrigin;
+
     private void Start()
     {
         Instance = this;
@@ -94,8 +99,7 @@ public class LocationService : MonoBehaviour
         else
         {
             // Access granted and location value could be retrieved
-            //mLogger.Log(kTAG, "Location: Lat" + Input.location.lastData.latitude +
-            Debug.Log("Location: Lat" + Input.location.lastData.latitude +                  
+            mLogger.Log(kTAG, "Location: Lat" + Input.location.lastData.latitude +
                 "Lon: " + Input.location.lastData.longitude + 
                 "Alt: " + Input.location.lastData.altitude + 
                 "horizAccuracy: " + Input.location.lastData.horizontalAccuracy +
@@ -109,12 +113,23 @@ public class LocationService : MonoBehaviour
         horizAccuracy = Input.location.lastData.horizontalAccuracy;
         vertAccuracy = Input.location.lastData.verticalAccuracy;
 
+        // The first position will be the floating origin for Maps SDL
+        if (!getOrigin)
+        {
+            CurrPos = new LatLng(latitude, longitude);
+            mLogger.Log(kTAG, $"My origin pos {CurrPos}");
+            getOrigin = true;
+        }
+
+        /*
         if (counter==0)
         {
             //TODO LocationTrans.SetLocalOrigin()
             // TEST with fixed coordinates
-            ucsTest = LocationTrans.GPSToUCS((float)41.834171, (float)15.571149);
+            //ucsTest = LocationTrans.GPSToUCS((float)41.834171, (float)15.571149);
         }
+        */
+
         // Stop service if there is no need to query location updates continuously
         //Input.location.Stop();
 
@@ -123,6 +138,7 @@ public class LocationService : MonoBehaviour
     }
 }
 
+/*
 public class PermissionsRationaleDialog : MonoBehaviour
 {
     const int kDialogWidth = 300;
@@ -152,3 +168,4 @@ public class PermissionsRationaleDialog : MonoBehaviour
         }
     }
 }
+*/
