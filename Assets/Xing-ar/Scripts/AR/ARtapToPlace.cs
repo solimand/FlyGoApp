@@ -34,7 +34,7 @@ public class ARtapToPlace : MonoBehaviour
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "ARtapToPlace Start");
 
-        testpos = new LatLng(44.482810, 11.375016);
+        testpos = new LatLng(44.482772, 11.374781);
 
         //Entry point Maps SDK and init initial position
         mapsService = GetComponent<MapsService>();
