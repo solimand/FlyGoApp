@@ -12,9 +12,9 @@ using UnityEngine.XR.ARSubsystems;
 public class ARtapToPlace : MonoBehaviour
 {
     //private const string OBJ_UNITY_TAG = "CubeObject"; //name of the prefab in unity
-    private const string kTAG = "ARtapToPlace";
 
     //LOGGER
+    private const string kTAG = "ARtapToPlace";
     private static ILogger mLogger = Debug.unityLogger;
 
     public GameObject goToPlace; //obj to place with tap

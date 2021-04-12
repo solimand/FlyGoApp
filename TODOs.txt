@@ -1,14 +1,12 @@
 APP
-    -Ask and set permission: Camera-Location-Storage (FIX)
-    -Activation Area
+    -Ask and set permission: Camera-Location-Storage (FIX) (Exit app if dont give permission)
+    -Activation Area (geofence) (instance object when I am in the area of that object)
     -Reset button (when intercept click, avoid intercepting clicks on buttons)
-    -Check AR support
-    -IDEA: instance object when I am in the area of that object
-    -Exit app if dont give permission
+    -Check AR features
    
 GENERAL
     -Find filetype of prefabs
-    -Search -> delete not used packages (reimport them in empty project and check which files to remove)
+    -Search -> delete magicLeap package
 
 TESTs
     -#Polygon_0 (home)
@@ -16,7 +14,7 @@ TESTs
         44.482627742351326, 11.37425397971663
         44.48217611761878, 11.37578820327315
         44.4828956536761, 11.375975957904192
-    -#Polygon_0
+    -#Polygon_0 (near home)
         44.48420457417349, 11.372499815020891
         44.48367641680532, 11.373857012782427
         44.48261626040989, 11.373325935397478

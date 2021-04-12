@@ -44,10 +44,11 @@ public class SceneSelection : MonoBehaviour
         m_VerticalScrollBar.value = 1;
     }
 
-    public void DbgARButtonPressed()
+    public void DbgARButtonPressed() 
     {
-        LoadScene("DbgAR");
+        LoadScene("DbgARScene");
     }
+
     static void LoadScene(string sceneName)
     {
         LoaderUtility.Initialize();
