@@ -34,7 +34,7 @@ public class BackButton : MonoBehaviour
         if (Application.CanStreamedLevelBeLoaded("Menu"))
         {
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
-            UnityEngine.XR.ARFoundation.LoaderUtility.Deinitialize();
+            //UnityEngine.XR.ARFoundation.LoaderUtility.Deinitialize();
         }
     }
 }

@@ -3,6 +3,7 @@ using Google.Maps.Coord;
 using Google.Maps.Event;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -27,14 +28,28 @@ public class ARtapToPlace : MonoBehaviour
     private static LatLng testpos;
     private Vector3 fixedObjPos;
     private MapsService mapsService;
+    
+    // TEST Static Locations
+    private static double testLat = 44.482657;
+    private static double testLon = 11.375136;
+    // TEST Geofencing HOME
+    //private static double minLat = 44.48217611761878;
+    //private static double maxLat = 44.48343912715564;
+    //private static double minLon = 11.37425397971663;
+    //private static double maxLon = 11.375975957904192;
+    // TEST Geofencing !HOME
+    private static double minLat = 44.48261626040989;
+    private static double maxLat = 44.48420457417349;
+    private static double minLon = 11.371915093455645;
+    private static double maxLon = 11.373857012782427;
 
     // Start is called before the first frame update
     private void Start()
     {
         mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "ARtapToPlace Start");
+        mLogger.Log(kTAG, "Start");
 
-        testpos = new LatLng(44.482772, 11.374781);
+        testpos = new LatLng(testLat, testLon);
 
         //Entry point Maps SDK and init initial position
         mapsService = GetComponent<MapsService>();
@@ -59,7 +74,7 @@ public class ARtapToPlace : MonoBehaviour
 
     private void Awake()
     {
-        mLogger.Log(kTAG, "ARtapToPlace Awake.");
+        mLogger.Log(kTAG, "Awake.");
         _arRaymMn = GetComponent<ARRaycastManager>();
     }
 
@@ -103,15 +118,26 @@ public class ARtapToPlace : MonoBehaviour
                 //_fixedGo = Instantiate(goPOI, projctn.FromLatLngToVector3(initPos),Quaternion.identity) as GameObject;
 
                 //setting init floating origin (only first time)
-                if(!mapsService.Projection.IsFloatingOriginSet)
-                {                    
+                if (!mapsService.Projection.IsFloatingOriginSet)
+                {
                     mLogger.Log(kTAG, $"My latlng pos {LocationService.Instance.CurrPos}");
                     mapsService.InitFloatingOrigin(LocationService.Instance.CurrPos);
                 }
 
-                fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);                
-                _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
-                mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
+                // TODO geofencing
+                if ((LocationService.Instance.latitude > minLat) &&
+                        (LocationService.Instance.latitude < maxLat) &&
+                        (LocationService.Instance.longitude > minLon) &&
+                        (LocationService.Instance.longitude < maxLon)) {
+                    mLogger.Log(kTAG, "Congratualtions!! You are in the right zone");
+                    fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);
+                    _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
+                    mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
+                }
+                else
+                {
+                    mLogger.Log(kTAG, "Sorry, no ARt here...");
+                }
 
             }
             else

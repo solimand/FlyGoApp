@@ -28,7 +28,7 @@ public class LocationService : MonoBehaviour
     {
         Instance = this;
         mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "LocationService Start.");
+        mLogger.Log(kTAG, "Start.");
         
         // location permission
         #if PLATFORM_ANDROID

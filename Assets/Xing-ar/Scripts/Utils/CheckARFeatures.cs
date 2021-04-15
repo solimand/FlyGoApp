@@ -36,7 +36,7 @@ public class CheckARFeatures : MonoBehaviour
     void Start()
     {
         mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "ARtapToPlace Start");
+        mLogger.Log(kTAG, " Start");
 
         var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors(planeDescriptors);
