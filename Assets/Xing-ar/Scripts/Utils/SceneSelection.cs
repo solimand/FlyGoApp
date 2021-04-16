@@ -14,7 +14,7 @@ public class SceneSelection : MonoBehaviour
     private const string kTAG = "SceneSelection";
     //private GameObject dialog = null;
     private AndroidPermissionChecker apc;
-    private bool comeBackFromPermission = false;
+    //private bool comeBackFromPermission = false;
 
     [SerializeField]
     Scrollbar m_HorizontalScrollBar;
@@ -55,10 +55,10 @@ public class SceneSelection : MonoBehaviour
         m_VerticalScrollBar.value = 1;
     }
 
+    /*
     private void OnApplicationFocus(bool focus)
     {
         mLogger.Log(kTAG, "onAppFocus");
-        //TODO Test if OnApplicationPause(false)
         if (comeBackFromPermission)
         {
             if (apc == null)
@@ -77,16 +77,30 @@ public class SceneSelection : MonoBehaviour
         }
         comeBackFromPermission = false;
     }
+    */
 
     public void DbgARButtonPressed() 
     {
         if (apc == null)
             apc = new AndroidPermissionChecker();
 
-        comeBackFromPermission = true;
+        //comeBackFromPermission = true;
         apc.AskAndroidPermission();
+
+        //TODO wait in case of user allow permission
+        //  there is a delay in which user granted permission but check gives false
+        //wait until user take a decision
+        StartCoroutine(WaitDialog());
+
+        mLogger.Log(kTAG, "control returned to scenesel");
         if(apc.SimplyCheckPermisison())
             LoadScene("DbgARScene");
+        else
+            mLogger.Log(kTAG, "you need permission for this scene");
+    }
+    IEnumerator WaitDialog()
+    {
+        yield return new WaitUntil(() => apc.DecisionTaken==true);
     }
 
     static void LoadScene(string sceneName)
