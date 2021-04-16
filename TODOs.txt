@@ -1,5 +1,7 @@
 APP
-    -Ask and set permission: Camera-Location-Storage (FIX) (Exit app if dont give permission)
+    -Ask and set permission: Camera-Location-Storage (FIX) (Exit app if dont give permission) 
+        +(not platform-dependent)
+        +permission rationale dialog interface (for multiplatform and for multi permissions)
     -Activation Area (geofence) (instance object when I am in the area of that object)
     -Reset button (when intercept click, avoid intercepting clicks on buttons)
     -Check AR features
@@ -7,7 +9,7 @@ APP
 GENERAL
     -Find filetype of prefabs
     -Search -> delete magicLeap package
-
+    -Write down all the dependencies Scenes-GameObjects-Scripts
 TESTs
     -#Polygon_0 (home) 
         44.48343912715564, 11.374591938052507

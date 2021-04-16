@@ -6,7 +6,7 @@ using UnityEngine.Android;
 #endif
 
 public class LocationService : MonoBehaviour
-{    
+{
     private const string kTAG = "LocationService";
 
     public static LocationService Instance { set; get; }
@@ -23,47 +23,33 @@ public class LocationService : MonoBehaviour
     //private GameObject dialog = null;
     private LatLng currPos;
     private bool getOrigin;
+    //private AndroidPermissionChecker apc = null;
 
     private void Start()
     {
         Instance = this;
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start.");
-        
-        // location permission
-        #if PLATFORM_ANDROID
-            if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
-            {
-                Permission.RequestUserPermission(Permission.FineLocation);
-                //dialog = new GameObject();
-            }
-        #endif
-        
+
+        //apc = new AndroidPermissionChecker();
+        //apc.AskAndroidPermission();
+
         //Do not destroy the target Object when loading a new Scene.
         //DontDestroyOnLoad(gameObject);
-        
-        //TODO PermissionsRationaleDialog :
-        /*
-        #if PLATFORM_ANDROID
-            if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
-            {
-                // The user denied permission to use the location.
-                // Display a message explaining why you need it with Yes/No buttons.
-                // If the user says yes then present the request again
-                // Display a dialog here.
-                    // request again
-                    // quit if deny or if deny and dont ask again
-                //dialog.AddComponent<PermissionsRationaleDialog>();
-                //return;
-            }
-            else if (dialog != null)
-            {
-                Destroy(dialog);
-            }
-        #endif
-        */
+
         StartCoroutine(StartLocationService());
     }
+
+    /*
+    void OnGUI()
+    {
+        if (apc == null)
+        {
+            apc = new AndroidPermissionChecker();
+        }
+        apc.RationaleAndroidPermission();
+    }
+    */
 
     private IEnumerator StartLocationService()
     {
@@ -121,51 +107,12 @@ public class LocationService : MonoBehaviour
             getOrigin = true;
         }
 
-        /*
-        if (counter==0)
-        {
-            //TODO LocationTrans.SetLocalOrigin()
-            // TEST with fixed coordinates
-            //ucsTest = LocationTrans.GPSToUCS((float)41.834171, (float)15.571149);
-        }
-        */
-
         // Stop service if there is no need to query location updates continuously
         //Input.location.Stop();
 
         yield break;
 
     }
+
 }
 
-/*
-public class PermissionsRationaleDialog : MonoBehaviour
-{
-    const int kDialogWidth = 300;
-    const int kDialogHeight = 100;
-    private bool windowOpen = true;
-
-    void DoMyWindow(int windowID)
-    {
-        GUI.Label(new Rect(10, 20, kDialogWidth - 20, kDialogHeight - 50),
-            "Please let me use the location.");
-        GUI.Button(new Rect(10, kDialogHeight - 30, 100, 20), "No");
-        if (GUI.Button(new Rect(kDialogWidth - 110, kDialogHeight - 30, 100, 20), "Yes"))
-        {
-        #if PLATFORM_ANDROID
-            Permission.RequestUserPermission(Permission.FineLocation);
-        #endif
-            windowOpen = false;
-        }
-    }
-
-    void OnGUI ()
-    {
-        if (windowOpen)
-        {
-            Rect rect = new Rect((Screen.width / 2) - (kDialogWidth / 2), (Screen.height / 2) - (kDialogHeight / 2), kDialogWidth, kDialogHeight);
-            GUI.ModalWindow(0, rect, DoMyWindow, "Permissions Request Dialog");
-        }
-    }
-}
-*/

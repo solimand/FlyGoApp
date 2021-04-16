@@ -74,7 +74,7 @@ public class ARtapToPlace : MonoBehaviour
 
     private void Awake()
     {
-        mLogger.Log(kTAG, "Awake.");
+        mLogger.Log(kTAG, "Awake");
         _arRaymMn = GetComponent<ARRaycastManager>();
     }
 

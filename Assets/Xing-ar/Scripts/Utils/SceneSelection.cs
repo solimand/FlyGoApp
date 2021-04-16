@@ -4,9 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARFoundation;
+//#if PLATFORM_ANDROID
+//using UnityEngine.Android;
+//#endif
 
 public class SceneSelection : MonoBehaviour
 {
+    private static ILogger mLogger = Debug.unityLogger;
+    private const string kTAG = "SceneSelection";
+    //private GameObject dialog = null;
+    private AndroidPermissionChecker apc;
+    private bool comeBackFromPermission = false;
+
     [SerializeField]
     Scrollbar m_HorizontalScrollBar;
     public Scrollbar horizontalScrollBar
@@ -34,9 +43,11 @@ public class SceneSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mLogger = new Logger(new MyLogHandler());
+        mLogger.Log(kTAG, "Start");
+        apc = new AndroidPermissionChecker();
         ScrollToStartPosition();
     }
-    
 
     void ScrollToStartPosition()
     {
@@ -44,9 +55,38 @@ public class SceneSelection : MonoBehaviour
         m_VerticalScrollBar.value = 1;
     }
 
+    private void OnApplicationFocus(bool focus)
+    {
+        mLogger.Log(kTAG, "onAppFocus");
+        //TODO Test if OnApplicationPause(false)
+        if (comeBackFromPermission)
+        {
+            if (apc == null)
+                apc = new AndroidPermissionChecker();
+            
+            if (!apc.SimplyCheckPermisison())
+            {
+                mLogger.Log(kTAG, "permission denied, asking for rationale...");
+                //apc.RationaleAndroidPermission();
+            }
+            if (!apc.SimplyCheckPermisison())
+            {
+                mLogger.Log(kTAG, "permission denied, exiting...");
+                //apc.ExitPermissionNotGranted();
+            }
+        }
+        comeBackFromPermission = false;
+    }
+
     public void DbgARButtonPressed() 
     {
-        LoadScene("DbgARScene");
+        if (apc == null)
+            apc = new AndroidPermissionChecker();
+
+        comeBackFromPermission = true;
+        apc.AskAndroidPermission();
+        if(apc.SimplyCheckPermisison())
+            LoadScene("DbgARScene");
     }
 
     static void LoadScene(string sceneName)
@@ -54,6 +94,7 @@ public class SceneSelection : MonoBehaviour
         LoaderUtility.Initialize();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
+
 
     /*TODO Check device support    
     public void CheckSupportButtonPressed()
