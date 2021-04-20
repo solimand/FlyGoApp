@@ -16,19 +16,19 @@ class AndroidPermissionChecker
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
         dialog = new GameObject();
-        DecisionTaken = false;
+        DecisionTaken = false;        
     }
 
     /** 
      * called in onGUI
      * 
      */
-    public void RationaleAndroidPermission()
+    public void RationaleAndroidPermission(string permissionType)
     {        
         //mLogger.Log(kTAG, "Asking rationale to user");
 
         #if PLATFORM_ANDROID
-        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        if (!Permission.HasUserAuthorizedPermission(permissionType))
         {
             // The user denied permission to use the location.
             // Display a message explaining why you need it with Yes/No buttons.
@@ -53,12 +53,12 @@ class AndroidPermissionChecker
         dialog.AddComponent<ExitAndroidDialog>();
     }
 
-    public void AskAndroidPermission()
+    public void AskAndroidPermission(string permissionType)
     {
         mLogger.Log(kTAG, "asking permission");
 
 #if PLATFORM_ANDROID
-        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        if (!Permission.HasUserAuthorizedPermission(permissionType))//Permission.FineLocation))
         {
             //permission dialog callbacks
             this.DecisionTaken = false;
@@ -67,7 +67,7 @@ class AndroidPermissionChecker
             callbacks.PermissionGranted += PermissionCallbacks_PermissionGranted;
             callbacks.PermissionDeniedAndDontAskAgain += PermissionCallbacks_PermissionDeniedAndDontAskAgain;
 
-            Permission.RequestUserPermission(Permission.FineLocation, callbacks);
+            Permission.RequestUserPermission(permissionType, callbacks);//Permission.FineLocation, callbacks);
             //dialog = new GameObject();
         }
 #endif
@@ -78,16 +78,19 @@ class AndroidPermissionChecker
         }
     }
 
-    public bool SimplyCheckPermisison()
+    public bool SimplyCheckPermisison(string permissionName)
     {
-        return Permission.HasUserAuthorizedPermission(Permission.FineLocation);
+        return Permission.HasUserAuthorizedPermission(permissionName);//Permission.FineLocation);
     }
 
     internal void PermissionCallbacks_PermissionDeniedAndDontAskAgain(string permissionName)
     {
         this.DecisionTaken = true;
         mLogger.Log(kTAG, $"{permissionName} PermissionDeniedAndDontAskAgain--QUIT");
-        Application.Quit();
+#if PLATFORM_ANDROID
+        dialog.AddComponent<ExitAndroidDialog>();
+        return;
+#endif
     }
 
     internal void PermissionCallbacks_PermissionGranted(string permissionName)
@@ -101,6 +104,6 @@ class AndroidPermissionChecker
         this.DecisionTaken = true;
         mLogger.Log(kTAG, $"{permissionName} PermissionCallbacks_PermissionDenied");
         //TODO try rationale
-        RationaleAndroidPermission();
+        RationaleAndroidPermission(permissionName);
     }
 }

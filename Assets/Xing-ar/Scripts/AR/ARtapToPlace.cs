@@ -12,8 +12,6 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(MapsService))]
 public class ARtapToPlace : MonoBehaviour
 {
-    //private const string OBJ_UNITY_TAG = "CubeObject"; //name of the prefab in unity
-
     //LOGGER
     private const string kTAG = "ARtapToPlace";
     private static ILogger mLogger = Debug.unityLogger;
@@ -33,15 +31,15 @@ public class ARtapToPlace : MonoBehaviour
     private static double testLat = 44.482657;
     private static double testLon = 11.375136;
     // TEST Geofencing HOME
-    //private static double minLat = 44.48217611761878;
-    //private static double maxLat = 44.48343912715564;
-    //private static double minLon = 11.37425397971663;
-    //private static double maxLon = 11.375975957904192;
+    private static double minLat = 44.48217611761878;
+    private static double maxLat = 44.48343912715564;
+    private static double minLon = 11.37425397971663;
+    private static double maxLon = 11.375975957904192;
     // TEST Geofencing !HOME
-    private static double minLat = 44.48261626040989;
-    private static double maxLat = 44.48420457417349;
-    private static double minLon = 11.371915093455645;
-    private static double maxLon = 11.373857012782427;
+    //private static double minLat = 44.48261626040989;
+    //private static double maxLat = 44.48420457417349;
+    //private static double minLon = 11.371915093455645;
+    //private static double maxLon = 11.373857012782427;
 
     // Start is called before the first frame update
     private void Start()
@@ -131,7 +129,12 @@ public class ARtapToPlace : MonoBehaviour
                         (LocationService.Instance.longitude < maxLon)) {
                     mLogger.Log(kTAG, "Congratualtions!! You are in the right zone");
                     fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);
+
+                    // TODO adjust altitude of instantiate
                     _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
+                    //adjust the rotation
+                    _fixedGo.transform.Rotate(0f, 180f, 0f);
+
                     mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
                 }
                 else

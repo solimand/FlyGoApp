@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARFoundation;
-//#if PLATFORM_ANDROID
-//using UnityEngine.Android;
-//#endif
+#if PLATFORM_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class SceneSelection : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class SceneSelection : MonoBehaviour
     //private GameObject dialog = null;
     private AndroidPermissionChecker apc;
     //private bool comeBackFromPermission = false;
-
+   
     [SerializeField]
     Scrollbar m_HorizontalScrollBar;
     public Scrollbar horizontalScrollBar
@@ -85,22 +85,33 @@ public class SceneSelection : MonoBehaviour
             apc = new AndroidPermissionChecker();
 
         //comeBackFromPermission = true;
-        apc.AskAndroidPermission();
+        apc.AskAndroidPermission(Permission.FineLocation);
 
-        //TODO wait in case of user allow permission
-        //  there is a delay in which user granted permission but check gives false
-        //wait until user take a decision
+        // I need a coroutine to wait...see docs
         StartCoroutine(WaitDialog());
+        
+        //mLogger.Log(kTAG, "control returned to scenesel");        
+    }
 
-        mLogger.Log(kTAG, "control returned to scenesel");
-        if(apc.SimplyCheckPermisison())
+    /// <summary>Method <c>WaitDialog</c> waits for user taking a decision.
+    /// This is useful in case of user allows permission, 
+    /// there is a delay in which user granted permission but check gives false. </summary>
+    IEnumerator WaitDialog()
+    {
+        //waiting user decision
+        while (!apc.DecisionTaken)
+        {
+            yield return new WaitForSeconds(1);
+            if (apc.DecisionTaken)
+                break;
+        }
+
+        //I have to check, decisionTaken is true also in case of permission denied
+        //TODO FIX check fails in case of permission granted on rationale dialog
+        if (apc.SimplyCheckPermisison(Permission.FineLocation))
             LoadScene("DbgARScene");
         else
             mLogger.Log(kTAG, "you need permission for this scene");
-    }
-    IEnumerator WaitDialog()
-    {
-        yield return new WaitUntil(() => apc.DecisionTaken==true);
     }
 
     static void LoadScene(string sceneName)
