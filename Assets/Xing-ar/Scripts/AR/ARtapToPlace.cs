@@ -103,6 +103,11 @@ public class ARtapToPlace : MonoBehaviour
                 //create object on touch
                 _myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
                 mLogger.Log(kTAG, $"Obj placed at {hitPose.position}");
+                AudioSource audioSource = _myGo.GetComponent<AudioSource>();
+                audioSource.rolloffMode = AudioRolloffMode.Linear;
+                audioSource.Play(0);
+                mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+                    $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
             }
             else
             {
@@ -133,7 +138,7 @@ public class ARtapToPlace : MonoBehaviour
                     // TODO adjust altitude of instantiate
                     _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
                     //adjust the rotation
-                    _fixedGo.transform.Rotate(0f, 180f, 0f);
+                    //_fixedGo.transform.Rotate(0f, 180f, 0f);
 
                     mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
                 }

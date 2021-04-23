@@ -1,5 +1,5 @@
 APP
-    -Ask and set permission: Camera-Location-Storage (FIX) (Exit app if dont give permission) 
+    -Ask and set permission: Camera-Storage (FIX)
         +(not platform-dependent)
         +permission rationale dialog interface (for multiplatform and for multi permissions)
     -Activation Area (geofence) (instance object when I am in the area of that object)
