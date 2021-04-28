@@ -88,15 +88,20 @@ public class SceneSelection : MonoBehaviour
         apc.AskAndroidPermission(Permission.FineLocation);
 
         // I need a coroutine to wait...see docs
-        StartCoroutine(WaitDialog());
-        
+        StartCoroutine(WaitDialog(Permission.FineLocation));
+
+        apc.AskAndroidPermission(Permission.Camera);
+        StartCoroutine(WaitDialog(Permission.Camera));
+        apc.AskAndroidPermission(Permission.ExternalStorageWrite);
+        StartCoroutine(WaitDialog(Permission.ExternalStorageWrite));
+
         //mLogger.Log(kTAG, "control returned to scenesel");        
     }
 
     /// <summary>Method <c>WaitDialog</c> waits for user taking a decision.
     /// This is useful in case of user allows permission, 
     /// there is a delay in which user granted permission but check gives false. </summary>
-    IEnumerator WaitDialog()
+    IEnumerator WaitDialog(string permission)
     {
         //waiting user decision
         while (!apc.DecisionTaken)
@@ -108,7 +113,7 @@ public class SceneSelection : MonoBehaviour
 
         //I have to check, decisionTaken is true also in case of permission denied
         //TODO FIX check fails in case of permission granted on rationale dialog
-        if (apc.SimplyCheckPermisison(Permission.FineLocation))
+        if (apc.SimplyCheckPermisison(permission))
             LoadScene("DbgARScene");
         else
             mLogger.Log(kTAG, "you need permission for this scene");
