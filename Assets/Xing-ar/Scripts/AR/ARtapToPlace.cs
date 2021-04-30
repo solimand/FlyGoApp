@@ -51,6 +51,8 @@ public class ARtapToPlace : MonoBehaviour
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
 
+        //goToPlace = Resources.Load<GameObject>("zombieChar");        
+
         //testpos = new LatLng(testLat, testLon);
 
         //Entry point Maps SDK and init initial position
@@ -105,14 +107,13 @@ public class ARtapToPlace : MonoBehaviour
             if (_myGo == null)
             {
                 //create object on touch
-                _myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
-                //_myGo = Instantiate(goToPlace, hitPose.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject; 
-                _myGo.transform.LookAt(Camera.main.transform);
-                    
-                mLogger.Log(kTAG, $"Obj 1 placed at {hitPose.position}");
+                // TODO FIX rotation in front of camera
+                //_myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
+                _myGo = Instantiate(goToPlace, hitPose.position, 
+                    transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
+                mLogger.Log(kTAG, $"Obj {goToPlace} placed at {hitPose.position}");
 
-                //_myGo.transform.rotation = Quaternion.Inverse(transform.rotation);
-
+                // TODO FIX spatial audio
                 //AudioSource audioSource = _myGo.GetComponent<AudioSource>();
                 //audioSource.rolloffMode = AudioRolloffMode.Linear;
                 //audioSource.Play(0);
@@ -121,8 +122,10 @@ public class ARtapToPlace : MonoBehaviour
             }
             else
             {
-                //update object position on touch
+                //update object position and roation on touch
                 _myGo.transform.position = hitPose.position;
+                _myGo.transform.rotation = _myGo.transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+                //transform.LookAt(Camera.main.transform)              
             }
             /*if (_fixedGo == null)
             {

@@ -322,7 +322,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: REAL Scene
+  m_Text: Another Scene
 --- !u!222 &52549991
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -837,7 +837,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1415549493}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.4182421
+  m_Size: 0.41982904
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1567,7 +1567,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DBG Scene
+  m_Text: StARt the ARt
 --- !u!222 &1634378563
 CanvasRenderer:
   m_ObjectHideFlags: 0

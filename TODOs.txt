@@ -6,6 +6,9 @@ APP
     -Improve Activation Area (geofence) (instance object when I am in the area of that object)
     -Reset button (when intercept click, avoid intercepting clicks on buttons)
     -Check AR features
+
+ISSUEs
+    -anchor creator and anchor manager in session origin: null reference when instantiating object
    
 GENERAL
     -Find filetype of prefabs
