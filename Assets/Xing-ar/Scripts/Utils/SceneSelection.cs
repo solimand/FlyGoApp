@@ -86,14 +86,15 @@ public class SceneSelection : MonoBehaviour
 
         //comeBackFromPermission = true;
         apc.AskAndroidPermission(Permission.FineLocation);
-
         // I need a coroutine to wait...see docs
         StartCoroutine(WaitDialog(Permission.FineLocation));
 
+        /*
+        // TODO test other permissions
         apc.AskAndroidPermission(Permission.Camera);
         StartCoroutine(WaitDialog(Permission.Camera));
         apc.AskAndroidPermission(Permission.ExternalStorageWrite);
-        StartCoroutine(WaitDialog(Permission.ExternalStorageWrite));
+        StartCoroutine(WaitDialog(Permission.ExternalStorageWrite));*/
 
         //mLogger.Log(kTAG, "control returned to scenesel");        
     }

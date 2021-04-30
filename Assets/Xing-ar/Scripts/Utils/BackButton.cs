@@ -30,7 +30,6 @@ public class BackButton : MonoBehaviour
     public void BackButtonPressed()
     {
         // TODO stop location service
-
         if (Application.CanStreamedLevelBeLoaded("Menu"))
         {
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);

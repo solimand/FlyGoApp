@@ -1,8 +1,9 @@
 APP
-    -Ask and set permission: Camera-Storage (FIX)
+    -TEST multiple permissions Camera-Storage (FIX)
+        +FIX Android Lag
         +(not platform-dependent)
-        +permission rationale dialog interface (for multiplatform and for multi permissions)
-    -Activation Area (geofence) (instance object when I am in the area of that object)
+        +Improve Rationale
+    -Improve Activation Area (geofence) (instance object when I am in the area of that object)
     -Reset button (when intercept click, avoid intercepting clicks on buttons)
     -Check AR features
    

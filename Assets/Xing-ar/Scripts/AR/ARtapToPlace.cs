@@ -16,17 +16,20 @@ public class ARtapToPlace : MonoBehaviour
     private const string kTAG = "ARtapToPlace";
     private static ILogger mLogger = Debug.unityLogger;
 
+    //Playables GOs
+        // public field for copying object in unity scene
     public GameObject goToPlace; //obj to place with tap
-    public GameObject goPOI; //obj to place with tap
-
+    //public GameObject goPOI; //obj to place with pos
+    //private GameObject _fixedGo;
     private GameObject _myGo;
-    private GameObject _fixedGo;
+
     private ARRaycastManager _arRaymMn;
     static List<ARRaycastHit> hits =new List<ARRaycastHit>();
-    private static LatLng testpos;
-    private Vector3 fixedObjPos;
+    //private static LatLng testpos;
+    //private Vector3 fixedObjPos;
     private MapsService mapsService;
     
+    /*
     // TEST Static Locations
     private static double testLat = 44.482657;
     private static double testLon = 11.375136;
@@ -40,6 +43,7 @@ public class ARtapToPlace : MonoBehaviour
     //private static double maxLat = 44.48420457417349;
     //private static double minLon = 11.371915093455645;
     //private static double maxLon = 11.373857012782427;
+    */
 
     // Start is called before the first frame update
     private void Start()
@@ -47,7 +51,7 @@ public class ARtapToPlace : MonoBehaviour
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
 
-        testpos = new LatLng(testLat, testLon);
+        //testpos = new LatLng(testLat, testLon);
 
         //Entry point Maps SDK and init initial position
         mapsService = GetComponent<MapsService>();
@@ -102,24 +106,26 @@ public class ARtapToPlace : MonoBehaviour
             {
                 //create object on touch
                 _myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
-                mLogger.Log(kTAG, $"Obj placed at {hitPose.position}");
-                AudioSource audioSource = _myGo.GetComponent<AudioSource>();
-                audioSource.rolloffMode = AudioRolloffMode.Linear;
-                audioSource.Play(0);
-                mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
-                    $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
+                //_myGo = Instantiate(goToPlace, hitPose.position, transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject; 
+                _myGo.transform.LookAt(Camera.main.transform);
+                    
+                mLogger.Log(kTAG, $"Obj 1 placed at {hitPose.position}");
+
+                //_myGo.transform.rotation = Quaternion.Inverse(transform.rotation);
+
+                //AudioSource audioSource = _myGo.GetComponent<AudioSource>();
+                //audioSource.rolloffMode = AudioRolloffMode.Linear;
+                //audioSource.Play(0);
+                //mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+                //    $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
             }
             else
             {
                 //update object position on touch
                 _myGo.transform.position = hitPose.position;
             }
-            if (_fixedGo == null)
+            /*if (_fixedGo == null)
             {
-                // TODO test altitude of device
-                //_fixedGo = Instantiate(goPOI, LocationService.Instance.ucsTest, Quaternion.identity) as GameObject;
-                //_fixedGo = Instantiate(goPOI, projctn.FromLatLngToVector3(initPos),Quaternion.identity) as GameObject;
-
                 //setting init floating origin (only first time)
                 if (!mapsService.Projection.IsFloatingOriginSet)
                 {
@@ -127,7 +133,7 @@ public class ARtapToPlace : MonoBehaviour
                     mapsService.InitFloatingOrigin(LocationService.Instance.CurrPos);
                 }
 
-                // TODO geofencing
+                // TODO improve geofencing
                 if ((LocationService.Instance.latitude > minLat) &&
                         (LocationService.Instance.latitude < maxLat) &&
                         (LocationService.Instance.longitude > minLon) &&
@@ -135,7 +141,7 @@ public class ARtapToPlace : MonoBehaviour
                     mLogger.Log(kTAG, "Congratualtions!! You are in the right zone");
                     fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);
 
-                    // TODO adjust altitude of instantiate
+                    // TODO adjust altitude and rotation
                     _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
                     //adjust the rotation
                     //_fixedGo.transform.Rotate(0f, 180f, 0f);
@@ -150,9 +156,9 @@ public class ARtapToPlace : MonoBehaviour
             }
             else
             {
-                // TODO I should not update the position
+                // TODO I should not update the position but the rotation
                 _fixedGo.transform.position = fixedObjPos;
-            }
+            }*/
         }
                 
     }
