@@ -107,7 +107,6 @@ public class ARtapToPlace : MonoBehaviour
             if (_myGo == null)
             {
                 //create object on touch
-                // TODO FIX rotation in front of camera
                 //_myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
                 _myGo = Instantiate(goToPlace, hitPose.position, 
                     transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
@@ -123,9 +122,10 @@ public class ARtapToPlace : MonoBehaviour
             else
             {
                 //update object position and roation on touch
+                // TODO FIX rotation in front of camera and normal to ground
                 _myGo.transform.position = hitPose.position;
-                _myGo.transform.rotation = _myGo.transform.rotation * Quaternion.Euler(0f, 180f, 0f);
-                //transform.LookAt(Camera.main.transform)              
+                //_myGo.transform.rotation = _myGo.transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+                _myGo.transform.LookAt(Camera.main.transform, transform.up);
             }
             /*if (_fixedGo == null)
             {
