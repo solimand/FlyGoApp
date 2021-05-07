@@ -33,3 +33,5 @@ Generic Button
 		that has a "buttonManager" script
 		which declares onclick to be pointed by field "button"
 
+NOTES:
+	-Only ARM64 - disabled build for ARMv7 because of audio spatializer (not supported)

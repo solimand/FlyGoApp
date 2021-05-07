@@ -6,14 +6,19 @@ APP
     -Improve Activation Area (geofence) (instance object when I am in the area of that object)
     -Reset button (when intercept click, avoid intercepting clicks on buttons)
     -Check AR features
+    -RESET Scene - stop audio, delete characters
+
 
 ISSUEs
-    -anchor creator and anchor manager in session origin: null reference when instantiating object
+    -anchor creator in session origin: null reference when instantiating object (disabled it for now)
    
 GENERAL
     -Find filetype of prefabs
     -Search -> delete magicLeap package
     -Write down all the dependencies Scenes-GameObjects-Scripts
+
+
+###############################################################################################
 TESTs
     -#Polygon_0 (home) 
         44.48343912715564, 11.374591938052507
