@@ -9,13 +9,6 @@ public class ARSessionConfig : MonoBehaviour
     private const string kTAG = "ARSessionConfig";
     private static ILogger mLogger = Debug.unityLogger;
 
-    //Names of what I want delete with reset
-    private static readonly string GO_NAME = "zombieChar(Clone)"; 
-
-    // NOTE: in case of Reset, if I destroy the instantiated GameObj,
-        // I do not need to reset the originPosition (MapService)
-        // because the absence of GO instance trigger a new origin calibration
-
     // Start is called before the first frame update
     void Start()
     {
@@ -35,18 +28,19 @@ public class ARSessionConfig : MonoBehaviour
         */
     }
 
+    // NOTE: in case of Reset, if I destroy the instantiated GameObj,
+    // I do not need to reset the originPosition (MapService)
+    // because the absence of GO instance trigger a new origin calibration
     public void ResetButtonPressed()
     {
-        GameObject goToDel;
-        if ((goToDel = GameObject.Find(GO_NAME)) != null)
+        if (ARtapToPlace.MyGo != null)
         {
-            mLogger.Log(kTAG, $"Destroying GO {GO_NAME}");
-            Object.Destroy(goToDel);
-            mLogger.Log(kTAG, $"{GO_NAME} destroyed");
-
+            Destroy(ARtapToPlace.MyGo);
+            mLogger.Log(kTAG, $"obj {ARtapToPlace.MyGo} destroyed, resetting...");
         }
 
         ARSession arSess = GetComponent<ARSession>();
         arSess.Reset();
+        mLogger.Log(kTAG, "Session Resetted");
     }
 }

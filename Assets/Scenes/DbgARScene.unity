@@ -431,7 +431,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 388525039}
+      - m_Target: {fileID: 6672308126474732644}
         m_TargetAssemblyTypeName: ARSessionConfig, Assembly-CSharp
         m_MethodName: ResetButtonPressed
         m_Mode: 1
@@ -498,7 +498,6 @@ GameObject:
   - component: {fileID: 388525036}
   - component: {fileID: 388525037}
   - component: {fileID: 388525038}
-  - component: {fileID: 388525039}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -745,18 +744,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e0b68449f5c494498f0894eb2aa8a16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &388525039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 388525029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8505e4c0a98040a4bb28a3f47c86558f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &397390038
@@ -1358,6 +1345,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: zombieChar
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 263d2c59dde150f489b7b2b52926c1e3,
+        type: 3}
+      propertyPath: m_TagString
+      value: MyZombie
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 263d2c59dde150f489b7b2b52926c1e3,
         type: 3}
       propertyPath: m_Controller
@@ -1806,6 +1798,7 @@ GameObject:
   - component: {fileID: 212175866532230322}
   - component: {fileID: 5472436117178709916}
   - component: {fileID: 5434462552450501220}
+  - component: {fileID: 6672308126474732644}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -1813,3 +1806,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6672308126474732644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672308126474732643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8505e4c0a98040a4bb28a3f47c86558f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

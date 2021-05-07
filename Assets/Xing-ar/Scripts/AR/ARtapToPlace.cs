@@ -19,7 +19,7 @@ public class ARtapToPlace : MonoBehaviour
     //Playables GOs
         // public field for using object in unity scene
     public GameObject goToPlace; //obj to place with tap
-    private GameObject _myGo;
+    private static GameObject _myGo;
     //public GameObject goPOI; //obj to place with pos
     //private GameObject _fixedGo;
 
@@ -28,7 +28,9 @@ public class ARtapToPlace : MonoBehaviour
     //private static LatLng testpos;
     //private Vector3 fixedObjPos;
     private MapsService mapsService;
-    
+
+    public static GameObject MyGo { get => _myGo; set => _myGo = value; }
+
     /*
     // TEST Static Locations
     private static double testLat = 44.482657;
@@ -106,6 +108,7 @@ public class ARtapToPlace : MonoBehaviour
             var uiClicked = false;
 
             // TODO FIX avoid Detect Clicks Through UI 
+                // a click takes 3-4 frames and Update() is executed once per frame
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
             {
                 mLogger.Log(kTAG, "EvSys detected a click on UI");
