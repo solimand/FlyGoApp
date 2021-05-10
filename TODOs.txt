@@ -1,22 +1,16 @@
 APP
+    -Improve Activation Area (geofence) (instance object when I am in the area of that object)
+    -TEST effects
     -TEST multiple permissions Camera-Storage (FIX)
         +FIX Android Lag
         +(not platform-dependent)
         +Improve Rationale
-    -Improve Activation Area (geofence) (instance object when I am in the area of that object)
-    -Reset button (when intercept click, avoid intercepting clicks on buttons)
-    -Check AR features
-    -RESET Scene - stop audio, delete characters
+    -Avoid intercepting clicks on UI
 
 
 ISSUEs
     -anchor creator in session origin: null reference when instantiating object (disabled it for now)
    
-GENERAL
-    -Find filetype of prefabs
-    -Search -> delete magicLeap package
-    -Write down all the dependencies Scenes-GameObjects-Scripts
-
 
 ###############################################################################################
 TESTs
@@ -25,10 +19,10 @@ TESTs
         44.482627742351326, 11.37425397971663
         44.48217611761878, 11.37578820327315
         44.4828956536761, 11.375975957904192
-        ------------------------------------------------
+        
         (minMax-Lat=44.48217611761878/44.48343912715564)
         (minMax-Lon=11.37425397971663/11.375975957904192)
-
+----------------------------------------------------------------
     -#Polygon_0 (near home)
         44.48420457417349, 11.372499815020891
         44.48367641680532, 11.373857012782427

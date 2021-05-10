@@ -19,7 +19,6 @@ public class ARtapToPlace : MonoBehaviour
     //Playables GOs
         // public field for using object in unity scene
     public GameObject goToPlace; //obj to place with tap
-    private static GameObject _myGo;
     //public GameObject goPOI; //obj to place with pos
     //private GameObject _fixedGo;
 
@@ -29,7 +28,7 @@ public class ARtapToPlace : MonoBehaviour
     //private Vector3 fixedObjPos;
     private MapsService mapsService;
 
-    public static GameObject MyGo { get => _myGo; set => _myGo = value; }
+    public static GameObject MyGo { get; set; }
 
     /*
     // TEST Static Locations
@@ -105,44 +104,45 @@ public class ARtapToPlace : MonoBehaviour
         if (_arRaymMn.Raycast(touchPos, hits, TrackableType.PlaneWithinPolygon))
         {
             var hitPose = hits[0].pose;
-            var uiClicked = false;
+            //var uiClicked = false;
 
             // TODO FIX avoid Detect Clicks Through UI 
                 // a click takes 3-4 frames and Update() is executed once per frame
+            /*
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
             {
                 mLogger.Log(kTAG, "EvSys detected a click on UI");
                 uiClicked = true;
             }
+            */
 
-            if (_myGo == null && !uiClicked)
+            if (MyGo == null)// && !uiClicked)
             {
                 //create object on touch
                 //_myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
-                _myGo = Instantiate(goToPlace, hitPose.position, 
+                MyGo = Instantiate(goToPlace, hitPose.position, 
                     transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
                 mLogger.Log(kTAG, $"Obj {goToPlace} placed at {hitPose.position}");
 
                 // Add an ARAnchor component if it doesn't have one already.
-                if (_myGo.GetComponent<ARAnchor>() == null)
+                if (MyGo.GetComponent<ARAnchor>() == null)
                 {
-                    _myGo.AddComponent<ARAnchor>();
+                    MyGo.AddComponent<ARAnchor>();
                 }
-                mLogger.Log(kTAG, $"My AR Anchor {_myGo.GetComponent<ARAnchor>()}");
+                mLogger.Log(kTAG, $"My AR Anchor {MyGo.GetComponent<ARAnchor>()}");
 
                 // TODO FIX spatial audio
-                AudioSource audioSource = _myGo.GetComponent<AudioSource>();
+                AudioSource audioSource = MyGo.GetComponent<AudioSource>();
                 audioSource.Play(0);
                 mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
                     $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
             }
-            else if (!uiClicked)
+            else// if (!uiClicked)
             {                
                 //update object position and roation on touch
                 // TODO FIX rotation in front of camera and normal to ground
-                _myGo.transform.position = hitPose.position;
-                //_myGo.transform.rotation = _myGo.transform.rotation * Quaternion.Euler(0f, 180f, 0f);
-                _myGo.transform.LookAt(Camera.main.transform, transform.up);
+                MyGo.transform.position = hitPose.position;
+                MyGo.transform.LookAt(Camera.main.transform, transform.up);
                 mLogger.Log(kTAG, $"Obj {goToPlace} placed at updated pos {hitPose.position}");
             }
 

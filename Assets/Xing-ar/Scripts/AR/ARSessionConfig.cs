@@ -29,8 +29,8 @@ public class ARSessionConfig : MonoBehaviour
     }
 
     // NOTE: in case of Reset, if I destroy the instantiated GameObj,
-    // I do not need to reset the originPosition (MapService)
-    // because the absence of GO instance trigger a new origin calibration
+        // I do not need to reset the originPosition (MapService)
+        // because the absence of GO instance trigger a new origin calibration
     public void ResetButtonPressed()
     {
         if (ARtapToPlace.MyGo != null)
