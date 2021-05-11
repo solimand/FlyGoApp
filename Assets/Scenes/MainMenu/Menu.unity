@@ -836,8 +836,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1415549494}
   m_HandleRect: {fileID: 1415549493}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.41982904
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1237,6 +1237,7 @@ GameObject:
   - component: {fileID: 1499173575}
   - component: {fileID: 1499173576}
   - component: {fileID: 1499173577}
+  - component: {fileID: 1499173578}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -1286,6 +1287,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DbgAR: {fileID: 442292523}
+--- !u!114 &1499173578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499173574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a183504f0b52fa9429bc3c62dbda2e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1505003128
 GameObject:
   m_ObjectHideFlags: 0
