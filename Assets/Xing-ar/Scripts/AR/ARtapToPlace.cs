@@ -133,7 +133,8 @@ public class ARtapToPlace : MonoBehaviour
 
                 // TODO FIX spatial audio
                 AudioSource audioSource = MyGo.GetComponent<AudioSource>();
-                audioSource.Play(0);
+                if (audioSource != null)
+                    audioSource.Play(0);
                 mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
                     $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
             }
@@ -143,6 +144,11 @@ public class ARtapToPlace : MonoBehaviour
                 // TODO FIX rotation in front of camera and normal to ground
                 MyGo.transform.position = hitPose.position;
                 MyGo.transform.LookAt(Camera.main.transform, transform.up);
+                
+                // If animation -- restart it
+                if (MyGo.GetComponent<Animator>() != null)
+                    MyGo.GetComponent<Animator>().Play("Run", -1, 0);
+
                 mLogger.Log(kTAG, $"Obj {goToPlace} placed at updated pos {hitPose.position}");
             }
 
