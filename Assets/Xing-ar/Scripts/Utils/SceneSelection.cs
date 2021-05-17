@@ -81,6 +81,7 @@ public class SceneSelection : MonoBehaviour
 
     public void DbgARButtonPressed() 
     {
+#if PLATFORM_ANDROID
         if (apc == null)
             apc = new AndroidPermissionChecker();
 
@@ -96,7 +97,8 @@ public class SceneSelection : MonoBehaviour
         apc.AskAndroidPermission(Permission.ExternalStorageWrite);
         StartCoroutine(WaitDialog(Permission.ExternalStorageWrite));*/
 
-        //mLogger.Log(kTAG, "control returned to scenesel");        
+        //mLogger.Log(kTAG, "control returned to scenesel");
+#endif
     }
 
     /// <summary>Method <c>WaitDialog</c> waits for user taking a decision.
@@ -111,13 +113,14 @@ public class SceneSelection : MonoBehaviour
             if (apc.DecisionTaken)
                 break;
         }
-
+#if PLATFORM_ANDROID
         //I have to check, decisionTaken is true also in case of permission denied
         //TODO FIX check fails in case of permission granted on rationale dialog
         if (apc.SimplyCheckPermisison(permission))
             LoadScene("DbgARScene");
         else
             mLogger.Log(kTAG, "you need permission for this scene");
+#endif
     }
 
     static void LoadScene(string sceneName)

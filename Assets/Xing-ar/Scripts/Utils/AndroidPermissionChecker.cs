@@ -70,18 +70,22 @@ class AndroidPermissionChecker
             Permission.RequestUserPermission(permissionType, callbacks);//Permission.FineLocation, callbacks);
             //dialog = new GameObject();
         }
-#endif
+
         else
         {
             this.DecisionTaken = true;
             mLogger.Log(kTAG, "Permission already granted");
         }
+#endif
     }
-
+    
+#if PLATFORM_ANDROID
     public bool SimplyCheckPermisison(string permissionName)
     {
+
         return Permission.HasUserAuthorizedPermission(permissionName);//Permission.FineLocation);
     }
+#endif
 
     internal void PermissionCallbacks_PermissionDeniedAndDontAskAgain(string permissionName)
     {
