@@ -7,7 +7,7 @@ using Google.Common.Geometry;
 public class S2Test : MonoBehaviour
 {
     S2RegionCoverer cov;
-    const int level = 20;
+    const int DESIRED_LVL = 21;
     const double lat = 44.482672;
     const double lon = 11.375569;
     
@@ -21,8 +21,11 @@ public class S2Test : MonoBehaviour
                 
         S2LatLng s2latlon = S2LatLng.FromDegrees(lat, lon);
         S2CellId cellid = S2CellId.FromLatLng(s2latlon);
+        S2CellId parentCellid = cellid.ParentForLevel(DESIRED_LVL);
         string cellidPrec30 = cellid.ToToken();
-        Debug.Log($"I am in S2 Cell id {cellidPrec30} with preciosion {cellid.Level}");
+        string cellidDesiredPrec = parentCellid.ToToken();
+        Debug.Log($"I am in S2 Cell id {cellidPrec30} with preciosion {cellid.Level}" +
+            $" child of {cellidDesiredPrec} with preciosion {parentCellid.Level}");
         Debug.Log("exit");
     }
 

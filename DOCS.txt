@@ -35,3 +35,6 @@ Generic Button
 
 NOTES:
 	-Only ARM64 - disabled build for ARMv7 because of audio spatializer (not supported)
+
+S2 Geometry:
+	-Cell Statistics: https://s2geometry.io/resources/s2cell_statistics.html (suggested level 22)
