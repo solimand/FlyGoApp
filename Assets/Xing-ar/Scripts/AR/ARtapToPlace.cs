@@ -118,7 +118,14 @@ public class ARtapToPlace : MonoBehaviour
 
             if (MyGo == null)// && !uiClicked)
             {
-                //create object on touch
+                //create object on touch if I am in the right cellid
+                S2Geofence s2geo = new S2Geofence();
+
+                string currCellID = s2geo.CellIdFromCoord(LocationService.Instance.latitude,
+                    LocationService.Instance.longitude);
+                mLogger.Log(kTAG, $"I am in S2 Cell id {currCellID}, lat {LocationService.Instance.latitude}" +
+                    $"lon {LocationService.Instance.longitude}");
+
                 //_myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
                 MyGo = Instantiate(goToPlace, hitPose.position, 
                     transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
@@ -132,11 +139,13 @@ public class ARtapToPlace : MonoBehaviour
                 mLogger.Log(kTAG, $"My AR Anchor {MyGo.GetComponent<ARAnchor>()}");
 
                 // TODO FIX spatial audio
+                /*
                 AudioSource audioSource = MyGo.GetComponent<AudioSource>();
                 if (audioSource != null)
                     audioSource.Play(0);
                 mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
                     $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
+                */
             }
             else// if (!uiClicked)
             {                
@@ -153,6 +162,7 @@ public class ARtapToPlace : MonoBehaviour
             }
 
             #region geolocation test
+
             /*if (_fixedGo == null)
             {
                 //setting init floating origin (only first time)
