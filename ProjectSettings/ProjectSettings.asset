@@ -148,6 +148,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.xunibo.xingartest
     Standalone: com.xunibo.xing-ar-test
+    iPhone: com.xunibo.xing-ar-test
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -378,7 +379,7 @@ PlayerSettings:
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
   cameraUsageDescription: Required For AR.
-  locationUsageDescription: 
+  locationUsageDescription: Required For AR Location
   microphoneUsageDescription: 
   switchNMETAOverride: 
   switchNetLibKey: 
@@ -613,7 +614,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    4: UNITY_XR_ARKIT_LOADER_ENABLED
   additionalCompilerArguments: {}
   platformArchitecture:
     iPhone: 1
@@ -690,7 +692,9 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 1
+    Collab: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -704,11 +708,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 
+  cloudProjectId: da9bea0c-f04a-4a1e-89f6-6eab22f985a1
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Xing-AR
+  organizationId: msolimando
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0
