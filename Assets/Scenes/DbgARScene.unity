@@ -788,6 +788,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AnchorPrefab: {fileID: 0}
+  m_AnchorPoints: []
+  m_RaycastManager: {fileID: 0}
+  m_AnchorManager: {fileID: 0}
+  m_PlaneManager: {fileID: 0}
 --- !u!114 &388525036
 MonoBehaviour:
   m_ObjectHideFlags: 0

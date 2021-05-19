@@ -118,13 +118,12 @@ public class ARtapToPlace : MonoBehaviour
 
             if (MyGo == null)// && !uiClicked)
             {
-                //create object on touch if I am in the right cellid
+                //check geofence s2 cell id
                 S2Geofence s2geo = new S2Geofence();
-
-                string currCellID = s2geo.CellIdFromCoord(LocationService.Instance.latitude,
+                s2geo.AmIinGeofence(LocationService.Instance.latitude,
                     LocationService.Instance.longitude);
-                mLogger.Log(kTAG, $"I am in S2 Cell id {currCellID}, lat {LocationService.Instance.latitude}" +
-                    $"lon {LocationService.Instance.longitude}");
+                
+                //mLogger.Log(kTAG, $"I am in S2 Cell id {currCellID}");
 
                 //_myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
                 MyGo = Instantiate(goToPlace, hitPose.position, 
