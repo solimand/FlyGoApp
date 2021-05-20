@@ -90,6 +90,16 @@ class S2Geofence
         }
         return false;
     }
-    
+
+    public bool AmIinCellId(double lat, double lon)
+    {
+        string currCell = CellIdFromCoord(lat, lon);
+        if (fixedPos.Contains(currCell))
+        {
+            Debug.Log($"You are in the cellid {currCell}");
+            return true;
+        }
+        return false;
+    }
 }
 

@@ -32,3 +32,20 @@ TESTs
         44.48312911825594, 11.371915093455645
         (minMax-Lat=44.48261626040989/44.48420457417349)
         (minMax-Lon=11.371915093455645/11.373857012782427)
+----------------------------------------------------------------
+
+// TEST Static Locations
+    //private static double testLat = 44.483135;
+    //private static double testLon = 11.375635;
+    /*
+    // TEST Geofencing HOME
+    private static double minLat = 44.48217611761878;
+    private static double maxLat = 44.48343912715564;
+    private static double minLon = 11.37425397971663;
+    private static double maxLon = 11.375975957904192;
+    // TEST Geofencing !HOME
+    //private static double minLat = 44.48261626040989;
+    //private static double maxLat = 44.48420457417349;
+    //private static double minLon = 11.371915093455645;
+    //private static double maxLon = 11.373857012782427;
+    */

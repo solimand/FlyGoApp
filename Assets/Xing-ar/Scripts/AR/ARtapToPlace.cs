@@ -12,61 +12,59 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(MapsService))]
 public class ARtapToPlace : MonoBehaviour
 {
-    //LOGGER
+    //LOGGER-----------
     private const string kTAG = "ARtapToPlace";
     private static ILogger mLogger = Debug.unityLogger;
 
-    //Playables GOs
-        // public field for using object in unity scene
+    // Game Objects (use pulbic field for unity editor)-----------
     public GameObject goToPlace; //obj to place with tap
     //public GameObject goPOI; //obj to place with pos
     //private GameObject _fixedGo;
+    public static GameObject MyGo { get; set; }
+    //Anchor prefab-----------
+    [SerializeField]
+    GameObject m_Prefab;
+    public GameObject prefab { get; set; }
+    /*{
+        get => m_Prefab;
+        set => m_Prefab = value;
+    }*/
 
+    // AR Classes-----------
     private ARRaycastManager _arRaymMn;
+    private ARAnchor anchor;
+    private ARPlaneManager arpm;
+    private ARAnchorManager m_AnchorManager;
     static List<ARRaycastHit> hits =new List<ARRaycastHit>();
+
+    // LOCATION-----------
     //private static LatLng testpos;
     //private Vector3 fixedObjPos;
     private MapsService mapsService;
+    private S2Geofence s2geo;
 
-    public static GameObject MyGo { get; set; }
-
-    /*
-    // TEST Static Locations
-    private static double testLat = 44.482657;
-    private static double testLon = 11.375136;
-    // TEST Geofencing HOME
-    private static double minLat = 44.48217611761878;
-    private static double maxLat = 44.48343912715564;
-    private static double minLon = 11.37425397971663;
-    private static double maxLon = 11.375975957904192;
-    // TEST Geofencing !HOME
-    //private static double minLat = 44.48261626040989;
-    //private static double maxLat = 44.48420457417349;
-    //private static double minLon = 11.371915093455645;
-    //private static double maxLon = 11.373857012782427;
-    */
+    
 
     // Start is called before the first frame update
     private void Start()
     {
         mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "Start");
-
-        //goToPlace = Resources.Load<GameObject>("zombieChar");        
+        mLogger.Log(kTAG, "Start");     
 
         //testpos = new LatLng(testLat, testLon);
 
         //Entry point Maps SDK and init initial position
         mapsService = GetComponent<MapsService>();
-        
+
         // Register a listener to be notified when the map is loaded
         //mapsService.Events.MapEvents.Loaded.AddListener(OnLoaded);
         //mLogger.Log(kTAG, $"FloatingOrigin set to lat = {initPos.Lat.ToString()} " +
         //  $"and lon {initPos.Lng.ToString()}");
-
         // Load map with default options
         //mapsService.LoadMap(ExampleDefaults.DefaultBounds, ExampleDefaults.DefaultGameObjectOptions);
 
+        s2geo = new S2Geofence();
+        anchor = null;        
     }
 
     /*
@@ -81,6 +79,7 @@ public class ARtapToPlace : MonoBehaviour
     {
         mLogger.Log(kTAG, "Awake");
         _arRaymMn = GetComponent<ARRaycastManager>();
+        m_AnchorManager = GetComponent<ARAnchorManager>();
     }
 
     bool GetPos(out Vector2 touchPos)
@@ -98,6 +97,43 @@ public class ARtapToPlace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //render object at 2 meters if I am in cellID
+        //if (s2geo.AmIinCellId(LocationService.Instance.latitude,
+        //            LocationService.Instance.longitude))
+        //{            
+            arpm = GetComponent<ARPlaneManager>();
+        //mLogger.Log(kTAG, "ARPlaneManager created");
+
+        if (arpm)
+        {
+            if (anchor == null) 
+            { 
+                mLogger.Log(kTAG, "Creating anchor attachment");
+                var oldPrefab = m_AnchorManager.anchorPrefab;
+                m_AnchorManager.anchorPrefab = prefab;
+                // create a ray (vector 2 meters from camera) and caputre (raycast) intersection with plane
+                var ray = Camera.main.ScreenPointToRay(new Vector3(200, 200, 0));
+                mLogger.Log(kTAG, "CCC");
+                if (_arRaymMn.Raycast(ray, hits, TrackableType.PlaneWithinPolygon))
+                {
+                    mLogger.Log(kTAG, $"My Ray {ray} hitted the plane at {hits[0].pose}");
+                    foreach (var plane in arpm.trackables)
+                    {
+                        anchor = m_AnchorManager.AttachAnchor(plane, hits[0].pose);
+                        break;
+                    }
+                    m_AnchorManager.anchorPrefab = oldPrefab;
+                    mLogger.Log(kTAG, $"anchor created {anchor}");
+                }
+            }
+        }
+        else
+        {
+            mLogger.Log(kTAG, "Sorry ARPlanemanager problems");
+        }
+        //}
+
+        /*
         if (!GetPos(out Vector2 touchPos))
             return;
 
@@ -115,11 +151,10 @@ public class ARtapToPlace : MonoBehaviour
                 uiClicked = true;
             }
             */
-
+        /*
             if (MyGo == null)// && !uiClicked)
             {
-                //check geofence s2 cell id
-                S2Geofence s2geo = new S2Geofence();
+                //check geofence s2 cell id               
                 s2geo.AmIinGeofence(LocationService.Instance.latitude,
                     LocationService.Instance.longitude);
                 
@@ -145,7 +180,8 @@ public class ARtapToPlace : MonoBehaviour
                 mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
                     $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
                 */
-            }
+     /*       }
+    
             else// if (!uiClicked)
             {                
                 //update object position and roation on touch
@@ -177,10 +213,13 @@ public class ARtapToPlace : MonoBehaviour
                         (LocationService.Instance.longitude > minLon) &&
                         (LocationService.Instance.longitude < maxLon)) {
                     mLogger.Log(kTAG, "Congratualtions!! You are in the right zone");
+
                     fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);
 
                     // TODO adjust altitude and rotation
                     _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
+                    //Instantiate(goToPlace, hitPose.position,transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
+
                     //adjust the rotation
                     //_fixedGo.transform.Rotate(0f, 180f, 0f);
 
@@ -197,8 +236,9 @@ public class ARtapToPlace : MonoBehaviour
                 // TODO I should not update the position but the rotation
                 _fixedGo.transform.position = fixedObjPos;
             }*/
-            #endregion
-        }
+
+
+        //}
 
     }
 }
