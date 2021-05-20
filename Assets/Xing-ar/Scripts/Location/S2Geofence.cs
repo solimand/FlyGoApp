@@ -16,6 +16,7 @@ class S2Geofence
 
     // S2 GEOFENCING DATA
     string [] fixedPos = new string[2] { "477e2b39f45", "477e2b3a1b9" };
+    string[] fixedPos2mt = new string[2] { "477e2b3a1c1", "477e2b3a1bf" };
     string[,] geoFencesMatrix = new string[2, 8] {
         {"477e2b39f41", "477e2b39f43", "477e2b39f47",
             "477e2b39f49", "477e2b39f4f", "477e2b39f51", "477e2b39f5b", "477e2b39f5d"},        
@@ -91,15 +92,15 @@ class S2Geofence
         return false;
     }
 
-    public bool AmIinCellId(double lat, double lon)
+    public string AmIinCellId(double lat, double lon)
     {
         string currCell = CellIdFromCoord(lat, lon);
-        if (fixedPos.Contains(currCell))
+        if (fixedPos2mt.Contains(currCell))
         {
-            Debug.Log($"You are in the cellid {currCell}");
-            return true;
+            //Debug.Log($"You are in the cellid {currCell}");
+            return currCell;
         }
-        return false;
+        return "N";
     }
 }
 

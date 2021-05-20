@@ -1,9 +1,7 @@
 using Google.Maps;
 using Google.Maps.Coord;
 using Google.Maps.Event;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -22,35 +20,32 @@ public class ARtapToPlace : MonoBehaviour
     //private GameObject _fixedGo;
     public static GameObject MyGo { get; set; }
     //Anchor prefab-----------
-    [SerializeField]
-    GameObject m_Prefab;
-    public GameObject prefab { get; set; }
-    /*{
-        get => m_Prefab;
-        set => m_Prefab = value;
-    }*/
+    //[SerializeField]
+    //GameObject m_Prefab;
+    //public GameObject prefab { get; set; }
 
     // AR Classes-----------
     private ARRaycastManager _arRaymMn;
-    private ARAnchor anchor;
+    //private ARAnchor anchor;
     private ARPlaneManager arpm;
-    private ARAnchorManager m_AnchorManager;
-    static List<ARRaycastHit> hits =new List<ARRaycastHit>();
+    //private ARAnchorManager m_AnchorManager;
+    //static List<ARRaycastHit> hits =new List<ARRaycastHit>();
 
     // LOCATION-----------
     //private static LatLng testpos;
     //private Vector3 fixedObjPos;
     private MapsService mapsService;
     private S2Geofence s2geo;
-
+    private string geoFenceCell;
     
 
     // Start is called before the first frame update
     private void Start()
     {
         mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "Start");     
-
+        mLogger.Log(kTAG, "Start");
+        s2geo = new S2Geofence();
+        //anchor = null;
         //testpos = new LatLng(testLat, testLon);
 
         //Entry point Maps SDK and init initial position
@@ -61,13 +56,11 @@ public class ARtapToPlace : MonoBehaviour
         //mLogger.Log(kTAG, $"FloatingOrigin set to lat = {initPos.Lat.ToString()} " +
         //  $"and lon {initPos.Lng.ToString()}");
         // Load map with default options
-        //mapsService.LoadMap(ExampleDefaults.DefaultBounds, ExampleDefaults.DefaultGameObjectOptions);
-
-        s2geo = new S2Geofence();
-        anchor = null;        
+        //mapsService.LoadMap(ExampleDefaults.DefaultBounds,
+            //ExampleDefaults.DefaultGameObjectOptions);
     }
 
-    /*
+    /* Google Maps Related
     public void OnLoaded(MapLoadedArgs args)
     {
         // The Map is loaded - you can start/resume gameplay from that point.
@@ -79,7 +72,9 @@ public class ARtapToPlace : MonoBehaviour
     {
         mLogger.Log(kTAG, "Awake");
         _arRaymMn = GetComponent<ARRaycastManager>();
-        m_AnchorManager = GetComponent<ARAnchorManager>();
+        //m_AnchorManager = GetComponent<ARAnchorManager>();
+        arpm = GetComponent<ARPlaneManager>();
+        //mLogger.Log(kTAG, "ARPlaneManager created");
     }
 
     bool GetPos(out Vector2 touchPos)
@@ -89,7 +84,6 @@ public class ARtapToPlace : MonoBehaviour
             touchPos = Input.GetTouch(0).position;
             return true;
         }
-
         touchPos = default;
         return false;
     }
@@ -97,148 +91,154 @@ public class ARtapToPlace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //render object at 2 meters if I am in cellID
-        //if (s2geo.AmIinCellId(LocationService.Instance.latitude,
-        //            LocationService.Instance.longitude))
-        //{            
-            arpm = GetComponent<ARPlaneManager>();
-        //mLogger.Log(kTAG, "ARPlaneManager created");
-
-        if (arpm)
+        //render object at 2 meters if I am in a cellID
+        if ((geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
+                    LocationService.Instance.longitude)) != "N") // I am in some geofence for 2mt
         {
-            if (anchor == null) 
-            { 
-                mLogger.Log(kTAG, "Creating anchor attachment");
-                var oldPrefab = m_AnchorManager.anchorPrefab;
-                m_AnchorManager.anchorPrefab = prefab;
-                // create a ray (vector 2 meters from camera) and caputre (raycast) intersection with plane
-                var ray = Camera.main.ScreenPointToRay(new Vector3(200, 200, 0));
-                mLogger.Log(kTAG, "CCC");
-                if (_arRaymMn.Raycast(ray, hits, TrackableType.PlaneWithinPolygon))
+
+            //mLogger.Log(kTAG, $"I am in S2 Cell id {geoFenceCell}");
+
+            if (MyGo == null)
+            {
+                // TODO connect object and plane otherwise avoid plane detection
+                //now Im using it only for triggering the instantiation
+                if (arpm)
                 {
-                    mLogger.Log(kTAG, $"My Ray {ray} hitted the plane at {hits[0].pose}");
-                    foreach (var plane in arpm.trackables)
+                    // TODO fix altitude
+                    Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
+                    forward -= new Vector3(0, 0.5f, 0);
+                    //forward -= new Vector3(0, 1, 0);
+
+                    if (arpm.trackables.count > 0) //plane detected
                     {
-                        anchor = m_AnchorManager.AttachAnchor(plane, hits[0].pose);
-                        break;
-                    }
-                    m_AnchorManager.anchorPrefab = oldPrefab;
-                    mLogger.Log(kTAG, $"anchor created {anchor}");
+                        ARPlane firstPlane = null;
+                        foreach (var plane in arpm.trackables)
+                        {
+                            firstPlane = plane;
+                            break;
+                        }
+                        //place object at two meters
+                        MyGo = Instantiate(goToPlace, forward, //OR firstPlane.center
+                            transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
+                        // Add an ARAnchor component if it doesn't have one already.
+                        if (MyGo.GetComponent<ARAnchor>() == null)
+                        {
+                            MyGo.AddComponent<ARAnchor>();
+                        }
+                        mLogger.Log(kTAG, $"Obj {goToPlace} placed at {forward}" +
+                            $" with anchor {MyGo.GetComponent<ARAnchor>()}");
+
+                        // TODO FIX spatial audio
+                        /*
+                        AudioSource audioSource = MyGo.GetComponent<AudioSource>();
+                        if (audioSource != null)
+                            audioSource.Play(0);
+                        mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+                            $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
+                        */
+
+                    }                    
                 }
-            }
-        }
-        else
-        {
-            mLogger.Log(kTAG, "Sorry ARPlanemanager problems");
-        }
-        //}
-
-        /*
-        if (!GetPos(out Vector2 touchPos))
-            return;
-
-        if (_arRaymMn.Raycast(touchPos, hits, TrackableType.PlaneWithinPolygon))
-        {
-            var hitPose = hits[0].pose;
-            //var uiClicked = false;
-
-            // TODO FIX avoid Detect Clicks Through UI 
-                // a click takes 3-4 frames and Update() is executed once per frame
-            /*
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
-            {
-                mLogger.Log(kTAG, "EvSys detected a click on UI");
-                uiClicked = true;
-            }
-            */
-        /*
-            if (MyGo == null)// && !uiClicked)
-            {
-                //check geofence s2 cell id               
-                s2geo.AmIinGeofence(LocationService.Instance.latitude,
-                    LocationService.Instance.longitude);
-                
-                //mLogger.Log(kTAG, $"I am in S2 Cell id {currCellID}");
-
-                //_myGo = Instantiate(goToPlace, hitPose.position, hitPose.rotation) as GameObject;
-                MyGo = Instantiate(goToPlace, hitPose.position, 
-                    transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
-                mLogger.Log(kTAG, $"Obj {goToPlace} placed at {hitPose.position}");
-
-                // Add an ARAnchor component if it doesn't have one already.
-                if (MyGo.GetComponent<ARAnchor>() == null)
+                else
                 {
-                    MyGo.AddComponent<ARAnchor>();
+                    mLogger.Log(kTAG, "ARPlanemanager problems");
                 }
-                mLogger.Log(kTAG, $"My AR Anchor {MyGo.GetComponent<ARAnchor>()}");
-
-                // TODO FIX spatial audio
-                /*
-                AudioSource audioSource = MyGo.GetComponent<AudioSource>();
-                if (audioSource != null)
-                    audioSource.Play(0);
-                mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
-                    $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
-                */
-     /*       }
-    
-            else// if (!uiClicked)
-            {                
+            }
+            /*
+            else
+            {                    
                 //update object position and roation on touch
                 // TODO FIX rotation in front of camera and normal to ground
+                    
                 MyGo.transform.position = hitPose.position;
                 MyGo.transform.LookAt(Camera.main.transform, transform.up);
-                
+
                 // If animation -- restart it
                 if (MyGo.GetComponent<Animator>() != null)
                     MyGo.GetComponent<Animator>().Play("Run", -1, 0);
 
-                mLogger.Log(kTAG, $"Obj {goToPlace} placed at updated pos {hitPose.position}");
+                mLogger.Log(kTAG, $"Obj {goToPlace} updated pos {hitPose.position}");     
+                    
             }
+            */
+        }//else if if ((geoFenceCell = s2geo.AnotherID...
+    }
 
-            #region geolocation test
-
-            /*if (_fixedGo == null)
+    void InstantiateAtTwoMt()
+    {
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
+        forward -= new Vector3(0, 1, 0);
+        if (MyGo == null)
+        {
+            //place object at two meters
+            MyGo = Instantiate(goToPlace, forward, //OR firstPlane.center
+                transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
+            // Add an ARAnchor component if it doesn't have one already.
+            if (MyGo.GetComponent<ARAnchor>() == null)
             {
-                //setting init floating origin (only first time)
-                if (!mapsService.Projection.IsFloatingOriginSet)
-                {
-                    mLogger.Log(kTAG, $"My latlng pos {LocationService.Instance.CurrPos}");
-                    mapsService.InitFloatingOrigin(LocationService.Instance.CurrPos);
-                }
-
-                // TODO improve geofencing
-                if ((LocationService.Instance.latitude > minLat) &&
-                        (LocationService.Instance.latitude < maxLat) &&
-                        (LocationService.Instance.longitude > minLon) &&
-                        (LocationService.Instance.longitude < maxLon)) {
-                    mLogger.Log(kTAG, "Congratualtions!! You are in the right zone");
-
-                    fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);
-
-                    // TODO adjust altitude and rotation
-                    _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
-                    //Instantiate(goToPlace, hitPose.position,transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
-
-                    //adjust the rotation
-                    //_fixedGo.transform.Rotate(0f, 180f, 0f);
-
-                    mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
-                }
-                else
-                {
-                    mLogger.Log(kTAG, "Sorry, no ARt here...");
-                }
-
+                MyGo.AddComponent<ARAnchor>();
             }
-            else
-            {
-                // TODO I should not update the position but the rotation
-                _fixedGo.transform.position = fixedObjPos;
-            }*/
+            mLogger.Log(kTAG, $"Obj {goToPlace} placed at {forward}" +
+                $" with anchor {MyGo.GetComponent<ARAnchor>()}");
 
+            // TODO FIX spatial audio
+            /*
+            AudioSource audioSource = MyGo.GetComponent<AudioSource>();
+            if (audioSource != null)
+                audioSource.Play(0);
+            mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+                $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
+            */
+        }
+        /*
+        else
+        {                    
+            //update object position and roation on touch
+            // TODO FIX rotation in front of camera and normal to ground
 
-        //}
+            MyGo.transform.position = hitPose.position;
+            MyGo.transform.LookAt(Camera.main.transform, transform.up);
 
+            // If animation -- restart it
+            if (MyGo.GetComponent<Animator>() != null)
+                MyGo.GetComponent<Animator>().Play("Run", -1, 0);
+
+            mLogger.Log(kTAG, $"Obj {goToPlace} updated pos {hitPose.position}");     
+
+        }
+        */
     }
 }
+
+
+#region GPS placement test
+
+/*
+if (_fixedGo == null)
+{
+    //setting init floating origin (only first time)
+    if (!mapsService.Projection.IsFloatingOriginSet)
+    {
+        mLogger.Log(kTAG, $"My latlng pos {LocationService.Instance.CurrPos}");
+        mapsService.InitFloatingOrigin(LocationService.Instance.CurrPos);
+    }                
+
+    fixedObjPos = mapsService.Projection.FromLatLngToVector3(testpos);
+
+        // TODO adjust altitude and rotation
+        _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
+
+        //adjust the rotation
+        //_fixedGo.transform.Rotate(0f, 180f, 0f);
+
+        mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
+    }
+
+}
+else
+{
+    // TODO I should update something if object exists...
+    _fixedGo.transform.position = fixedObjPos;
+}
+*/
+#endregion
