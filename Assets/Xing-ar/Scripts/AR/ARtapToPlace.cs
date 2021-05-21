@@ -15,10 +15,25 @@ public class ARtapToPlace : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
 
     // Game Objects (use pulbic field for unity editor)-----------
-    public GameObject goToPlace; //obj to place with tap
+    public GameObject medusaObject; //obj to place with tap
+    public static GameObject Medusa { get; set; }
+    public GameObject chimera1Object; //obj to place with tap
+    public static GameObject Chimera1 { get; set; }
+
     //public GameObject goPOI; //obj to place with pos
     //private GameObject _fixedGo;
-    public static GameObject MyGo { get; set; }
+
+    /// <summary>
+    /// All <see cref="GameObject"/>s to be moved when the world's Floating Origin is moved.
+    /// </summary>
+    /// <remarks>
+    /// If this array is not set by calling <see cref="SetAdditionalGameObjects"/>, then this array
+    /// is initialized with <see cref="Camera.main"/> during <see cref="Awake"/>. This is so, by
+    /// default, the scene's <see cref="Camera"/> is moved when the Floating Origin is recentered,
+    /// resulting in a seamless recentering of the world that should be invisible to the user.
+    /// </remarks>
+    private GameObject[] AdditionalGameObjects;
+
     //Anchor prefab-----------
     //[SerializeField]
     //GameObject m_Prefab;
@@ -32,12 +47,17 @@ public class ARtapToPlace : MonoBehaviour
     //static List<ARRaycastHit> hits =new List<ARRaycastHit>();
 
     // LOCATION-----------
-    //private static LatLng testpos;
+    private static LatLng originMapsPos;
     //private Vector3 fixedObjPos;
     private MapsService mapsService;
     private S2Geofence s2geo;
     private string geoFenceCell;
-    
+    ///Distance in meters the Camera should move before the world's Floating Origin is reset
+    //public float FloatingOriginRange = 1;
+
+    //[Tooltip("Script for controlling Camera movement. Used to detect when the Camera has moved.")]
+    //public CameraController CameraController;
+    public Vector3 FloatingOrigin { get; private set; }
 
     // Start is called before the first frame update
     private void Start()
@@ -75,6 +95,54 @@ public class ARtapToPlace : MonoBehaviour
         //m_AnchorManager = GetComponent<ARAnchorManager>();
         arpm = GetComponent<ARPlaneManager>();
         //mLogger.Log(kTAG, "ARPlaneManager created");
+        // Store the initial position of the Camera on the ground plane.
+        FloatingOrigin = GetCameraPositionOnGroundPlane();
+        mLogger.Log(kTAG, $"My floating origin {FloatingOrigin}");
+
+        // If no additional GameObjects have been set (to be moved when the world's Floating Origin is
+        // recentered), set this array to be just Camera.main's GameObject. This is so that, by
+        // default, the scene's Camera is moved when the world is recentered, resulting in a seamless
+        // recentering of the world that should be invisible to the user.        
+        if (AdditionalGameObjects == null)
+        {
+            AdditionalGameObjects = new[] { Camera.main.gameObject };
+        }
+    }
+
+    private bool TryMoveFloatingOrigin(/*Vector3 moveAmount*/)
+    {
+        Vector3 newFloatingOrigin = GetCameraPositionOnGroundPlane();
+        float distance = Vector3.Distance(FloatingOrigin, newFloatingOrigin);
+        Debug.Log($"New Floating Origin {newFloatingOrigin} and distance {distance} " +
+            $"having a FloatingOriginRange {2.0f}");//{FloatingOriginRange}");
+        // Reset the world's Floating Origin if (and only if) the Camera has moved far enough.
+        if (distance < 2.0)//FloatingOriginRange)
+        {
+            return false;
+        }
+        // The Camera's current position is given to MapsService's MoveFloatingOrigin function,
+        // along with any GameObjects to move along with the world (which will at least be the the
+        // Camera itself). This is so that the world, the Camera, and any extra GameObjects can all be
+        // moved together, until the Camera is over the origin again. Note that the MoveFloatingOrigin
+        // function automatically moves all geometry loaded by the Maps Service.
+        Vector3 originOffset =
+            mapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
+        // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
+        // moved away from this new origin, and the world needs to be recentered again.
+        FloatingOrigin = newFloatingOrigin;
+
+        // Optionally print a debug message, saying how much the Floating Origin was moved by.
+        Debug.Log($"Floating Origin moved: world moved by {originOffset}");
+
+        return true;
+    }
+
+    private Vector3 GetCameraPositionOnGroundPlane()
+    {
+        Vector3 result = Camera.main.transform.position;
+        // Ignore the Y value since the floating origin only really makes sense on the ground plane.
+        result.y = 0;
+        return result;
     }
 
     bool GetPos(out Vector2 touchPos)
@@ -91,23 +159,38 @@ public class ARtapToPlace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //setting init floating origin (only first time)
+        if (!mapsService.Projection.IsFloatingOriginSet)
+        {
+            originMapsPos = LocationService.Instance.CurrPos;
+            mapsService.InitFloatingOrigin(originMapsPos);
+            mLogger.Log(kTAG, $"My latlng floating origin {originMapsPos}");
+        }
+
+        //TODO I need tyo know if I am moved enough
+        if (TryMoveFloatingOrigin())
+        {
+            Debug.Log("bingo y r moving");
+            return;
+        }
+
+
         //render object at 2 meters if I am in a cellID
+        // TODO different object for different geoFenceCell
         if ((geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
                     LocationService.Instance.longitude)) != "N") // I am in some geofence for 2mt
         {
 
             //mLogger.Log(kTAG, $"I am in S2 Cell id {geoFenceCell}");
 
-            if (MyGo == null)
+            if (Medusa == null)
             {
-                // TODO connect object and plane otherwise avoid plane detection
-                //now Im using it only for triggering the instantiation
+                // Im using plane detection only for triggering the instantiation
                 if (arpm)
                 {
                     // TODO fix altitude
                     Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
                     forward -= new Vector3(0, 0.5f, 0);
-                    //forward -= new Vector3(0, 1, 0);
 
                     if (arpm.trackables.count > 0) //plane detected
                     {
@@ -118,19 +201,19 @@ public class ARtapToPlace : MonoBehaviour
                             break;
                         }
                         //place object at two meters
-                        MyGo = Instantiate(goToPlace, forward, //OR firstPlane.center
+                        Medusa = Instantiate(medusaObject, forward, //OR firstPlane.center
                             transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
                         // Add an ARAnchor component if it doesn't have one already.
-                        if (MyGo.GetComponent<ARAnchor>() == null)
+                        if (Medusa.GetComponent<ARAnchor>() == null)
                         {
-                            MyGo.AddComponent<ARAnchor>();
+                            Medusa.AddComponent<ARAnchor>();
                         }
-                        mLogger.Log(kTAG, $"Obj {goToPlace} placed at {forward}" +
-                            $" with anchor {MyGo.GetComponent<ARAnchor>()}");
+                        mLogger.Log(kTAG, $"Obj {medusaObject} placed at {forward}" +
+                            $" with anchor {Medusa.GetComponent<ARAnchor>()}");
 
                         // TODO FIX spatial audio
                         /*
-                        AudioSource audioSource = MyGo.GetComponent<AudioSource>();
+                        AudioSource audioSource = Medusa.GetComponent<AudioSource>();
                         if (audioSource != null)
                             audioSource.Play(0);
                         mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
@@ -150,14 +233,14 @@ public class ARtapToPlace : MonoBehaviour
                 //update object position and roation on touch
                 // TODO FIX rotation in front of camera and normal to ground
                     
-                MyGo.transform.position = hitPose.position;
-                MyGo.transform.LookAt(Camera.main.transform, transform.up);
+                Medusa.transform.position = hitPose.position;
+                Medusa.transform.LookAt(Camera.main.transform, transform.up);
 
                 // If animation -- restart it
-                if (MyGo.GetComponent<Animator>() != null)
-                    MyGo.GetComponent<Animator>().Play("Run", -1, 0);
+                if (Medusa.GetComponent<Animator>() != null)
+                    Medusa.GetComponent<Animator>().Play("Run", -1, 0);
 
-                mLogger.Log(kTAG, $"Obj {goToPlace} updated pos {hitPose.position}");     
+                mLogger.Log(kTAG, $"Obj {medusaObject} updated pos {hitPose.position}");     
                     
             }
             */
@@ -168,22 +251,22 @@ public class ARtapToPlace : MonoBehaviour
     {
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
         forward -= new Vector3(0, 1, 0);
-        if (MyGo == null)
+        if (Medusa == null)
         {
             //place object at two meters
-            MyGo = Instantiate(goToPlace, forward, //OR firstPlane.center
+            Medusa = Instantiate(medusaObject, forward, //OR firstPlane.center
                 transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
             // Add an ARAnchor component if it doesn't have one already.
-            if (MyGo.GetComponent<ARAnchor>() == null)
+            if (Medusa.GetComponent<ARAnchor>() == null)
             {
-                MyGo.AddComponent<ARAnchor>();
+                Medusa.AddComponent<ARAnchor>();
             }
-            mLogger.Log(kTAG, $"Obj {goToPlace} placed at {forward}" +
-                $" with anchor {MyGo.GetComponent<ARAnchor>()}");
+            mLogger.Log(kTAG, $"Obj {medusaObject} placed at {forward}" +
+                $" with anchor {Medusa.GetComponent<ARAnchor>()}");
 
             // TODO FIX spatial audio
             /*
-            AudioSource audioSource = MyGo.GetComponent<AudioSource>();
+            AudioSource audioSource = Medusa.GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.Play(0);
             mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
@@ -196,17 +279,33 @@ public class ARtapToPlace : MonoBehaviour
             //update object position and roation on touch
             // TODO FIX rotation in front of camera and normal to ground
 
-            MyGo.transform.position = hitPose.position;
-            MyGo.transform.LookAt(Camera.main.transform, transform.up);
+            Medusa.transform.position = hitPose.position;
+            Medusa.transform.LookAt(Camera.main.transform, transform.up);
 
             // If animation -- restart it
-            if (MyGo.GetComponent<Animator>() != null)
-                MyGo.GetComponent<Animator>().Play("Run", -1, 0);
+            if (Medusa.GetComponent<Animator>() != null)
+                Medusa.GetComponent<Animator>().Play("Run", -1, 0);
 
-            mLogger.Log(kTAG, $"Obj {goToPlace} updated pos {hitPose.position}");     
+            mLogger.Log(kTAG, $"Obj {medusaObject} updated pos {hitPose.position}");     
 
         }
         */
+    }
+   
+    public void SetAdditionalGameObjects(ICollection<GameObject> objects)
+    {
+        // Check to see if the main Camera's GameObject is already a part of this given set of
+        // GameObjects, adding it if not and storing as the array of GameObjects to move when the
+        // world's Floating Origin is recentered.
+        GameObject cameraGameObject = Camera.main.gameObject;
+        List<GameObject> objectList = new List<GameObject>(objects);
+
+        if (!objects.Contains(cameraGameObject))
+        {
+            objectList.Add(cameraGameObject);
+        }
+
+        AdditionalGameObjects = objectList.ToArray();
     }
 }
 
