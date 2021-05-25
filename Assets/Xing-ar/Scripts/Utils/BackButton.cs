@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class BackButton : MonoBehaviour
 {
+    //LOGGER
+    private const string kTAG = "BackButton";
+    private static ILogger mLogger = Debug.unityLogger;
+    
     [SerializeField]
     GameObject m_BackButton;
     public GameObject backButton
@@ -13,6 +17,7 @@ public class BackButton : MonoBehaviour
 
     void Start()
     {
+        mLogger = new Logger(new MyLogHandler());
         if (Application.CanStreamedLevelBeLoaded("Menu"))
         {
             m_BackButton.SetActive(true);
@@ -29,9 +34,15 @@ public class BackButton : MonoBehaviour
 
     public void BackButtonPressed()
     {
-        // TODO stop location service
         if (Application.CanStreamedLevelBeLoaded("Menu"))
         {
+            //TODO check what i have to destroy in the main scene
+            if (ARobjPlacement.Medusa != null)
+            {
+                Destroy(ARobjPlacement.Medusa);
+                mLogger.Log(kTAG, $"back button pressed, " +
+                    $"obj {ARobjPlacement.Medusa} destroyed");
+            }
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
             //UnityEngine.XR.ARFoundation.LoaderUtility.Deinitialize();
         }
