@@ -15,9 +15,9 @@ public class ARobjPlacement : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
 
     // Game Objects (use pulbic field for unity editor)-----------
-    public GameObject medusaObject; //obj to place with tap
+    public GameObject medusaObject; //obj to place 
     public static GameObject Medusa { get; set; }
-    public GameObject chimera1Object; //obj to place with tap
+    public GameObject chimera1Object; //obj to place
     public static GameObject Chimera1 { get; set; }
 
     //public GameObject goPOI; //obj to place with pos
@@ -156,114 +156,80 @@ public class ARobjPlacement : MonoBehaviour
         //mLogger.Log(kTAG, "user is moving");
 
         // TODO different object for different geoFenceCell
-        // TODO delete objects not belonging to geofence 
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
                     LocationService.Instance.longitude);
 
         if (geoFenceCell == "N")                    //out of geofence
+        {
+            // TODO delete objects not belonging to geofence 
+            //mLogger.Log(kTAG, $"No target S2Cell id {geoFenceCell}");
             return;
+        }
         else
         {
-            if ((geoFenceCell == GeoFencePrevCell) && (Medusa != null))   
-                //I am in the same previous geofence and the related obj exists
-                return;
-            else        //I am in new geofence-create new obj
+            if ((geoFenceCell == GeoFencePrevCell) && (Medusa != null))
             {
-                //mLogger.Log(kTAG, $"I am in new valid S2Cell id {geoFenceCell}");
+                //I am in the same previous geofence and the related obj exists
+                //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
+                return;
+            }
+            else        //I am in new geofence->create new obj
+            {
                 GeoFencePrevCell = geoFenceCell;
                 if (Medusa == null)
                 {
-                    // Im using plane detection only for triggering the instantiation
-                    if (arpm)
-                    {
-                        // TODO fix altitude
-                        Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
-                        forward -= new Vector3(0, 0.5f, 0);
-
-                        if (arpm.trackables.count == 0)
-                            return;
-
-                        mLogger.Log(kTAG, $"planes {arpm.trackables.count}");
-                        foreach (var plane in arpm.trackables)
-                        {
-                            mLogger.Log(kTAG, "AAA");
-                            break;
-                        }
-                        //place object at two meters
-                        Medusa = Instantiate(medusaObject, forward, //OR firstPlane.center
-                                                                    //transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
-                            transform.rotation * Quaternion.identity) as GameObject;
-                        // Add an ARAnchor component if it doesn't have one already.
-                        if (Medusa.GetComponent<ARAnchor>() == null)
-                        {
-                            Medusa.AddComponent<ARAnchor>();
-                        }
-                        mLogger.Log(kTAG, $"Obj {medusaObject} placed at {forward}" +
-                            $" with anchor {Medusa.GetComponent<ARAnchor>()}");
-
-                        // TODO FIX spatial audio
-                        /*
-                        AudioSource audioSource = Medusa.GetComponent<AudioSource>();
-                        if (audioSource != null)
-                            audioSource.Play(0);
-                        mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
-                            $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
-                        */
-                        
-                        //if (arpm.trackables.count > 0) { } //plane detected
-                    }
-                    else
-                    {
-                        mLogger.Log(kTAG, "ARPlanemanager problems");
-                    }
+                    //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
+                    //TODO make instantiation a method
+                    Medusa = InstantiateAtTwoMt(this.arpm, this.medusaObject);                    
                 }
             }
         }
     }
 
-    void InstantiateAtTwoMt()
+    GameObject InstantiateAtTwoMt(ARPlaneManager arpm, GameObject objRef)
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
-        forward -= new Vector3(0, 1, 0);
-        if (Medusa == null)
+        GameObject result;
+        if (arpm)
         {
-            //place object at two meters
-            Medusa = Instantiate(medusaObject, forward, //OR firstPlane.center
-                transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
-            // Add an ARAnchor component if it doesn't have one already.
-            if (Medusa.GetComponent<ARAnchor>() == null)
+            // TODO fix altitude
+            Vector3 forward = transform.TransformDirection(Vector3.forward) * 2;
+            forward -= new Vector3(0, 0.5f, 0);
+          
+            //detect plane to trigger the placement
+            if (arpm.trackables.count == 0)
+                return null;
+            //mLogger.Log(kTAG, $"planes {arpm.trackables.count}");
+            foreach (var plane in arpm.trackables)
             {
-                Medusa.AddComponent<ARAnchor>();
+                //mLogger.Log(kTAG, "AAA");
+                break;
             }
-            mLogger.Log(kTAG, $"Obj {medusaObject} placed at {forward}" +
-                $" with anchor {Medusa.GetComponent<ARAnchor>()}");
+            //place object at two meters //OR firstPlane.center
+            result = Instantiate(objRef, forward, 
+                transform.rotation * Quaternion.identity) as GameObject;
+            // Add an ARAnchor component if it doesn't have one already
+            if (result.GetComponent<ARAnchor>() == null)
+            {
+                result.AddComponent<ARAnchor>();
+            }
+            mLogger.Log(kTAG, $"Obj {objRef} placed at {forward}" +
+                $" with anchor {result.GetComponent<ARAnchor>()}");
 
             // TODO FIX spatial audio
-            /*
-            AudioSource audioSource = Medusa.GetComponent<AudioSource>();
+            
+            AudioSource audioSource = result.GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.Play(0);
             mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
                 $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
-            */
+            
+            return result;
         }
-        /*
         else
-        {                    
-            //update object position and roation on touch
-            // TODO FIX rotation in front of camera and normal to ground
-
-            Medusa.transform.position = hitPose.position;
-            Medusa.transform.LookAt(Camera.main.transform, transform.up);
-
-            // If animation -- restart it
-            if (Medusa.GetComponent<Animator>() != null)
-                Medusa.GetComponent<Animator>().Play("Run", -1, 0);
-
-            mLogger.Log(kTAG, $"Obj {medusaObject} updated pos {hitPose.position}");     
-
+        {
+            mLogger.Log(kTAG, "ARPlanemanager problems");
+            return null;
         }
-        */
     }
    
     public void SetAdditionalGameObjects(ICollection<GameObject> objects)
@@ -282,36 +248,3 @@ public class ARobjPlacement : MonoBehaviour
         AdditionalGameObjects = objectList.ToArray();
     }
 }
-
-
-#region GPS placement test
-
-/*
-if (_fixedGo == null)
-{
-    //setting init floating origin (only first time)
-    if (!MyMapsService.Projection.IsFloatingOriginSet)
-    {
-        mLogger.Log(kTAG, $"My latlng pos {LocationService.Instance.CurrPos}");
-        MyMapsService.InitFloatingOrigin(LocationService.Instance.CurrPos);
-    }                
-
-    fixedObjPos = MyMapsService.Projection.FromLatLngToVector3(testpos);
-
-        // TODO adjust altitude and rotation
-        _fixedGo = Instantiate(goPOI, fixedObjPos, Quaternion.identity) as GameObject;
-
-        //adjust the rotation
-        //_fixedGo.transform.Rotate(0f, 180f, 0f);
-
-        mLogger.Log(kTAG, $"Obj 2 placed at {fixedObjPos}");
-    }
-
-}
-else
-{
-    // TODO I should update something if object exists...
-    _fixedGo.transform.position = fixedObjPos;
-}
-*/
-#endregion
