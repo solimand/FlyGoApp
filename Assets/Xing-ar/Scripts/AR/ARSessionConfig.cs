@@ -33,10 +33,10 @@ public class ARSessionConfig : MonoBehaviour
         // because the absence of GO instance trigger a new origin calibration
     public void ResetButtonPressed()
     {
-        if (ARobjPlacement.Medusa != null)
+        if (ARobjPlacement.AlberoMuscoloso != null)
         {
-            Destroy(ARobjPlacement.Medusa);
-            mLogger.Log(kTAG, $"obj {ARobjPlacement.Medusa} destroyed, resetting...");
+            Destroy(ARobjPlacement.AlberoMuscoloso);
+            mLogger.Log(kTAG, $"obj {ARobjPlacement.AlberoMuscoloso} destroyed, resetting...");
         }
         ARobjPlacement.GeoFencePrevCell = "";
         mLogger.Log(kTAG, "geofenceprevcell destroyed, resetting...");

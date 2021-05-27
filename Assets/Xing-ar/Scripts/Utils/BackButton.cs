@@ -37,11 +37,11 @@ public class BackButton : MonoBehaviour
         if (Application.CanStreamedLevelBeLoaded("Menu"))
         {
             //TODO check what i have to destroy in the main scene
-            if (ARobjPlacement.Medusa != null)
+            if (ARobjPlacement.AlberoMuscoloso != null)
             {
-                Destroy(ARobjPlacement.Medusa);
+                Destroy(ARobjPlacement.AlberoMuscoloso);
                 mLogger.Log(kTAG, $"back button pressed, " +
-                    $"obj {ARobjPlacement.Medusa} destroyed");
+                    $"obj {ARobjPlacement.AlberoMuscoloso} destroyed");
             }
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
             //UnityEngine.XR.ARFoundation.LoaderUtility.Deinitialize();

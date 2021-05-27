@@ -15,10 +15,10 @@ public class ARobjPlacement : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
 
     // Game Objects (use pulbic field for unity editor)-----------
-    public GameObject medusaObject; //obj to place 
-    public static GameObject Medusa { get; set; }
-    public GameObject chimera1Object; //obj to place
-    public static GameObject Chimera1 { get; set; }
+    public GameObject alberoMuscolosoObj; //obj to place 
+    public static GameObject AlberoMuscoloso { get; set; }
+    public GameObject ragnopalmaObj; //obj to place
+    public static GameObject Ragnopalma { get; set; }
 
     //public GameObject goPOI; //obj to place with pos
     //private GameObject _fixedGo;
@@ -53,12 +53,14 @@ public class ARobjPlacement : MonoBehaviour
     private S2Geofence s2geo;
     private string geoFenceCell;
     public static string GeoFencePrevCell { get; set; }
+
+    //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
     public float FloatingOriginRange = 10f;
-
     //[Tooltip("Script for controlling Camera movement. Used to detect when the Camera has moved.")]
     //public CameraController CameraController;
     public Vector3 FloatingOrigin { get; private set; }
+
 
     // Start is called before the first frame update
     private void Start()
@@ -70,7 +72,6 @@ public class ARobjPlacement : MonoBehaviour
         //Entry point Maps SDK and init initial position
         MyMapsService = GetComponent<MapsService>();
     }
-
 
     private void Awake()
     {
@@ -161,13 +162,23 @@ public class ARobjPlacement : MonoBehaviour
 
         if (geoFenceCell == "N")                    //out of geofence
         {
-            // TODO delete objects not belonging to geofence 
+            // TODO delete objects not belonging to geofence
+            if (AlberoMuscoloso != null)
+            {
+                Destroy(AlberoMuscoloso);
+                mLogger.Log(kTAG, $"obj {AlberoMuscoloso} destroyed");
+            }
+            if (Ragnopalma != null)
+            {
+                Destroy(Ragnopalma);
+                mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
+            }
             //mLogger.Log(kTAG, $"No target S2Cell id {geoFenceCell}");
             return;
         }
         else
         {
-            if ((geoFenceCell == GeoFencePrevCell) && (Medusa != null))
+            if ((geoFenceCell == GeoFencePrevCell) && (AlberoMuscoloso != null))
             {
                 //I am in the same previous geofence and the related obj exists
                 //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
@@ -176,12 +187,23 @@ public class ARobjPlacement : MonoBehaviour
             else        //I am in new geofence->create new obj
             {
                 GeoFencePrevCell = geoFenceCell;
-                if (Medusa == null)
+                if (geoFenceCell == "477fd4ee084") //alberoMuscoloso
                 {
-                    //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                    //TODO make instantiation a method
-                    Medusa = InstantiateAtTwoMt(this.arpm, this.medusaObject);                    
+                    if (AlberoMuscoloso == null)
+                    {
+                        //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
+                        AlberoMuscoloso = InstantiateAtTwoMt(this.arpm, this.alberoMuscolosoObj);
+                    }
                 }
+                else if(geoFenceCell == "477fd4ee074") //ragnopalma
+                {
+                    if (Ragnopalma == null)
+                    {
+                        //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
+                        Ragnopalma = InstantiateAtTwoMt(this.arpm, this.ragnopalmaObj);
+                    }
+                }
+                
             }
         }
     }
