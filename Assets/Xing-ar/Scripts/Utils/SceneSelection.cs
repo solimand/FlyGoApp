@@ -12,6 +12,7 @@ public class SceneSelection : MonoBehaviour
 {
     private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "SceneSelection";
+    private const string MainSceneName = "DbgARScene";
     //private GameObject dialog = null;
     private AndroidPermissionChecker apc;
     //private bool comeBackFromPermission = false;
@@ -98,6 +99,10 @@ public class SceneSelection : MonoBehaviour
         StartCoroutine(WaitDialog(Permission.ExternalStorageWrite));*/
 
         //mLogger.Log(kTAG, "control returned to scenesel");
+#endif
+#if UNITY_IOS
+        mLogger.Log(kTAG, "IOS deployment");
+        LoadScene(MainSceneName);
 #endif
     }
 
