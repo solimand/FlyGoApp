@@ -53,6 +53,7 @@ public class ARobjPlacement : MonoBehaviour
     private S2Geofence s2geo;
     private string geoFenceCell;
     public static string GeoFencePrevCell { get; set; }
+    private const int DESIRED_LVL = 20; // S2Cell precision level
 
     //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
@@ -158,7 +159,7 @@ public class ARobjPlacement : MonoBehaviour
 
         // TODO different object for different geoFenceCell
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
-                    LocationService.Instance.longitude);
+                    LocationService.Instance.longitude, DESIRED_LVL);
 
         if (geoFenceCell == "N")                    //out of geofence
         {

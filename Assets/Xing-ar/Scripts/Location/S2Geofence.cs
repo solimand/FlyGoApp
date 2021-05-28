@@ -10,7 +10,7 @@ class S2Geofence
     private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "S2Geofence";
 
-    private const int DESIRED_LVL = 20;
+    //private const int DESIRED_LVL = 20;
     //const double latTest = 44.482672;
     //const double lonTest = 11.375569;
     Dictionary<string, string[]> geofenceAreas = new Dictionary<string, string[]>();
@@ -70,20 +70,20 @@ class S2Geofence
     }
         
 
-    public string CellIdFromCoord(double lat, double lon)
+    public string CellIdFromCoord(double lat, double lon, int level)
     {
         S2LatLng s2latlon = S2LatLng.FromDegrees(lat, lon);
         S2CellId cellid = S2CellId.FromLatLng(s2latlon); //prec 30
-        S2CellId parentCellid = cellid.ParentForLevel(DESIRED_LVL); //prec desired
+        S2CellId parentCellid = cellid.ParentForLevel(level); //prec desired
         string cellidDesiredPrec = parentCellid.ToToken();
         //Debug.Log($"I am in S2 Cell id {cellidDesiredPrec} with preciosion {parentCellid.Level}");
         return cellidDesiredPrec;
     }
 
     
-    public bool AmIinGeofence(double lat, double lon)
+    public bool AmIinGeofence(double lat, double lon, int level)
     {
-        string currCell = CellIdFromCoord(lat, lon);
+        string currCell = CellIdFromCoord(lat, lon, level);
         string[] currGeofences;
 
         //accedi array con ogni fixced pos e ricevi array geofence,
@@ -104,9 +104,9 @@ class S2Geofence
         return false;
     }
 
-    public string AmIinCellId(double lat, double lon)
+    public string AmIinCellId(double lat, double lon, int level)
     {
-        string currCell = CellIdFromCoord(lat, lon);
+        string currCell = CellIdFromCoord(lat, lon, level);
         if (fixedPos2mt.Contains(currCell))
         {
             //Debug.Log($"You are in the cellid {currCell}");

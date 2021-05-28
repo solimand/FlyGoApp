@@ -12,7 +12,7 @@ public class SceneSelection : MonoBehaviour
 {
     private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "SceneSelection";
-    private const string MainSceneName = "DbgARScene";
+    private const string MainSceneName = "MainARScene";
     //private GameObject dialog = null;
     private AndroidPermissionChecker apc;
     //private bool comeBackFromPermission = false;
@@ -122,7 +122,7 @@ public class SceneSelection : MonoBehaviour
         //I have to check, decisionTaken is true also in case of permission denied
         //TODO FIX check fails in case of permission granted on rationale dialog
         if (apc.SimplyCheckPermisison(permission))
-            LoadScene("DbgARScene");
+            LoadScene(MainSceneName);
         else
             mLogger.Log(kTAG, "you need permission for this scene");
 #endif
