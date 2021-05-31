@@ -4,13 +4,11 @@ using Google.Common.Geometry;
 using System.Linq; //for ToArray()
 
 
-
 class S2Geofence
 {
     private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "S2Geofence";
 
-    //private const int DESIRED_LVL = 20;
     //const double latTest = 44.482672;
     //const double lonTest = 11.375569;
     Dictionary<string, string[]> geofenceAreas = new Dictionary<string, string[]>();
@@ -20,13 +18,14 @@ class S2Geofence
     // S2 GEOFENCING DATA
     string [] fixedPos = new string[2] { "477e2b39f45", "477e2b3a1b9" };
     //string[] fixedPos2mt = new string[6] { "477e2b3a1c1", "477e2b3a1bf", "477e2b3a1eb","477e2b3a1ed", "477e2b3a195", "477e2b3a193" };
-    string[] fixedPos2mt = new string[2] { "477fd4ee074", "477fd4ee084" };
+    string[] fixedPos2mt = new string[3] { "477e2b39f44", "477e2b398ac", "477e2b3a1bc" };
     string[,] geoFencesMatrix = new string[2, 8] {
         {"477e2b39f41", "477e2b39f43", "477e2b39f47",
             "477e2b39f49", "477e2b39f4f", "477e2b39f51", "477e2b39f5b", "477e2b39f5d"},        
         { "477e2b3a1b1", "477e2b3a1b7", "477e2b3a1bb",
             "477e2b3a1bd", "477e2b3a1bf", "477e2b3a1c1", "477e2b3a1c7", "477e2b3a1c9"}
     };
+
     
     //TODO change geofence from dictionary to struct
     private struct GeofenceRow

@@ -1,18 +1,4 @@
-APP
-    -Improve Activation Area (geofence) (instance object when I am in the area of that object)    
-    -TEST multiple permissions Camera-Storage (FIX)
-        +FIX Android Lag
-        +(not platform-dependent)
-        +Improve Rationale
-    -Permissions Apple
-    
-Graphics
-    -Avoid intercepting clicks on UI  
 
-
-ISSUEs
-    -anchor creator in session origin: null reference when instantiating object (disabled it for now)
-   
 
 ###############################################################################################
 TESTs
