@@ -20,18 +20,6 @@ public class ARobjPlacement : MonoBehaviour
     public static GameObject AlberoMuscoloso { get; set; }
     public GameObject ragnopalmaObj; //obj to place
     public static GameObject Ragnopalma { get; set; }
-    
-    // WORLD private state
-    private struct GameObjectRelated
-    {
-        public string geofence;
-        public GameObject GameObj;
-        public GameObject gameObjRef;
-    }
-    List<GameObjectRelated> myworld;
-        
-    //public GameObject goPOI; //obj to place with pos
-    //private GameObject _fixedGo;
 
     /// <summary>
     /// All <see cref="GameObject"/>s to be moved when the world's Floating Origin is moved.
@@ -43,11 +31,6 @@ public class ARobjPlacement : MonoBehaviour
     /// resulting in a seamless recentering of the world that should be invisible to the user.
     /// </remarks>
     private GameObject[] AdditionalGameObjects;
-
-    //Anchor prefab-----------
-    //[SerializeField]
-    //GameObject m_Prefab;
-    //public GameObject prefab { get; set; }
 
     // AR Classes-----------
     private ARRaycastManager _arRaymMn;
@@ -65,7 +48,9 @@ public class ARobjPlacement : MonoBehaviour
     public static string GeoFencePrevCell { get; set; }
     private const int DESIRED_LVL = 19; // S2Cell precision level
     private const string alberoCell19 = "477e2b3a1bc";
-    private const string ragnoPalmaCell19 = "xxx";
+    //private const float alberoLat = 44.483005f; private const float alberoLon = 11.375767f;
+    private const float alberoLat = 44.482630f; private const float alberoLon = 11.375155f;
+    private const string ragnoPalmaCell19 = "477e2b3bd6c";
 
     //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
@@ -73,35 +58,7 @@ public class ARobjPlacement : MonoBehaviour
     //[Tooltip("Script for controlling Camera movement. Used to detect when the Camera has moved.")]
     //public CameraController CameraController;
     public Vector3 FloatingOrigin { get; private set; }
-
-
-    /// <summary>
-    ///  initialization world: geofences and gameobject
-    /// </summary>
-    private void InitWorld()
-    {
-        // TEST
-        GameObjectRelated AlberoMuscolosoRowTest;
-        AlberoMuscolosoRowTest.geofence = "477e2b3a1bc";        
-        AlberoMuscolosoRowTest.GameObj = AlberoMuscoloso;        
-        AlberoMuscolosoRowTest.gameObjRef = alberoMuscolosoObj;
-        mLogger.Log(kTAG, "AAA");
-        myworld.Add(AlberoMuscolosoRowTest);        
-        mLogger.Log(kTAG, "Obj Albero added to conf");        
-
-        GameObjectRelated AlberoMuscolosoRow;
-        AlberoMuscolosoRow.geofence = "477e2b39f44";
-        AlberoMuscolosoRow.GameObj = AlberoMuscoloso;
-        AlberoMuscolosoRow.gameObjRef = alberoMuscolosoObj;
-        mLogger.Log(kTAG, "BBB");
-        myworld.Add(AlberoMuscolosoRow);
-
-        GameObjectRelated RagnoPalmaRow;
-        RagnoPalmaRow.geofence = "477e2b398ac";
-        RagnoPalmaRow.GameObj = Ragnopalma;
-        RagnoPalmaRow.gameObjRef = ragnopalmaObj;
-        myworld.Add(RagnoPalmaRow);
-    }
+  
 
     // Start is called before the first frame update
     private void Start()
@@ -135,73 +92,6 @@ public class ARobjPlacement : MonoBehaviour
         }
     }
 
-    private bool TryMoveFloatingOrigin(/*Vector3 moveAmount*/)
-    {
-        Vector3 newFloatingOrigin = GetCameraPositionOnGroundPlane();
-        float distance = Vector3.Distance(FloatingOrigin, newFloatingOrigin);
-        
-        // Reset the world's Floating Origin if (and only if) the Camera has moved far enough.
-        if (distance < FloatingOriginRange) //if (distance < 2.0)
-        {
-            return false;
-        }
-        // The Camera's current position is given to MapsService's MoveFloatingOrigin function,
-        // along with any GameObjects to move along with the world (which will at least be the the
-        // Camera itself). This is so that the world, the Camera, and any extra GameObjects can all be
-        // moved together, until the Camera is over the origin again. Note that the MoveFloatingOrigin
-        // function automatically moves all geometry loaded by the Maps Service.
-        Vector3 originOffset =
-            MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
-        // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
-        // moved away from this new origin, and the world needs to be recentered again.
-        FloatingOrigin = newFloatingOrigin;
-
-        // Optionally print a debug message, saying how much the Floating Origin was moved by.
-        Debug.Log($"Floating Origin moved: world moved by {originOffset}, " +
-            $"with distance {distance} and range {FloatingOriginRange}");
-
-        return true;
-    }
-
-    private Vector3 GetCameraPositionOnGroundPlane()
-    {
-        Vector3 result = Camera.main.transform.position;
-        // Ignore the Y value since the floating origin only really makes sense on the ground plane.
-        result.y = 0;
-        return result;
-    }
-
-    bool GetPos(out Vector2 touchPos)
-    {
-        if(Input.touchCount > 0)
-        {
-            touchPos = Input.GetTouch(0).position;
-            return true;
-        }
-        touchPos = default;
-        return false;
-    }
-
-    private GameObject fromGeofenceToGo(string geof)
-    {
-        foreach (GameObjectRelated gor in myworld)
-        {
-            if (gor.geofence == geof)
-                return gor.GameObj;
-        }
-        return VoidObject;
-    }
-
-    private GameObject fromGeofenceToGoObj(string geof)
-    {
-        foreach (GameObjectRelated gor in myworld)
-        {
-            if (gor.geofence == geof)
-                return gor.gameObjRef;
-        }
-        return VoidObject;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -223,19 +113,7 @@ public class ARobjPlacement : MonoBehaviour
 
         if (geoFenceCell == "N")                    //out of geofence
         {
-            // TODO delete objects not belonging to geofence
-            /*
-            foreach (GameObjectRelated gor in myworld)
-            {
-                if (gor.GameObj != null)
-                {
-                    Destroy(gor.GameObj);
-                    mLogger.Log(kTAG, $"obj {gor.GameObj} destroyed");
-                }
-            }
-            return;
-            */
-
+            // TODO delete objects not belonging to geofence            
             if (AlberoMuscoloso != null)
             {
                 Destroy(AlberoMuscoloso);
@@ -251,8 +129,6 @@ public class ARobjPlacement : MonoBehaviour
         }
         else  //In cellID
         {
-            //TODO switch-case on geofences
-            //GameObject current = fromGeofenceToGo(geoFenceCell);            
             switch (geoFenceCell)
             {
                 case alberoCell19:
@@ -268,7 +144,9 @@ public class ARobjPlacement : MonoBehaviour
                         if (AlberoMuscoloso == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                            AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
+                            //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
+                            AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
+                                alberoLat, alberoLon);
                         }
                     }
                     break;
@@ -286,7 +164,7 @@ public class ARobjPlacement : MonoBehaviour
                         if (Ragnopalma == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                            AlberoMuscoloso = InstantiateAt(this.arpm, this.ragnopalmaObj, 2);
+                            Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 10);
                         }
                     }
                     break;
@@ -294,60 +172,35 @@ public class ARobjPlacement : MonoBehaviour
                     mLogger.Log(kTAG, "ERROR Nothing to instantiate");
                     break;
             }
+        }        
+    }
 
-        }
-        /*
-            if ((geoFenceCell == GeoFencePrevCell) && (AlberoMuscoloso != null))
-            {
-                //I am in the same previous geofence and the related obj exists
-                //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
-                return;
-            }
+    private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon)
+    {
+        LatLng worldPos = new LatLng(lat, lon);
+        Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
+        unityPos -= new Vector3(0, 0.5f, 0);
+        GameObject result = Instantiate(objRef, unityPos, transform.rotation * Quaternion.identity) 
+            as GameObject;
 
-            else        //I am in new geofence->create new obj
-            {
-                
-                GeoFencePrevCell = geoFenceCell;
-                /*
-                if (current == null)
-                {
-                    //TODO different behavior
-                    current = InstantiateAt(this.arpm, fromGeofenceToGoObj(geoFenceCell));
-                }
-                */
-
-        /*
-        if (geoFenceCell == "477e2b3a1bc") //alberoMuscoloso
+        if (result.GetComponent<ARAnchor>() == null)
         {
-            if (AlberoMuscoloso == null)
-            {
-                //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj);
-            }
+            result.AddComponent<ARAnchor>();
         }
+        mLogger.Log(kTAG, $"Obj {objRef} placed at {unityPos}" +
+            $" with anchor {result.GetComponent<ARAnchor>()}");
+        
+        AudioSource audioSource = result.GetComponent<AudioSource>();
+        if (audioSource != null)
+            audioSource.Play(0);
+        mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+            $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
 
-        if (geoFenceCell == "477fd4ee084") //alberoMuscoloso
-        {
-            if (AlberoMuscoloso == null)
-            {
-                //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj);
-            }
-        }
-
-        else if(geoFenceCell == "477fd4ee074") //ragnopalma
-        {
-            if (Ragnopalma == null)
-            {
-                //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj);
-            }
-        }
-          */
+        return result;
     }
 
     //TODO altitude from ground + position related to user movement
-    GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters)
+    private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters)
     {
         GameObject result;
         if (arpm)
@@ -365,7 +218,7 @@ public class ARobjPlacement : MonoBehaviour
                 //mLogger.Log(kTAG, "AAA");
                 break;
             }
-            //place object at two meters //OR firstPlane.center
+            //place object at X meters
             result = Instantiate(objRef, forward, 
                 transform.rotation * Quaternion.identity) as GameObject;
             // Add an ARAnchor component if it doesn't have one already
@@ -376,8 +229,7 @@ public class ARobjPlacement : MonoBehaviour
             mLogger.Log(kTAG, $"Obj {objRef} placed at {forward}" +
                 $" with anchor {result.GetComponent<ARAnchor>()}");
 
-            // TODO FIX spatial audio
-            
+            // TODO FIX spatial audio            
             AudioSource audioSource = result.GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.Play(0);
@@ -408,4 +260,52 @@ public class ARobjPlacement : MonoBehaviour
 
         AdditionalGameObjects = objectList.ToArray();
     }
+
+    private Vector3 GetCameraPositionOnGroundPlane()
+    {
+        Vector3 result = Camera.main.transform.position;
+        // Ignore the Y value since the floating origin only really makes sense on the ground plane.
+        result.y = 0;
+        return result;
+    }
+
+    private bool TryMoveFloatingOrigin(/*Vector3 moveAmount*/)
+    {
+        Vector3 newFloatingOrigin = GetCameraPositionOnGroundPlane();
+        float distance = Vector3.Distance(FloatingOrigin, newFloatingOrigin);
+
+        // Reset the world's Floating Origin if (and only if) the Camera has moved far enough.
+        if (distance < FloatingOriginRange) //if (distance < 2.0)
+        {
+            return false;
+        }
+        // The Camera's current position is given to MapsService's MoveFloatingOrigin function,
+        // along with any GameObjects to move along with the world (which will at least be the the
+        // Camera itself). This is so that the world, the Camera, and any extra GameObjects can all be
+        // moved together, until the Camera is over the origin again. Note that the MoveFloatingOrigin
+        // function automatically moves all geometry loaded by the Maps Service.
+        Vector3 originOffset =
+            MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
+        // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
+        // moved away from this new origin, and the world needs to be recentered again.
+        FloatingOrigin = newFloatingOrigin;
+
+        // Optionally print a debug message, saying how much the Floating Origin was moved by.
+        Debug.Log($"Floating Origin moved: world moved by {originOffset}, " +
+            $"with distance {distance} and range {FloatingOriginRange}");
+
+        return true;
+    }
+
+    bool GetPos(out Vector2 touchPos)
+    {
+        if (Input.touchCount > 0)
+        {
+            touchPos = Input.GetTouch(0).position;
+            return true;
+        }
+        touchPos = default;
+        return false;
+    }
+
 }

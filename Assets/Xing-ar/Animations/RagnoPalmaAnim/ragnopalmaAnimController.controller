@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ragnopalmaAnimation
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -23,7 +23,7 @@ AnimatorState:
   m_Motion: {fileID: -1498010087492872569, guid: 63cba6ad1a47d407aba9c995e705f445,
     type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: speedup
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

@@ -80,7 +80,7 @@ public class SceneSelection : MonoBehaviour
     }
     */
 
-    public void DbgARButtonPressed() 
+    public void MainARButtonPressed() 
     {
 #if PLATFORM_ANDROID
         if (apc == null)
@@ -124,7 +124,7 @@ public class SceneSelection : MonoBehaviour
         if (apc.SimplyCheckPermisison(permission))
             LoadScene(MainSceneName);
         else
-            mLogger.Log(kTAG, "you need permission for this scene");
+            mLogger.Log(kTAG, $"you need {permission} for this scene");
 #endif
     }
 

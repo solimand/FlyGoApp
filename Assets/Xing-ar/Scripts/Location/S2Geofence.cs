@@ -16,56 +16,12 @@ class S2Geofence
     //string[][] values;
 
     // S2 GEOFENCING DATA
-    string [] fixedPos = new string[2] { "477e2b39f45", "477e2b3a1b9" };
-    //string[] fixedPos2mt = new string[6] { "477e2b3a1c1", "477e2b3a1bf", "477e2b3a1eb","477e2b3a1ed", "477e2b3a195", "477e2b3a193" };
-    string[] fixedPos2mt = new string[3] { "477e2b39f44", "477e2b398ac", "477e2b3a1bc" };
-    string[,] geoFencesMatrix = new string[2, 8] {
-        {"477e2b39f41", "477e2b39f43", "477e2b39f47",
-            "477e2b39f49", "477e2b39f4f", "477e2b39f51", "477e2b39f5b", "477e2b39f5d"},        
-        { "477e2b3a1b1", "477e2b3a1b7", "477e2b3a1bb",
-            "477e2b3a1bd", "477e2b3a1bf", "477e2b3a1c1", "477e2b3a1c7", "477e2b3a1c9"}
-    };
-
-    
-    //TODO change geofence from dictionary to struct
-    private struct GeofenceRow
-    {
-        string charName;
-        string geofencePlace;
-        string[] geofenceNeighbourhood;
-    }
-    private GeofenceRow[] locations;
-
-    
+    string[] fixedPos2mt = new string[3] { "477e2b3bd6c", "477e2b398ac", "477e2b3a1bc" };  
 
     public S2Geofence()
     {
         mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "Start");
-        int i = 0;
-
-        //writing geofenceAreas Dictionary
-        foreach (string currPos in fixedPos)
-        {
-            string[] value = Enumerable.Range(0, geoFencesMatrix.GetLength(1))
-                .Select(x => geoFencesMatrix[i, x])
-                .ToArray();
-            geofenceAreas.Add(currPos, value);
-            i++;
-        }
-
-
-        //writing all keys/val in array to future checks
-        keys = geofenceAreas.Keys.ToArray();
-        
-        /* DEBUG TEST Dictionary
-        values = geofenceAreas.Values.ToArray();
-        foreach (string curFixedPos in keys)
-            Debug.Log($"dictionary fixedPos pos {curFixedPos}");
-        foreach (string[] currValues in values)
-            foreach (string currValue in currValues)
-                Debug.Log($"dictionary geofence {currValue}");
-        */
+        mLogger.Log(kTAG, "Start");        
     }
         
 
@@ -79,7 +35,18 @@ class S2Geofence
         return cellidDesiredPrec;
     }
 
-    
+    public string AmIinCellId(double lat, double lon, int level)
+    {
+        string currCell = CellIdFromCoord(lat, lon, level);
+        if (fixedPos2mt.Contains(currCell))
+        {
+            //Debug.Log($"You are in the cellid {currCell}");
+            return currCell;
+        }
+        return "N";
+    }
+
+    /*
     public bool AmIinGeofence(double lat, double lon, int level)
     {
         string currCell = CellIdFromCoord(lat, lon, level);
@@ -102,16 +69,6 @@ class S2Geofence
         }
         return false;
     }
-
-    public string AmIinCellId(double lat, double lon, int level)
-    {
-        string currCell = CellIdFromCoord(lat, lon, level);
-        if (fixedPos2mt.Contains(currCell))
-        {
-            //Debug.Log($"You are in the cellid {currCell}");
-            return currCell;
-        }
-        return "N";
-    }
+    */
 }
 
