@@ -10,7 +10,7 @@ public class LocationService : MonoBehaviour
     private const string kTAG = "LocationService";
 
     public static LocationService Instance { set; get; }
-    public LatLng CurrPos { get => currPos; set => currPos = value; }
+    //public LatLng CurrPos { get => currPos; set => currPos = value; }
 
     public float latitude, longitude, altitude;
     public float horizAccuracy, vertAccuracy;
@@ -21,8 +21,8 @@ public class LocationService : MonoBehaviour
 
     //private LocationTrans locTrans = LocationTrans.GetInstance();
     //private GameObject dialog = null;
-    private LatLng currPos;
-    private bool getOrigin;
+    //private LatLng currPos;
+    //private bool getOrigin;
     //private AndroidPermissionChecker apc = null;
 
     private void Start()
@@ -97,8 +97,9 @@ public class LocationService : MonoBehaviour
         longitude = Input.location.lastData.longitude;
         altitude = Input.location.lastData.altitude;
         horizAccuracy = Input.location.lastData.horizontalAccuracy;
-        vertAccuracy = Input.location.lastData.verticalAccuracy;
+        vertAccuracy = Input.location.lastData.verticalAccuracy;        
 
+        /*
         // The first position will be the floating origin for Maps SDK
         if (!getOrigin)
         {
@@ -106,6 +107,7 @@ public class LocationService : MonoBehaviour
             mLogger.Log(kTAG, $"My origin pos {CurrPos}");
             getOrigin = true;
         }
+        */
 
         // Stop service if there is no need to query location updates continuously
         //Input.location.Stop();

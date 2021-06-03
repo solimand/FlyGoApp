@@ -4,11 +4,15 @@ using UnityEngine;
 
 public sealed class StaticLocations{
     // Allowed Geofence Areas
-    public static string[] fixedPos2mt = new string[3] { "477fd4ee07c", "477e2b398ac", "477e2b3a1bc" };  
-    
-    // TEST
-    public const float alberoLat = 44.48744696f; public const float alberoLon = 11.32981088f;
-    public const string alberoCell19 = "477fd4ee07c";
+    public static string[] fixedPos2mt = new string[3] { "477fd4ee07c", "477e2b398ac", "477e2b3a1bc" };
+
+    // TEST Facolta 
+    //public const float alberoLat = 44.48744696f; public const float alberoLon = 11.32981088f;
+    //public const string alberoCell19 = "477fd4ee07c";
+
+    // TEST HOME 44.482642 11.375178 477e2b3a1bc
+    public const float alberoLat = 44.482642f; public const float alberoLon = 11.375178f;
+    public const string alberoCell19 = "477e2b3a1bc";
 
     // ARCIERE    
     public const float ArciereLat = 44.499365736248f; public const float ArciereLon = 11.2823648750782f;

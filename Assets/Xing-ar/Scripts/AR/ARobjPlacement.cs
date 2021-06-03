@@ -98,7 +98,7 @@ public class ARobjPlacement : MonoBehaviour
         //setting init floating origin (only first time) (exit if position is 0)
         //if (LocationService.Instance.CurrPos.Lat == 0 || LocationService.Instance.CurrPos.Lng == 0) //not set yet
             //return;
-        
+        /*
         if (!MyMapsService.Projection.IsFloatingOriginSet)
         {
             if (LocationService.Instance.CurrPos.Lat == 0 || LocationService.Instance.CurrPos.Lng == 0) //not set yet
@@ -108,11 +108,7 @@ public class ARobjPlacement : MonoBehaviour
             MyMapsService.InitFloatingOrigin(originMapsPos);
             mLogger.Log(kTAG, $"My latlng floating origin {originMapsPos}");
         }
-
-        //Exit if user does not move (for first time, I have to move!)
-        //if (!TryMoveFloatingOrigin()) // TODO OR object already created...
-        //return;
-        //mLogger.Log(kTAG, "user is moving");
+        */
 
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
                     LocationService.Instance.longitude, DESIRED_LVL);
@@ -139,7 +135,7 @@ public class ARobjPlacement : MonoBehaviour
             switch (geoFenceCell)
             {
                 case StaticLocations.alberoCell19:
-                    if ((geoFenceCell == GeoFencePrevCell) && (AlberoMuscoloso != null))
+                    if (/*(geoFenceCell == GeoFencePrevCell) &&*/ (AlberoMuscoloso != null))
                     {
                         //I am in the same previous geofence and the related obj exists
                         //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
@@ -147,7 +143,7 @@ public class ARobjPlacement : MonoBehaviour
                     }
                     else
                     {
-                        GeoFencePrevCell = geoFenceCell;
+                        //GeoFencePrevCell = geoFenceCell;
                         if (AlberoMuscoloso == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
@@ -159,7 +155,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
 
                 case ragnoPalmaCell19:
-                    if ((geoFenceCell == GeoFencePrevCell) && (Ragnopalma != null))
+                    if (/*(geoFenceCell == GeoFencePrevCell) &&*/ (Ragnopalma != null))
                     {
                         //I am in the same previous geofence and the related obj exists
                         //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
@@ -167,7 +163,7 @@ public class ARobjPlacement : MonoBehaviour
                     }
                     else
                     {
-                        GeoFencePrevCell = geoFenceCell;
+                        //GeoFencePrevCell = geoFenceCell;
                         if (Ragnopalma == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
@@ -184,6 +180,14 @@ public class ARobjPlacement : MonoBehaviour
 
     private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon)
     {
+        // reset maps origin before gps instantiation
+        if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
+            return null;
+        MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude, 
+            LocationService.Instance.longitude));
+        mLogger.Log(kTAG, "My latlng floating origin updated");
+
+        // convert coordinates
         LatLng worldPos = new LatLng(lat, lon);
         Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
         unityPos -= new Vector3(0, 0.5f, 0);
