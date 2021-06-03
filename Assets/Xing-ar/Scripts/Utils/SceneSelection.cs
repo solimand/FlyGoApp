@@ -17,6 +17,7 @@ public class SceneSelection : MonoBehaviour
     private AndroidPermissionChecker apc;
     //private bool comeBackFromPermission = false;
    
+    /*
     [SerializeField]
     Scrollbar m_HorizontalScrollBar;
     public Scrollbar horizontalScrollBar
@@ -32,6 +33,7 @@ public class SceneSelection : MonoBehaviour
         get => m_VerticalScrollBar;
         set => m_VerticalScrollBar = value;
     }
+    */ 
 
     [SerializeField]
     GameObject m_AllMenu;
@@ -47,14 +49,16 @@ public class SceneSelection : MonoBehaviour
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
         apc = new AndroidPermissionChecker();
-        ScrollToStartPosition();
+        //ScrollToStartPosition();
     }
 
+    /*
     void ScrollToStartPosition()
     {
         m_HorizontalScrollBar.value = 0;
         m_VerticalScrollBar.value = 1;
     }
+    */
 
     /*
     private void OnApplicationFocus(bool focus)
