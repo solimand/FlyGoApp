@@ -9,15 +9,6 @@ class S2Geofence
     private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "S2Geofence";
 
-    //const double latTest = 44.482672;
-    //const double lonTest = 11.375569;
-    Dictionary<string, string[]> geofenceAreas = new Dictionary<string, string[]>();
-    string[] keys;
-    //string[][] values;
-
-    // S2 GEOFENCING DATA
-    string[] fixedPos2mt = new string[3] { "477e2b3bd6c", "477e2b398ac", "477e2b3a1bc" };  
-
     public S2Geofence()
     {
         mLogger = new Logger(new MyLogHandler());
@@ -38,11 +29,12 @@ class S2Geofence
     public string AmIinCellId(double lat, double lon, int level)
     {
         string currCell = CellIdFromCoord(lat, lon, level);
-        if (fixedPos2mt.Contains(currCell))
+        if (StaticLocations.fixedPos2mt.Contains(currCell))
         {
             //Debug.Log($"You are in the cellid {currCell}");
             return currCell;
         }
+        //Debug.Log($"You are in the cellid {currCell}");
         return "N";
     }
 

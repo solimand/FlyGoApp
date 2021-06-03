@@ -19,10 +19,12 @@ public class UpdateGPScamera : MonoBehaviour
     void Update()
     {
         coordinates.text = "Lat: " + LocationService.Instance.latitude.ToString() +
-            ", Lon: " + LocationService.Instance.longitude.ToString() +
-            ", Alt: " + LocationService.Instance.altitude.ToString() +
+                           ", Lon: " + LocationService.Instance.longitude.ToString() +
+                           "S2 Cell: " + ARobjPlacement.geoFenceCell;
+        /*
+            + ", Alt: " + LocationService.Instance.altitude.ToString() +
             ", horizAccuracy: " + LocationService.Instance.horizAccuracy.ToString() +
             ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString();
-            //+ ", UCS position of garage: " + LocationService.Instance.ucsTest.ToString();
+            */
     }
 }

@@ -44,12 +44,12 @@ public class ARobjPlacement : MonoBehaviour
     //private Vector3 fixedObjPos;
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
-    private string geoFenceCell;
+    public static string geoFenceCell;
     public static string GeoFencePrevCell { get; set; }
     private const int DESIRED_LVL = 19; // S2Cell precision level
-    private const string alberoCell19 = "477e2b3a1bc";
+    //private const string alberoCell19 = "477fd4ee07c";
     //private const float alberoLat = 44.483005f; private const float alberoLon = 11.375767f;
-    private const float alberoLat = 44.482630f; private const float alberoLon = 11.375155f;
+    //private const float alberoLat = 44.487467f; private const float alberoLon = 11.329513f;
     private const string ragnoPalmaCell19 = "477e2b3bd6c";
 
     //FLOATING ORIGIN-----------
@@ -80,7 +80,7 @@ public class ARobjPlacement : MonoBehaviour
         arpm = GetComponent<ARPlaneManager>();
         // Store the initial position of the Camera on the ground plane.
         FloatingOrigin = GetCameraPositionOnGroundPlane();
-        mLogger.Log(kTAG, $"My floating origin {FloatingOrigin}");
+        //mLogger.Log(kTAG, $"My floating origin {FloatingOrigin}");
 
         // If no additional GameObjects have been set (to be moved when the world's Floating Origin is
         // recentered), set this array to be just Camera.main's GameObject. This is so that, by
@@ -95,10 +95,16 @@ public class ARobjPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //setting init floating origin (only first time)
+        //setting init floating origin (only first time) (exit if position is 0)
+        //if (LocationService.Instance.CurrPos.Lat == 0 || LocationService.Instance.CurrPos.Lng == 0) //not set yet
+            //return;
+        
         if (!MyMapsService.Projection.IsFloatingOriginSet)
         {
+            if (LocationService.Instance.CurrPos.Lat == 0 || LocationService.Instance.CurrPos.Lng == 0) //not set yet
+                return;
             originMapsPos = LocationService.Instance.CurrPos;
+            //mLogger.Log(kTAG, $"My current origin position {originMapsPos}");
             MyMapsService.InitFloatingOrigin(originMapsPos);
             mLogger.Log(kTAG, $"My latlng floating origin {originMapsPos}");
         }
@@ -113,7 +119,7 @@ public class ARobjPlacement : MonoBehaviour
 
         if (geoFenceCell == "N")                    //out of geofence
         {
-            // TODO delete objects not belonging to geofence            
+            // TODO delete all objects not belonging to geofence            
             if (AlberoMuscoloso != null)
             {
                 Destroy(AlberoMuscoloso);
@@ -129,9 +135,10 @@ public class ARobjPlacement : MonoBehaviour
         }
         else  //In cellID
         {
+            // TODO delete objects not belonging to geofence
             switch (geoFenceCell)
             {
-                case alberoCell19:
+                case StaticLocations.alberoCell19:
                     if ((geoFenceCell == GeoFencePrevCell) && (AlberoMuscoloso != null))
                     {
                         //I am in the same previous geofence and the related obj exists
@@ -146,7 +153,7 @@ public class ARobjPlacement : MonoBehaviour
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
                             //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
                             AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
-                                alberoLat, alberoLon);
+                                StaticLocations.alberoLat, StaticLocations.alberoLon);
                         }
                     }
                     break;

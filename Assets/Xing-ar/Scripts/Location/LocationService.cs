@@ -99,7 +99,7 @@ public class LocationService : MonoBehaviour
         horizAccuracy = Input.location.lastData.horizontalAccuracy;
         vertAccuracy = Input.location.lastData.verticalAccuracy;
 
-        // The first position will be the floating origin for Maps SDL
+        // The first position will be the floating origin for Maps SDK
         if (!getOrigin)
         {
             CurrPos = new LatLng(latitude, longitude);
