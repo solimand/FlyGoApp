@@ -95,27 +95,12 @@ public class ARobjPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //setting init floating origin (only first time) (exit if position is 0)
-        //if (LocationService.Instance.CurrPos.Lat == 0 || LocationService.Instance.CurrPos.Lng == 0) //not set yet
-            //return;
-        /*
-        if (!MyMapsService.Projection.IsFloatingOriginSet)
-        {
-            if (LocationService.Instance.CurrPos.Lat == 0 || LocationService.Instance.CurrPos.Lng == 0) //not set yet
-                return;
-            originMapsPos = LocationService.Instance.CurrPos;
-            //mLogger.Log(kTAG, $"My current origin position {originMapsPos}");
-            MyMapsService.InitFloatingOrigin(originMapsPos);
-            mLogger.Log(kTAG, $"My latlng floating origin {originMapsPos}");
-        }
-        */
-
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
                     LocationService.Instance.longitude, DESIRED_LVL);
 
-        if (geoFenceCell == "N")                    //out of geofence
+        if (geoFenceCell == "N")    //out of geofence
         {
-            // TODO delete all objects not belonging to geofence            
+            // TODO delete all objects           
             if (AlberoMuscoloso != null)
             {
                 Destroy(AlberoMuscoloso);
@@ -135,7 +120,7 @@ public class ARobjPlacement : MonoBehaviour
             switch (geoFenceCell)
             {
                 case StaticLocations.alberoCell19:
-                    if (/*(geoFenceCell == GeoFencePrevCell) &&*/ (AlberoMuscoloso != null))
+                    if (AlberoMuscoloso != null)
                     {
                         //I am in the same previous geofence and the related obj exists
                         //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
@@ -155,7 +140,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
 
                 case ragnoPalmaCell19:
-                    if (/*(geoFenceCell == GeoFencePrevCell) &&*/ (Ragnopalma != null))
+                    if (Ragnopalma != null)
                     {
                         //I am in the same previous geofence and the related obj exists
                         //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");

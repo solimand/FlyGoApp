@@ -7,6 +7,8 @@ using UnityEngine.Android;
 
 public class LocationService : MonoBehaviour
 {
+    //LOGGER
+    private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "LocationService";
 
     public static LocationService Instance { set; get; }
@@ -16,14 +18,6 @@ public class LocationService : MonoBehaviour
     public float horizAccuracy, vertAccuracy;
     //public Vector3 ucsTest;
 
-    //LOGGER
-    private static ILogger mLogger = Debug.unityLogger;
-
-    //private LocationTrans locTrans = LocationTrans.GetInstance();
-    //private GameObject dialog = null;
-    //private LatLng currPos;
-    //private bool getOrigin;
-    //private AndroidPermissionChecker apc = null;
 
     private void Start()
     {
