@@ -293,6 +293,8 @@ public class ARobjPlacement : MonoBehaviour
         // function automatically moves all geometry loaded by the Maps Service.
         Vector3 originOffset =
             MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
+            //MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
+                //LocationService.Instance.longitude), AdditionalGameObjects);
         // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
         // moved away from this new origin, and the world needs to be recentered again.
         FloatingOrigin = newFloatingOrigin;
