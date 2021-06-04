@@ -9,14 +9,12 @@ public class ARSessionConfig : MonoBehaviour
     private const string kTAG = "ARSessionConfig";
     private static ILogger mLogger = Debug.unityLogger;
 
-    // Start is called before the first frame update
     void Start()
     {
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
     }
 
-    // Update is called once per frame
     void Update()
     {
         // UTILS - the session is in initializing during first and subsequent inits (eg reset)
@@ -33,12 +31,13 @@ public class ARSessionConfig : MonoBehaviour
         // because the absence of GO instance trigger a new origin calibration
     public void ResetButtonPressed()
     {
+        // TODO destroy all gameobjects
         if (ARobjPlacement.AlberoMuscoloso != null)
         {
             Destroy(ARobjPlacement.AlberoMuscoloso);
             mLogger.Log(kTAG, $"obj {ARobjPlacement.AlberoMuscoloso} destroyed, resetting...");
         }
-        ARobjPlacement.GeoFencePrevCell = "";
+        //ARobjPlacement.GeoFencePrevCell = "";
         mLogger.Log(kTAG, "geofenceprevcell destroyed, resetting...");
 
         ARSession arSess = GetComponent<ARSession>();

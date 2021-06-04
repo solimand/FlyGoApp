@@ -62,4 +62,44 @@ public sealed class StaticLocations{
     public const int MedusaDist = 10;
     public const int MedusaAlt = 3;
     public const bool MedusaFront = false;
+
+    // CHIMERA 2
+    // SPIRITO FUOCO
+    // CHIMERA 3
+    // SERPENTE PIETRA
+    // BUDDHA
+
+
+    /*
+     * Chimera 1
+    •    Coordinate: 44.5046344356359, 11.2910401448607
+    •    Altitudine: non vola 
+    •    Distanza: appare a 30 m
+    •    Comportamento: Non si gira se l’utente gli gira attorno
+
+spirito di fuoco
+    •    Coordinate: 44.4980892012309, 11.2794315442443
+    •    Altitudine: vola a 3m 
+    •    Distanza: appare a 20-30m
+    •    Comportamento: Non si gira se l’utente gli gira attorno
+
+Chimera 3
+    •    Coordinate: 44.496118145665, 11.2779060378671
+    •    Altitudine: non vola 
+    •    Distanza: appare a 15 m
+    •    Comportamento: si gira se l’utente gli gira attorno mantenendo la frontalità
+
+serpente di pietra
+    •    Coordinate: 44.4971220961484, 11.2771144509315
+    •    Altitudine: vola  a 2-3 m 
+    •    Distanza: appare a 10 m
+    •    Comportamento: si gira se l’utente gli gira attorno mantenendo la frontalità
+
+BUDDHA
+    •    Coordinate: ???
+    •    Altitudine: vola a 5 m 
+    •    Distanza: appare a 10 m
+    •    Comportamento: Non si gira se l’utente gli gira attorno
+
+     */
 }

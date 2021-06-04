@@ -8,20 +8,18 @@ public class UpdateGPScamera : MonoBehaviour
     public Text coordinates;
 
     /*
-    // Start is called before the first frame update
     void Start()
     {
         
     }
     */
 
-    // Update is called once per frame
     void Update()
     {
         coordinates.text = "Lat: " + LocationService.Instance.latitude.ToString() +
                            ", Lon: " + LocationService.Instance.longitude.ToString() +
                            "S2 Cell: " + ARobjPlacement.geoFenceCell;
-        /*
+            /*
             + ", Alt: " + LocationService.Instance.altitude.ToString() +
             ", horizAccuracy: " + LocationService.Instance.horizAccuracy.ToString() +
             ", horizAccuracy: " + LocationService.Instance.vertAccuracy.ToString();

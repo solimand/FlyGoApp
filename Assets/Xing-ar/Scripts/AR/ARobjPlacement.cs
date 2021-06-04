@@ -45,11 +45,8 @@ public class ARobjPlacement : MonoBehaviour
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
     public static string geoFenceCell;
-    public static string GeoFencePrevCell { get; set; }
+    //public static string GeoFencePrevCell { get; set; }
     private const int DESIRED_LVL = 19; // S2Cell precision level
-    //private const string alberoCell19 = "477fd4ee07c";
-    //private const float alberoLat = 44.483005f; private const float alberoLon = 11.375767f;
-    //private const float alberoLat = 44.487467f; private const float alberoLon = 11.329513f;
     private const string ragnoPalmaCell19 = "477e2b3bd6c";
 
     //FLOATING ORIGIN-----------
@@ -66,7 +63,7 @@ public class ARobjPlacement : MonoBehaviour
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
         s2geo = new S2Geofence();
-        GeoFencePrevCell = "";
+        //GeoFencePrevCell = "";
         //Entry point Maps SDK and init initial position
         MyMapsService = GetComponent<MapsService>();
         //InitWorld();

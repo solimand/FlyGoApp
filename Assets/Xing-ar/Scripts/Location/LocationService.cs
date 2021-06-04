@@ -16,8 +16,6 @@ public class LocationService : MonoBehaviour
 
     public float latitude, longitude, altitude;
     public float horizAccuracy, vertAccuracy;
-    //public Vector3 ucsTest;
-
 
     private void Start()
     {
@@ -92,16 +90,6 @@ public class LocationService : MonoBehaviour
         altitude = Input.location.lastData.altitude;
         horizAccuracy = Input.location.lastData.horizontalAccuracy;
         vertAccuracy = Input.location.lastData.verticalAccuracy;        
-
-        /*
-        // The first position will be the floating origin for Maps SDK
-        if (!getOrigin)
-        {
-            CurrPos = new LatLng(latitude, longitude);
-            mLogger.Log(kTAG, $"My origin pos {CurrPos}");
-            getOrigin = true;
-        }
-        */
 
         // Stop service if there is no need to query location updates continuously
         //Input.location.Stop();

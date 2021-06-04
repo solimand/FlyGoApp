@@ -3,7 +3,6 @@ using UnityEngine;
 using Google.Common.Geometry;
 using System.Linq; //for ToArray()
 
-
 class S2Geofence
 {
     private static ILogger mLogger = Debug.unityLogger;
