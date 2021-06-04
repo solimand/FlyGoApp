@@ -51,11 +51,12 @@ public class ARobjPlacement : MonoBehaviour
 
     //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
-    public float FloatingOriginRange = 10f;
+    public float FloatingOriginRange = 2f;
     //[Tooltip("Script for controlling Camera movement. Used to detect when the Camera has moved.")]
     //public CameraController CameraController;
     public Vector3 FloatingOrigin { get; private set; }
-  
+
+    int frameCounter;
 
     // Start is called before the first frame update
     private void Start()
@@ -92,6 +93,10 @@ public class ARobjPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*mLogger.Log(kTAG, $"My current location lat {LocationService.Instance.latitude}" +
+            $" lon {LocationService.Instance.longitude}" +
+            $" S2cell {s2geo.CellIdFromCoord(LocationService.Instance.latitude, LocationService.Instance.longitude,19)}");*/
+
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
                     LocationService.Instance.longitude, DESIRED_LVL);
 
@@ -165,9 +170,18 @@ public class ARobjPlacement : MonoBehaviour
         // reset maps origin before gps instantiation
         if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
             return null;
-        MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude, 
+
+        // set float origin 
+        if (!MyMapsService.Projection.IsFloatingOriginSet)
+        {
+            MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
             LocationService.Instance.longitude));
-        mLogger.Log(kTAG, "My latlng floating origin updated");
+        }
+        else
+        {
+            TryMoveFloatingOrigin();
+        }
+        //mLogger.Log(kTAG, "My latlng floating origin updated");
 
         // convert coordinates
         LatLng worldPos = new LatLng(lat, lon);
@@ -284,7 +298,7 @@ public class ARobjPlacement : MonoBehaviour
         FloatingOrigin = newFloatingOrigin;
 
         // Optionally print a debug message, saying how much the Floating Origin was moved by.
-        Debug.Log($"Floating Origin moved: world moved by {originOffset}, " +
+        mLogger.Log(kTAG, $"Floating Origin moved: world moved by {originOffset}, " +
             $"with distance {distance} and range {FloatingOriginRange}");
 
         return true;
