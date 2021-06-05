@@ -601,6 +601,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alberoMuscolosoObj: {fileID: 1349417274}
   ragnopalmaObj: {fileID: 1349417274}
+  arciereObj: {fileID: 0}
+  chimeraObj: {fileID: 0}
+  chimera2Obj: {fileID: 0}
+  chimera3Obj: {fileID: 0}
+  scagliaPietraObj: {fileID: 0}
+  scagliaPietra2Obj: {fileID: 0}
+  pietreForateObj: {fileID: 0}
+  medusaObj: {fileID: 0}
+  spiritoFuocoObj: {fileID: 0}
+  serpentePietraObj: {fileID: 0}
+  buddhaObj: {fileID: 0}
   FloatingOriginRange: 10
 --- !u!114 &388525037
 MonoBehaviour:

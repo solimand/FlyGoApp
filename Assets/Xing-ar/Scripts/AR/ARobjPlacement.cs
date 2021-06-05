@@ -15,11 +15,32 @@ public class ARobjPlacement : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
 
     // Game Objects (use pulbic field for unity editor)-----------
-    private GameObject VoidObject;
     public GameObject alberoMuscolosoObj; //obj to place 
     public static GameObject AlberoMuscoloso { get; set; }
-    public GameObject ragnopalmaObj; //obj to place
+    public GameObject ragnopalmaObj;
     public static GameObject Ragnopalma { get; set; }
+    public GameObject arciereObj;
+    public static GameObject Arciere { get; set; }
+    public GameObject chimeraObj;
+    public static GameObject Chimera { get; set; }
+    public GameObject chimera2Obj;
+    public static GameObject Chimera2 { get; set; }
+    public GameObject chimera3Obj;
+    public static GameObject Chimera3 { get; set; }
+    public GameObject scagliaPietraObj;
+    public static GameObject ScagliaPietra { get; set; }
+    public GameObject scagliaPietra2Obj;
+    public static GameObject ScagliaPietra2 { get; set; }
+    public GameObject pietreForateObj;
+    public static GameObject PietreForate { get; set; }
+    public GameObject medusaObj;
+    public static GameObject Medusa { get; set; }
+    public GameObject spiritoFuocoObj;
+    public static GameObject SpiritoFuoco { get; set; }
+    public GameObject serpentePietraObj;
+    public static GameObject SerpentePietra { get; set; }
+    public GameObject buddhaObj;
+    public static GameObject Buddha { get; set; }
 
     /// <summary>
     /// All <see cref="GameObject"/>s to be moved when the world's Floating Origin is moved.
@@ -40,14 +61,11 @@ public class ARobjPlacement : MonoBehaviour
     //static List<ARRaycastHit> hits =new List<ARRaycastHit>();
 
     // LOCATION-----------
-    private static LatLng originMapsPos;
-    //private Vector3 fixedObjPos;
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
     public static string geoFenceCell;
     //public static string GeoFencePrevCell { get; set; }
     private const int DESIRED_LVL = 19; // S2Cell precision level
-    private const string ragnoPalmaCell19 = "477e2b3bd6c";
 
     //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
@@ -67,6 +85,7 @@ public class ARobjPlacement : MonoBehaviour
         //GeoFencePrevCell = "";
         //Entry point Maps SDK and init initial position
         MyMapsService = GetComponent<MapsService>();
+        frameCounter = 0;
         //InitWorld();
     }
 
@@ -93,6 +112,12 @@ public class ARobjPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (frameCounter < 60) //slow down, do nothing for 60 frames
+        {
+            frameCounter++;
+            return;
+        }
+
         /*mLogger.Log(kTAG, $"My current location lat {LocationService.Instance.latitude}" +
             $" lon {LocationService.Instance.longitude}" +
             $" S2cell {s2geo.CellIdFromCoord(LocationService.Instance.latitude, LocationService.Instance.longitude,19)}");*/
@@ -102,7 +127,9 @@ public class ARobjPlacement : MonoBehaviour
 
         if (geoFenceCell == "N")    //out of geofence
         {
-            // TODO delete all objects           
+            // TODO delete all objects
+            // dev two methods: 1)del all objects except one, 2)del all obj except one
+            /*
             if (AlberoMuscoloso != null)
             {
                 Destroy(AlberoMuscoloso);
@@ -114,17 +141,20 @@ public class ARobjPlacement : MonoBehaviour
                 mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
             }
             //mLogger.Log(kTAG, $"No target S2Cell id {geoFenceCell}");
+            */
+            DestroyAllObj();
             return;
         }
         else  //In cellID
         {
-            // TODO delete objects not belonging to geofence
+            // TODO method for deleting all objects except one
             switch (geoFenceCell)
             {
+                // TODO update rotation in case of Front==true
                 case StaticLocations.alberoCell19:
                     if (AlberoMuscoloso != null)
                     {
-                        //I am in the same previous geofence and the related obj exists
+                        //I am in the same previous geofence and the related obj exists                        
                         //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
                         return;
                     }
@@ -141,7 +171,7 @@ public class ARobjPlacement : MonoBehaviour
                     }
                     break;
 
-                case ragnoPalmaCell19:
+                case StaticLocations.ragnoCell19:
                     if (Ragnopalma != null)
                     {
                         //I am in the same previous geofence and the related obj exists
@@ -154,7 +184,7 @@ public class ARobjPlacement : MonoBehaviour
                         if (Ragnopalma == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                            Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 10);
+                            Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 3);
                         }
                     }
                     break;
@@ -165,6 +195,74 @@ public class ARobjPlacement : MonoBehaviour
         }        
     }
 
+    private void DestroyAllObj()
+    {
+        if (AlberoMuscoloso != null)
+        {
+            Destroy(AlberoMuscoloso);
+            mLogger.Log(kTAG, $"obj {AlberoMuscoloso} destroyed");
+        }
+        if (Ragnopalma != null)
+        {
+            Destroy(Ragnopalma);
+            mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
+        }
+        if (SerpentePietra != null)
+        {
+            Destroy(SerpentePietra);
+            mLogger.Log(kTAG, $"obj {SerpentePietra} destroyed");
+        }
+        if (Buddha != null)
+        {
+            Destroy(Buddha);
+            mLogger.Log(kTAG, $"obj {Buddha} destroyed");
+        }
+        if (Chimera != null)
+        {
+            Destroy(Chimera);
+            mLogger.Log(kTAG, $"obj {Chimera} destroyed");
+        }
+        if (Chimera2 != null)
+        {
+            Destroy(Chimera2);
+            mLogger.Log(kTAG, $"obj {Chimera2} destroyed");
+        }
+        if (Chimera3 != null)
+        {
+            Destroy(Chimera3);
+            mLogger.Log(kTAG, $"obj {Chimera3} destroyed");
+        }
+        if (SpiritoFuoco != null)
+        {
+            Destroy(SpiritoFuoco);
+            mLogger.Log(kTAG, $"obj {SpiritoFuoco} destroyed");
+        }
+        if (Medusa != null)
+        {
+            Destroy(Medusa);
+            mLogger.Log(kTAG, $"obj {Medusa} destroyed");
+        }
+        if (ScagliaPietra != null)
+        {
+            Destroy(ScagliaPietra);
+            mLogger.Log(kTAG, $"obj {ScagliaPietra} destroyed");
+        }
+        if (ScagliaPietra2 != null)
+        {
+            Destroy(ScagliaPietra2);
+            mLogger.Log(kTAG, $"obj {ScagliaPietra2} destroyed");
+        }
+        if (PietreForate != null)
+        {
+            Destroy(PietreForate);
+            mLogger.Log(kTAG, $"obj {PietreForate} destroyed");
+        }
+        if (Arciere != null)
+        {
+            Destroy(Arciere);
+            mLogger.Log(kTAG, $"obj {Arciere} destroyed");
+        }
+    }        
     private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon)
     {
         // reset maps origin before gps instantiation
