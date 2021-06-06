@@ -32,6 +32,17 @@ public class BackButton : MonoBehaviour
         }
     }
 
+    public void ReloadButtonPressed()
+    {
+        if (Application.CanStreamedLevelBeLoaded("MainARScene"))
+        {
+            ARobjPlacement.DestroyAllObj();
+            mLogger.Log(kTAG, "all object destroyed, reloading...");
+
+            SceneManager.LoadScene("MainARScene", LoadSceneMode.Single);
+        }
+    }
+
     public void BackButtonPressed()
     {
         if (Application.CanStreamedLevelBeLoaded("Menu"))

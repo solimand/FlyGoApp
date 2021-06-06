@@ -244,7 +244,8 @@ public class ARobjPlacement : MonoBehaviour
             mLogger.Log(kTAG, $"obj {Arciere} destroyed");
         }
     }
-    private void DestroyAllObj()
+
+    public static void DestroyAllObj()
     {
         if (AlberoMuscoloso != null)
         {

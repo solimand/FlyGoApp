@@ -32,23 +32,6 @@ public class LocationService : MonoBehaviour
     private const float UPDATE_TIME = 5f;
 
     /*
-    private void Start()
-    {
-        Instance = this;
-        mLogger = new Logger(new MyLogHandler());
-        mLogger.Log(kTAG, "Start.");
-
-        //apc = new AndroidPermissionChecker();
-        //apc.AskAndroidPermission();
-
-        //Do not destroy the target Object when loading a new Scene.
-        //DontDestroyOnLoad(gameObject);
-
-        StartCoroutine(StartLocationService());
-    }
-    */
-
-    /*
     void OnGUI()
     {
         if (apc == null)
@@ -70,7 +53,6 @@ public class LocationService : MonoBehaviour
         //apc.AskAndroidPermission();
         //Do not destroy the target Object when loading a new Scene.
         //DontDestroyOnLoad(gameObject);
-
 
         // First, check if user has location service enabled
         if (!Input.location.isEnabledByUser)

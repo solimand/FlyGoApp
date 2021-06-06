@@ -31,14 +31,8 @@ public class ARSessionConfig : MonoBehaviour
         // because the absence of GO instance trigger a new origin calibration
     public void ResetButtonPressed()
     {
-        // TODO destroy all gameobjects
-        if (ARobjPlacement.AlberoMuscoloso != null)
-        {
-            Destroy(ARobjPlacement.AlberoMuscoloso);
-            mLogger.Log(kTAG, $"obj {ARobjPlacement.AlberoMuscoloso} destroyed, resetting...");
-        }
-        //ARobjPlacement.GeoFencePrevCell = "";
-        mLogger.Log(kTAG, "geofenceprevcell destroyed, resetting...");
+        ARobjPlacement.DestroyAllObj();
+        mLogger.Log(kTAG, "all object destroyed, resetting...");
 
         ARSession arSess = GetComponent<ARSession>();
         arSess.Reset();
