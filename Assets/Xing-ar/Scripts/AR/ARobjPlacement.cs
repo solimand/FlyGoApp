@@ -64,7 +64,6 @@ public class ARobjPlacement : MonoBehaviour
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
     public static string geoFenceCell;
-    //public static string GeoFencePrevCell { get; set; }
     private const int DESIRED_LVL = 19; // S2Cell precision level
 
     //FLOATING ORIGIN-----------
@@ -82,7 +81,6 @@ public class ARobjPlacement : MonoBehaviour
         mLogger = new Logger(new MyLogHandler());
         mLogger.Log(kTAG, "Start");
         s2geo = new S2Geofence();
-        //GeoFencePrevCell = "";
         //Entry point Maps SDK and init initial position
         MyMapsService = GetComponent<MapsService>();
         frameCounter = 0;
@@ -126,28 +124,12 @@ public class ARobjPlacement : MonoBehaviour
                     LocationService.Instance.longitude, DESIRED_LVL);
 
         if (geoFenceCell == "N")    //out of geofence
-        {
-            // TODO delete all objects
-            // dev two methods: 1)del all objects except one, 2)del all obj except one
-            /*
-            if (AlberoMuscoloso != null)
-            {
-                Destroy(AlberoMuscoloso);
-                mLogger.Log(kTAG, $"obj {AlberoMuscoloso} destroyed");
-            }
-            if (Ragnopalma != null)
-            {
-                Destroy(Ragnopalma);
-                mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
-            }
-            //mLogger.Log(kTAG, $"No target S2Cell id {geoFenceCell}");
-            */
+        {            
             DestroyAllObj();
             return;
         }
         else  //In cellID
         {
-            // TODO method for deleting all objects except one
             switch (geoFenceCell)
             {
                 // TODO update rotation in case of Front==true
@@ -160,13 +142,13 @@ public class ARobjPlacement : MonoBehaviour
                     }
                     else
                     {
-                        //GeoFencePrevCell = geoFenceCell;
                         if (AlberoMuscoloso == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
                             //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
                             AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
                                 StaticLocations.alberoLat, StaticLocations.alberoLon);
+                            DestroyAllObjExceptOne(AlberoMuscoloso);
                         }
                     }
                     break;
@@ -180,7 +162,6 @@ public class ARobjPlacement : MonoBehaviour
                     }
                     else
                     {
-                        //GeoFencePrevCell = geoFenceCell;
                         if (Ragnopalma == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
@@ -195,6 +176,74 @@ public class ARobjPlacement : MonoBehaviour
         }        
     }
 
+    private void DestroyAllObjExceptOne(GameObject goToSave)
+    {
+        if (AlberoMuscoloso != null && AlberoMuscoloso != goToSave)
+        {
+            Destroy(AlberoMuscoloso);
+            mLogger.Log(kTAG, $"obj {AlberoMuscoloso} destroyed");
+        }
+        if (Ragnopalma != null && Ragnopalma != goToSave)
+        {
+            Destroy(Ragnopalma);
+            mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
+        }
+        if (SerpentePietra != null && SerpentePietra != goToSave)
+        {
+            Destroy(SerpentePietra);
+            mLogger.Log(kTAG, $"obj {SerpentePietra} destroyed");
+        }
+        if (Buddha != null)
+        {
+            Destroy(Buddha);
+            mLogger.Log(kTAG, $"obj {Buddha} destroyed");
+        }
+        if (Chimera != null)
+        {
+            Destroy(Chimera);
+            mLogger.Log(kTAG, $"obj {Chimera} destroyed");
+        }
+        if (Chimera2 != null)
+        {
+            Destroy(Chimera2);
+            mLogger.Log(kTAG, $"obj {Chimera2} destroyed");
+        }
+        if (Chimera3 != null)
+        {
+            Destroy(Chimera3);
+            mLogger.Log(kTAG, $"obj {Chimera3} destroyed");
+        }
+        if (SpiritoFuoco != null)
+        {
+            Destroy(SpiritoFuoco);
+            mLogger.Log(kTAG, $"obj {SpiritoFuoco} destroyed");
+        }
+        if (Medusa != null)
+        {
+            Destroy(Medusa);
+            mLogger.Log(kTAG, $"obj {Medusa} destroyed");
+        }
+        if (ScagliaPietra != null)
+        {
+            Destroy(ScagliaPietra);
+            mLogger.Log(kTAG, $"obj {ScagliaPietra} destroyed");
+        }
+        if (ScagliaPietra2 != null)
+        {
+            Destroy(ScagliaPietra2);
+            mLogger.Log(kTAG, $"obj {ScagliaPietra2} destroyed");
+        }
+        if (PietreForate != null)
+        {
+            Destroy(PietreForate);
+            mLogger.Log(kTAG, $"obj {PietreForate} destroyed");
+        }
+        if (Arciere != null)
+        {
+            Destroy(Arciere);
+            mLogger.Log(kTAG, $"obj {Arciere} destroyed");
+        }
+    }
     private void DestroyAllObj()
     {
         if (AlberoMuscoloso != null)
