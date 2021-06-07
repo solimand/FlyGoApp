@@ -64,7 +64,7 @@ public class ARobjPlacement : MonoBehaviour
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
     public static string geoFenceCell;
-    private const int DESIRED_LVL = 19; // S2Cell precision level
+    private const int DESIRED_LVL = 18; // S2Cell precision level
 
     //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
@@ -134,6 +134,16 @@ public class ARobjPlacement : MonoBehaviour
             {
                 // TODO update rotation in case of Front==true
                 case StaticLocations.alberoCell19:
+                    if (AlberoMuscoloso == null)
+                    {
+                        //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
+                        //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
+                        AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
+                            StaticLocations.alberoLat, StaticLocations.alberoLon);
+                        DestroyAllObjExceptOne(AlberoMuscoloso);
+                    }
+
+                    /*
                     if (AlberoMuscoloso != null)
                     {
                         //I am in the same previous geofence and the related obj exists                        
@@ -151,9 +161,17 @@ public class ARobjPlacement : MonoBehaviour
                             DestroyAllObjExceptOne(AlberoMuscoloso);
                         }
                     }
+                    */
                     break;
 
                 case StaticLocations.ragnoCell19:
+                    if (Ragnopalma == null)
+                    {
+                        //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
+                        Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
+                        DestroyAllObjExceptOne(Ragnopalma);
+                    }
+                    /*
                     if (Ragnopalma != null)
                     {
                         //I am in the same previous geofence and the related obj exists
@@ -170,6 +188,7 @@ public class ARobjPlacement : MonoBehaviour
 
                         }
                     }
+                    */
                     break;
                 case StaticLocations.AlberoMuscolosoCell19:
                     break;

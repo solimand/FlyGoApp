@@ -15,7 +15,7 @@ class S2Geofence
     }
         
 
-    public string CellIdFromCoord(double lat, double lon, int level)
+    public static string CellIdFromCoord(double lat, double lon, int level)
     {
         S2LatLng s2latlon = S2LatLng.FromDegrees(lat, lon);
         S2CellId cellid = S2CellId.FromLatLng(s2latlon); //prec 30
