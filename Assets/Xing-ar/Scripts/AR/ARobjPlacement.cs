@@ -165,9 +165,35 @@ public class ARobjPlacement : MonoBehaviour
                         if (Ragnopalma == null)
                         {
                             //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                            Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 3);
+                            Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
+                            DestroyAllObjExceptOne(Ragnopalma);
+
                         }
                     }
+                    break;
+                case StaticLocations.AlberoMuscolosoCell19:
+                    break;
+                case StaticLocations.ArciereCell19:
+                    break;
+                case StaticLocations.ChimeraCell19:
+                    break;
+                case StaticLocations.Chimera2Cell19:
+                    break;
+                case StaticLocations.Chimera3Cell19:
+                    break;
+                case StaticLocations.ScagliaPietraCell19:
+                    break;
+                case StaticLocations.ScagliaPietra2Cell19:
+                    break;
+                case StaticLocations.PietreForateCell19:
+                    break;
+                case StaticLocations.MedusaCell19:
+                    break;
+                case StaticLocations.SpiritoFuocoCell19:
+                    break;
+                case StaticLocations.SerpentePietraCell19:
+                    break;
+                case StaticLocations.BuddhaCell19:
                     break;
                 default:
                     mLogger.Log(kTAG, "ERROR Nothing to instantiate");
@@ -193,52 +219,52 @@ public class ARobjPlacement : MonoBehaviour
             Destroy(SerpentePietra);
             mLogger.Log(kTAG, $"obj {SerpentePietra} destroyed");
         }
-        if (Buddha != null)
+        if (Buddha != null && Buddha != goToSave)
         {
             Destroy(Buddha);
             mLogger.Log(kTAG, $"obj {Buddha} destroyed");
         }
-        if (Chimera != null)
+        if (Chimera != null && Chimera != goToSave)
         {
             Destroy(Chimera);
             mLogger.Log(kTAG, $"obj {Chimera} destroyed");
         }
-        if (Chimera2 != null)
+        if (Chimera2 != null && Chimera2 != goToSave)
         {
             Destroy(Chimera2);
             mLogger.Log(kTAG, $"obj {Chimera2} destroyed");
         }
-        if (Chimera3 != null)
+        if (Chimera3 != null && Chimera3 != goToSave)
         {
             Destroy(Chimera3);
             mLogger.Log(kTAG, $"obj {Chimera3} destroyed");
         }
-        if (SpiritoFuoco != null)
+        if (SpiritoFuoco != null && SpiritoFuoco != goToSave)
         {
             Destroy(SpiritoFuoco);
             mLogger.Log(kTAG, $"obj {SpiritoFuoco} destroyed");
         }
-        if (Medusa != null)
+        if (Medusa != null && Medusa != goToSave)
         {
             Destroy(Medusa);
             mLogger.Log(kTAG, $"obj {Medusa} destroyed");
         }
-        if (ScagliaPietra != null)
+        if (ScagliaPietra != null && ScagliaPietra != goToSave)
         {
             Destroy(ScagliaPietra);
             mLogger.Log(kTAG, $"obj {ScagliaPietra} destroyed");
         }
-        if (ScagliaPietra2 != null)
+        if (ScagliaPietra2 != null && ScagliaPietra2 != goToSave)
         {
             Destroy(ScagliaPietra2);
             mLogger.Log(kTAG, $"obj {ScagliaPietra2} destroyed");
         }
-        if (PietreForate != null)
+        if (PietreForate != null && PietreForate != goToSave)
         {
             Destroy(PietreForate);
             mLogger.Log(kTAG, $"obj {PietreForate} destroyed");
         }
-        if (Arciere != null)
+        if (Arciere != null && Arciere != goToSave)
         {
             Destroy(Arciere);
             mLogger.Log(kTAG, $"obj {Arciere} destroyed");
@@ -355,14 +381,15 @@ public class ARobjPlacement : MonoBehaviour
     }
 
     //TODO altitude from ground + position related to user movement
-    private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters)
+    private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, int altitude)
     {
         GameObject result;
         if (arpm)
         {
             // TODO fix altitude
             Vector3 forward = transform.TransformDirection(Vector3.forward) * meters;
-            forward -= new Vector3(0, 0.5f, 0);
+            //forward -= new Vector3(0, 0.5f, 0);
+            forward -= new Vector3(0, altitude, 0);
           
             //detect plane to trigger the placement
             if (arpm.trackables.count == 0)

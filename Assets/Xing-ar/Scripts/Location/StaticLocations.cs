@@ -7,17 +7,17 @@ public sealed class StaticLocations
     // Allowed Geofence Areas
     public static string[] fixedPos2mt = new string[3] { "477fd4ee07c", "477e2b398ac", "477e2b3a1bc" };
 
-    // TEST Facolta 
-    //public const float alberoLat = 44.48744696f; public const float alberoLon = 11.32981088f;
-    //public const string alberoCell19 = "477fd4ee07c";
-    //public const float ragnoLat = 44.482642f; public const float ragnoLon = 11.375178f;
-    //public const string ragnoCell19 = "477e2b3a1bc";
+    // TEST Facolta 44.48754455426136, 11.329327606536179 // 44.4873723394221, 11.330171161228847
+    public const float alberoLat = 44.48754455426136f; public const float alberoLon = 11.329327606536179f;
+    public const string alberoCell19 = "477fd4ee07c"; public const int alberoAlt= 0; public const int alberoDist = 3;
+    public const float ragnoLat = 44.4873723394221f; public const float ragnoLon = 11.330171161228847f;
+    public const string ragnoCell19 = "477fd4ee0ac";  public const int ragnoAlt= 3; public const int ragnoDist = 15;
 
     // TEST TETTO HOME 44.482642 11.375178 477e2b3a1bc
-    public const float alberoLat = 44.48265275117313f; public const float alberoLon = 11.37513649267819f;
+    /*public const float alberoLat = 44.48265275117313f; public const float alberoLon = 11.37513649267819f;
     public const string alberoCell19 = "477e2b3a1ec";
     public const float ragnoLat = 44.48277791763526f; public const float ragnoLon = 11.375424708611233f;
-    public const string ragnoCell19 = "477e2b3a1bc";
+    public const string ragnoCell19 = "477e2b3a1bc";*/
     
     // ARCIERE    
     public const float ArciereLat = 44.499365736248f; public const float ArciereLon = 11.2823648750782f;
@@ -27,14 +27,14 @@ public sealed class StaticLocations
     public const bool ArciereFront = true;
 
     // CHIMERA
-    public const float ChimeraLat = 44.5008017449531f; public const float ChimeraLon = 11.2838089093566f;
-    public const string ChimeraCell19 = "___";
+    public const float ChimeraLat = 44.50463673428272f; public const float ChimeraLon = 11.291060010707026f;
+    public const string ChimeraCell19 = "477fd41033c";
     public const int ChimeraDist = 15;
     public const int ChimeraAlt = 0;
     public const bool ChimeraFront = true;
 
     // SCAGLIA PIETRA (ISSUE = same position of chimera)
-    public const float ScagliaPietraLat = 44.5008017449531f; public const float ScagliaPietraLon = 11.2838089093566f;
+    public const float ScagliaPietraLat = 44.50077821742219f; public const float ScagliaPietraLon = 11.28382072857177f;
     public const string ScagliaPietraCell19 = "477fd4199dc";
     public const int ScagliaPietraDist = 10;
     public const int ScagliaPietraAlt = 3;
@@ -68,9 +68,9 @@ public sealed class StaticLocations
     public const int MedusaAlt = 3;
     public const bool MedusaFront = false;
 
-    // CHIMERA 2
-    public const float Chimera2Lat = 44.5046344356359f; public const float Chimera2Lon = 11.2910401448607f;
-    public const string Chimera2Cell19 = "477fd41033c";
+    // CHIMERA 2 44.4991385542784,11.286333873868
+    public const float Chimera2Lat = 44.4991385542784f; public const float Chimera2Lon = 11.286333873868f;
+    public const string Chimera2Cell19 = "477fd4177ec";
     public const int Chimera2Dist = 30;
     public const int Chimera2Alt = 0;
     public const bool Chimera2Front = false;
