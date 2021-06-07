@@ -9,9 +9,15 @@ public sealed class StaticLocations
 
     // TEST Facolta 44.48754455426136, 11.329327606536179 // 44.4873723394221, 11.330171161228847
     public const float alberoLat = 44.48754455426136f; public const float alberoLon = 11.329327606536179f;
+    public const string alberoCell19 = "477fd4ee07"; public const float alberoAlt= 0f; public const int alberoDist = 3;
+    public const float ragnoLat = 44.4873723394221f; public const float ragnoLon = 11.330171161228847f;
+    public const string ragnoCell19 = "477fd4ee09";  public const float ragnoAlt= 3f; public const int ragnoDist = 3;
+
+    // TEST Parco Facolta 44.48754455426136, 11.329327606536179 // 44.4873723394221, 11.330171161228847
+    /*public const float alberoLat = 44.48754455426136f; public const float alberoLon = 11.329327606536179f;
     public const string alberoCell19 = "477fd4ee07c"; public const float alberoAlt= 0f; public const int alberoDist = 3;
     public const float ragnoLat = 44.4873723394221f; public const float ragnoLon = 11.330171161228847f;
-    public const string ragnoCell19 = "477fd4ee09c";  public const float ragnoAlt= 3f; public const int ragnoDist = 15;
+    public const string ragnoCell19 = "477fd4ee09c";  public const float ragnoAlt= 3f; public const int ragnoDist = 15;*/
 
     // TEST TETTO HOME 44.482642 11.375178 477e2b3a1bc
     /*public const float alberoLat = 44.48265275117313f; public const float alberoLon = 11.37513649267819f;

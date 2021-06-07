@@ -29,7 +29,7 @@ public class LocationService : MonoBehaviour
     /// Higher values like 500 imply less overhead. Default is 10 meters
     /// </summary>
     private const float updateDistanceInMeters = 0.1f;
-    private const float UPDATE_TIME = 5f;
+    private const float UPDATE_TIME = 2f;
 
     /*
     void OnGUI()

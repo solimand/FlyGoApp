@@ -136,59 +136,19 @@ public class ARobjPlacement : MonoBehaviour
                 case StaticLocations.alberoCell19:
                     if (AlberoMuscoloso == null)
                     {
-                        //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                        //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
+                        //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,3f);
                         AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
                             StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
-
-                    /*
-                    if (AlberoMuscoloso != null)
-                    {
-                        //I am in the same previous geofence and the related obj exists                        
-                        //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
-                        return;
-                    }
-                    else
-                    {
-                        if (AlberoMuscoloso == null)
-                        {
-                            //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                            //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
-                            AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
-                                StaticLocations.alberoLat, StaticLocations.alberoLon);
-                            DestroyAllObjExceptOne(AlberoMuscoloso);
-                        }
-                    }
-                    */
                     break;
 
                 case StaticLocations.ragnoCell19:
                     if (Ragnopalma == null)
                     {
-                        //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
                         Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
                         DestroyAllObjExceptOne(Ragnopalma);
                     }
-                    /*
-                    if (Ragnopalma != null)
-                    {
-                        //I am in the same previous geofence and the related obj exists
-                        //mLogger.Log(kTAG, $" DBG I am in same S2Cell id {geoFenceCell} and obj is not null {Medusa}");
-                        return;
-                    }
-                    else
-                    {
-                        if (Ragnopalma == null)
-                        {
-                            //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
-                            Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
-                            DestroyAllObjExceptOne(Ragnopalma);
-
-                        }
-                    }
-                    */
                     break;
                 case StaticLocations.AlberoMuscolosoCell19:
                     break;
@@ -380,7 +340,7 @@ public class ARobjPlacement : MonoBehaviour
         LatLng worldPos = new LatLng(lat, lon);
         Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
         //unityPos -= new Vector3(0, 0.5f, 0);
-        unityPos -= new Vector3(0, alt, 0);
+        unityPos += new Vector3(0, alt, 0);
         GameObject result = Instantiate(objRef, unityPos, transform.rotation * Quaternion.identity) 
             as GameObject;
 
@@ -408,8 +368,9 @@ public class ARobjPlacement : MonoBehaviour
         {
             // TODO fix altitude
             Vector3 forward = transform.TransformDirection(Vector3.forward) * meters;
-            //forward -= new Vector3(0, 0.5f, 0);
-            forward -= new Vector3(0, altitude, 0);
+            //forward -= new Vector3(0, 1f, 0);
+            forward += new Vector3(0, 1f, 0);
+            //forward += new Vector3(0, altitude, 0); 
           
             //detect plane to trigger the placement
             if (arpm.trackables.count == 0)
@@ -423,6 +384,8 @@ public class ARobjPlacement : MonoBehaviour
             //place object at X meters
             result = Instantiate(objRef, forward, 
                 transform.rotation * Quaternion.identity) as GameObject;
+                //Quaternion.identity) as GameObject;
+                //result.transform.LookAt(Camera.main.transform);
             // Add an ARAnchor component if it doesn't have one already
             if (result.GetComponent<ARAnchor>() == null)
             {
