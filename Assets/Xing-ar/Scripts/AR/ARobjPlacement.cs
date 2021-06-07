@@ -139,7 +139,7 @@ public class ARobjPlacement : MonoBehaviour
                         //mLogger.Log(kTAG, $" DBG I am in new valid S2Cell id {geoFenceCell}");
                         //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2);
                         AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
-                            StaticLocations.alberoLat, StaticLocations.alberoLon);
+                            StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
 
@@ -358,7 +358,7 @@ public class ARobjPlacement : MonoBehaviour
             mLogger.Log(kTAG, $"obj {Arciere} destroyed");
         }
     }        
-    private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon)
+    private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon, float alt)
     {
         // reset maps origin before gps instantiation
         if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
@@ -379,7 +379,8 @@ public class ARobjPlacement : MonoBehaviour
         // convert coordinates
         LatLng worldPos = new LatLng(lat, lon);
         Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
-        unityPos -= new Vector3(0, 0.5f, 0);
+        //unityPos -= new Vector3(0, 0.5f, 0);
+        unityPos -= new Vector3(0, alt, 0);
         GameObject result = Instantiate(objRef, unityPos, transform.rotation * Quaternion.identity) 
             as GameObject;
 
@@ -400,7 +401,7 @@ public class ARobjPlacement : MonoBehaviour
     }
 
     //TODO altitude from ground + position related to user movement
-    private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, int altitude)
+    private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
     {
         GameObject result;
         if (arpm)
