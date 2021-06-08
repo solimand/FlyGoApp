@@ -133,20 +133,27 @@ public class ARobjPlacement : MonoBehaviour
             switch (geoFenceCell)
             {
                 // TODO update rotation in case of Front==true
-                case StaticLocations.alberoCell19:
+                case StaticLocations.alberoCell18:
                     if (AlberoMuscoloso == null)
                     {
-                        //AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,3f);
-                        AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
-                            StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
+                        enabled = false;
+                        enabled = true;
+
+                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,3f);
+                        //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
+                            //StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
                     break;
 
-                case StaticLocations.ragnoCell19:
+                case StaticLocations.ragnoCell18:
                     if (Ragnopalma == null)
                     {
-                        Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
+                        enabled = false;
+                        enabled = true;
+
+                        //Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
+                        Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 2, 2f);
                         DestroyAllObjExceptOne(Ragnopalma);
                     }
                     break;
