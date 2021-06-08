@@ -36,30 +36,5 @@ class S2Geofence
         //Debug.Log($"You are in the cellid {currCell}");
         return "N";
     }
-
-    /*
-    public bool AmIinGeofence(double lat, double lon, int level)
-    {
-        string currCell = CellIdFromCoord(lat, lon, level);
-        string[] currGeofences;
-
-        //accedi array con ogni fixced pos e ricevi array geofence,
-        //if sono dentro uno di questi visualizzo lanim
-        foreach (string currFixedPos in fixedPos)
-        {
-            currGeofences = geofenceAreas[currFixedPos];
-            foreach(string currCellGeofence in currGeofences)
-            {
-                if (currCell == currCellGeofence)
-                {
-                    Debug.Log($"I am in geofence cellid {currCellGeofence} " +
-                        $"and I can see object at {currFixedPos}");
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    */
 }
 

@@ -16,24 +16,6 @@ public class SceneSelection : MonoBehaviour
     //private GameObject dialog = null;
     private AndroidPermissionChecker apc;
     //private bool comeBackFromPermission = false;
-   
-    /*
-    [SerializeField]
-    Scrollbar m_HorizontalScrollBar;
-    public Scrollbar horizontalScrollBar
-    {
-        get => m_HorizontalScrollBar;
-        set => m_HorizontalScrollBar = value;
-    }
-
-    [SerializeField]
-    Scrollbar m_VerticalScrollBar;
-    public Scrollbar verticalScrollBar
-    {
-        get => m_VerticalScrollBar;
-        set => m_VerticalScrollBar = value;
-    }
-    */ 
 
     [SerializeField]
     GameObject m_AllMenu;
@@ -51,38 +33,10 @@ public class SceneSelection : MonoBehaviour
         apc = new AndroidPermissionChecker();
         //ScrollToStartPosition();
     }
-
-    /*
-    void ScrollToStartPosition()
+    public void DeclineButtonPressed()
     {
-        m_HorizontalScrollBar.value = 0;
-        m_VerticalScrollBar.value = 1;
+        Application.Quit();
     }
-    */
-
-    /*
-    private void OnApplicationFocus(bool focus)
-    {
-        mLogger.Log(kTAG, "onAppFocus");
-        if (comeBackFromPermission)
-        {
-            if (apc == null)
-                apc = new AndroidPermissionChecker();
-            
-            if (!apc.SimplyCheckPermisison())
-            {
-                mLogger.Log(kTAG, "permission denied, asking for rationale...");
-                //apc.RationaleAndroidPermission();
-            }
-            if (!apc.SimplyCheckPermisison())
-            {
-                mLogger.Log(kTAG, "permission denied, exiting...");
-                //apc.ExitPermissionNotGranted();
-            }
-        }
-        comeBackFromPermission = false;
-    }
-    */
 
     public void MainARButtonPressed() 
     {
@@ -137,6 +91,7 @@ public class SceneSelection : MonoBehaviour
         LoaderUtility.Initialize();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
+
 
 
     /*TODO Check device support    

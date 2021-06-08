@@ -360,7 +360,6 @@ public class ARobjPlacement : MonoBehaviour
         return result;
     }
 
-    //TODO altitude from ground + position related to user movement
     private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
     {
         GameObject result;
@@ -463,16 +462,5 @@ public class ARobjPlacement : MonoBehaviour
 
         return true;
     }
-
-    bool GetPos(out Vector2 touchPos)
-    {
-        if (Input.touchCount > 0)
-        {
-            touchPos = Input.GetTouch(0).position;
-            return true;
-        }
-        touchPos = default;
-        return false;
-    }
-
+    
 }
