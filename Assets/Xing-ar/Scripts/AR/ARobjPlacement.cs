@@ -136,10 +136,11 @@ public class ARobjPlacement : MonoBehaviour
                 case StaticLocations.alberoCell18:
                     if (AlberoMuscoloso == null)
                     {
-                        enabled = false;
-                        enabled = true;
-
-                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,3f);
+                        //enabled = false;
+                        //enabled = true;
+                        //TODO otherwise maps=null - s2geo=null and reInstantiate
+                        
+                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,2f);
                         //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
                             //StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
@@ -149,8 +150,8 @@ public class ARobjPlacement : MonoBehaviour
                 case StaticLocations.ragnoCell18:
                     if (Ragnopalma == null)
                     {
-                        enabled = false;
-                        enabled = true;
+                        //enabled = false;
+                        //enabled = true;
 
                         //Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
                         Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 2, 2f);
@@ -369,11 +370,28 @@ public class ARobjPlacement : MonoBehaviour
 
     private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
     {
+        
+        // reset maps origin before gps instantiation
+        if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
+            return null;
+
+        // set float origin 
+        if (!MyMapsService.Projection.IsFloatingOriginSet)
+        {
+            MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
+                LocationService.Instance.longitude));
+        }
+        else
+        {
+            TryMoveFloatingOrigin();
+        }
+        
+        
         GameObject result;
         if (arpm)
         {
             // TODO fix altitude
-            Vector3 forward = transform.TransformDirection(Vector3.forward) * meters;
+            Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * meters;
             //forward -= new Vector3(0, 1f, 0);
             forward += new Vector3(0, 1f, 0);
             //forward += new Vector3(0, altitude, 0); 
@@ -446,7 +464,8 @@ public class ARobjPlacement : MonoBehaviour
         float distance = Vector3.Distance(FloatingOrigin, newFloatingOrigin);
 
         // Reset the world's Floating Origin if (and only if) the Camera has moved far enough.
-        if (distance < FloatingOriginRange) //if (distance < 2.0)
+        //if (distance < FloatingOriginRange) 
+        if (distance < 2.0)
         {
             return false;
         }
