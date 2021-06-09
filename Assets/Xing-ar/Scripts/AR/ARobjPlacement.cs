@@ -3,6 +3,7 @@ using Google.Maps.Coord;
 using Google.Maps.Event;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -59,7 +60,7 @@ public class ARobjPlacement : MonoBehaviour
     private ARPlaneManager arpm;
     //private ARAnchorManager m_AnchorManager;
     //static List<ARRaycastHit> hits =new List<ARRaycastHit>();
-
+    //private XRInputSubsystem myxr;
     // LOCATION-----------
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
@@ -84,7 +85,7 @@ public class ARobjPlacement : MonoBehaviour
         //Entry point Maps SDK and init initial position
         MyMapsService = GetComponent<MapsService>();
         frameCounter = 0;
-        //InitWorld();
+        //myxr = new XRInputSubsystem();
     }
 
     private void Awake()
@@ -138,7 +139,6 @@ public class ARobjPlacement : MonoBehaviour
                     {
                         //enabled = false;
                         //enabled = true;
-                        //TODO otherwise maps=null - s2geo=null and reInstantiate
                         
                         AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,2f);
                         //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
@@ -370,41 +370,23 @@ public class ARobjPlacement : MonoBehaviour
 
     private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
     {
-        
-        // reset maps origin before gps instantiation
-        if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
-            return null;
-
-        // set float origin 
-        if (!MyMapsService.Projection.IsFloatingOriginSet)
-        {
-            MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
-                LocationService.Instance.longitude));
-        }
-        else
-        {
-            TryMoveFloatingOrigin();
-        }
-        
-        
         GameObject result;
         if (arpm)
         {
-            // TODO fix altitude
-            Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * meters;
-            //forward -= new Vector3(0, 1f, 0);
-            forward += new Vector3(0, 1f, 0);
-            //forward += new Vector3(0, altitude, 0); 
-          
+            //Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * meters;
+            var forward = Camera.main.transform.position
+                + Camera.main.transform.forward * meters
+                + Camera.main.transform.up * altitude;
+            //forward += new Vector3(0, 1f, 0);
+            //forward += new Vector3(0, altitude, 0);
+            
             //detect plane to trigger the placement
             if (arpm.trackables.count == 0)
                 return null;
-            //mLogger.Log(kTAG, $"planes {arpm.trackables.count}");
+            
             foreach (var plane in arpm.trackables)
-            {
-                //mLogger.Log(kTAG, "AAA");
                 break;
-            }
+            
             //place object at X meters
             result = Instantiate(objRef, forward, 
                 transform.rotation * Quaternion.identity) as GameObject;
@@ -418,7 +400,6 @@ public class ARobjPlacement : MonoBehaviour
             mLogger.Log(kTAG, $"Obj {objRef} placed at {forward}" +
                 $" with anchor {result.GetComponent<ARAnchor>()}");
 
-            // TODO FIX spatial audio            
             AudioSource audioSource = result.GetComponent<AudioSource>();
             if (audioSource != null)
                 audioSource.Play(0);
