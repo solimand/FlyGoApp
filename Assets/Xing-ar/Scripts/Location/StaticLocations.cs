@@ -24,6 +24,7 @@ public sealed class StaticLocations
     // ARCIERE    
     public const float ArciereLat = 44.499365736248f; public const float ArciereLon = 11.2823648750782f;
     public const string ArciereCell19 = "477fd4191dc";
+    public const string ArciereCell18 = "477fd4191d";
     public const int ArciereDist = 20;
     public const int ArciereAlt = 0;
     public const bool ArciereFront = true;
@@ -48,8 +49,8 @@ public sealed class StaticLocations
     public const float PietreForateLat = 44.5006762002241f; public const float PietreForateLon = 11.2847795337439f;
     public const string PietreForateCell19 = "477fd41991c";
     public const string PietreForateCell18 = "477fd41991";
-    public const int PietreForateDist = 30;
-    public const int PietreForateAlt = 10;
+    public const int PietreForateDist = 20; //30;
+    public const int PietreForateAlt = 6;//10;
     public const bool PietreForateFront = false;
 
     // ALBERO
@@ -80,7 +81,7 @@ public sealed class StaticLocations
     public const float Chimera2Lat = 44.4991385542784f; public const float Chimera2Lon = 11.286333873868f;
     public const string Chimera2Cell19 = "477fd4177ec";
     public const string Chimera2Cell18 = "477fd4177f";
-    public const int Chimera2Dist = 30;
+    public const int Chimera2Dist = 20; //30;
     public const int Chimera2Alt = 0;
     public const bool Chimera2Front = false;
 
@@ -111,6 +112,7 @@ public sealed class StaticLocations
     // BUDDHA
     public const float BuddhaLat = 0.0f; public const float BuddhaLon = 0.0f;
     public const string BuddhaCell19 = "___";
+    public const string BuddhaCell18 = "___";
     public const int BuddhaDist = 10;
     public const int BuddhaAlt = 5;
     public const bool BuddhaFront = false;

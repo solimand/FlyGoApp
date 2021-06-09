@@ -135,6 +135,7 @@ public class ARobjPlacement : MonoBehaviour
             {
                 // TODO update rotation in case of Front==true
                 case StaticLocations.alberoCell18:
+                    frameCounter = 0;
                     if (AlberoMuscoloso == null)
                     {
                         //enabled = false;
@@ -143,7 +144,13 @@ public class ARobjPlacement : MonoBehaviour
                         AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,2f);
                         //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
                             //StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
-                        DestroyAllObjExceptOne(AlberoMuscoloso);
+                            if (frameCounter < 360) //wait for obj creation
+                            {
+                                frameCounter++;
+                                return;
+                            }
+
+                            DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
                     break;
 
@@ -158,30 +165,115 @@ public class ARobjPlacement : MonoBehaviour
                         DestroyAllObjExceptOne(Ragnopalma);
                     }
                     break;
-                case StaticLocations.AlberoMuscolosoCell19:
+                
+                case StaticLocations.AlberoMuscolosoCell18:
+                    if (AlberoMuscoloso == null)
+                    {
+                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
+                            StaticLocations.alberoDist, StaticLocations.alberoAlt);
+                        DestroyAllObjExceptOne(AlberoMuscoloso);
+                    }
                     break;
-                case StaticLocations.ArciereCell19:
+                
+                case StaticLocations.ArciereCell18:
+                    if (Arciere == null)
+                    {
+                        Arciere = InstantiateAt(this.arpm, this.arciereObj, 
+                            StaticLocations.ArciereDist, StaticLocations.ArciereAlt);
+                        DestroyAllObjExceptOne(Arciere);
+                    }
                     break;
-                case StaticLocations.ChimeraCell19:
+                
+                case StaticLocations.ChimeraCell18:
+                    if (Chimera == null)
+                    {
+                        Chimera = InstantiateAt(this.arpm, this.chimeraObj, 
+                            StaticLocations.ChimeraDist, StaticLocations.ChimeraAlt);
+                        DestroyAllObjExceptOne(Chimera);
+                    }
                     break;
-                case StaticLocations.Chimera2Cell19:
+                
+                case StaticLocations.Chimera2Cell18:
+                    if (Chimera2 == null)
+                    {
+                        Chimera2 = InstantiateAt(this.arpm, this.chimera2Obj, 
+                            StaticLocations.Chimera2Dist, StaticLocations.Chimera2Alt);
+                        DestroyAllObjExceptOne(Chimera2);
+                    }
                     break;
-                case StaticLocations.Chimera3Cell19:
+                
+                case StaticLocations.Chimera3Cell18:
+                    if (Chimera3 == null)
+                    {
+                        Chimera3 = InstantiateAt(this.arpm, this.chimera3Obj, 
+                            StaticLocations.Chimera3Dist, StaticLocations.Chimera3Alt);
+                        DestroyAllObjExceptOne(Chimera3);
+                    }
                     break;
-                case StaticLocations.ScagliaPietraCell19:
+                
+                case StaticLocations.ScagliaPietraCell18:
+                    if (ScagliaPietra == null)
+                    {
+                        ScagliaPietra = InstantiateAt(this.arpm, this.scagliaPietraObj, 
+                            StaticLocations.ScagliaPietraDist, StaticLocations.ScagliaPietraAlt);
+                        DestroyAllObjExceptOne(ScagliaPietra);
+                    }
                     break;
-                case StaticLocations.ScagliaPietra2Cell19:
+                
+                case StaticLocations.ScagliaPietra2Cell18:
+                    if (ScagliaPietra2 == null)
+                    {
+                        ScagliaPietra2 = InstantiateAt(this.arpm, this.scagliaPietra2Obj, 
+                            StaticLocations.ScagliaPietra2Dist, StaticLocations.ScagliaPietra2Alt);
+                        DestroyAllObjExceptOne(ScagliaPietra2);
+                    }
                     break;
-                case StaticLocations.PietreForateCell19:
+                
+                case StaticLocations.PietreForateCell18:
+                    if (PietreForate == null)
+                    {
+                        PietreForate = InstantiateAt(this.arpm, this.pietreForateObj, 
+                            StaticLocations.PietreForateDist, StaticLocations.PietreForateAlt);
+                        DestroyAllObjExceptOne(PietreForate);
+                    }
                     break;
-                case StaticLocations.MedusaCell19:
+                
+                case StaticLocations.MedusaCell18:
+                    if (Medusa == null)
+                    {
+                        Medusa = InstantiateAt(this.arpm, this.medusaObj, 
+                            StaticLocations.MedusaDist, StaticLocations.MedusaAlt);
+                        DestroyAllObjExceptOne(Medusa);
+                    }
                     break;
-                case StaticLocations.SpiritoFuocoCell19:
+                
+                case StaticLocations.SpiritoFuocoCell18:
+                    if (SpiritoFuoco == null)
+                    {
+                        SpiritoFuoco = InstantiateAt(this.arpm, this.spiritoFuocoObj, 
+                            StaticLocations.SpiritoFuocoDist, StaticLocations.SpiritoFuocoAlt);
+                        DestroyAllObjExceptOne(SpiritoFuoco);
+                    }
                     break;
-                case StaticLocations.SerpentePietraCell19:
+                
+                case StaticLocations.SerpentePietraCell18:
+                    if (SerpentePietra == null)
+                    {
+                        SerpentePietra = InstantiateAt(this.arpm, this.serpentePietraObj, 
+                            StaticLocations.SerpentePietraDist, StaticLocations.SerpentePietraAlt);
+                        DestroyAllObjExceptOne(SerpentePietra);
+                    }
                     break;
-                case StaticLocations.BuddhaCell19:
+                
+                case StaticLocations.BuddhaCell18:
+                    if (Buddha == null)
+                    {
+                        Buddha = InstantiateAt(this.arpm, this.buddhaObj, 
+                            StaticLocations.BuddhaDist, StaticLocations.BuddhaAlt);
+                        DestroyAllObjExceptOne(Buddha);
+                    }
                     break;
+                
                 default:
                     mLogger.Log(kTAG, "ERROR Nothing to instantiate");
                     break;
