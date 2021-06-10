@@ -121,8 +121,10 @@ public class ARobjPlacement : MonoBehaviour
             $" lon {LocationService.Instance.longitude}" +
             $" S2cell {s2geo.CellIdFromCoord(LocationService.Instance.latitude, LocationService.Instance.longitude,19)}");*/
 
+        //geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
+        //          LocationService.Instance.longitude, DESIRED_LVL);
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
-                    LocationService.Instance.longitude, DESIRED_LVL);
+            LocationService.Instance.longitude, 17);
 
         if (geoFenceCell == "N")    //out of geofence
         {            
@@ -137,18 +139,16 @@ public class ARobjPlacement : MonoBehaviour
                 case StaticLocations.alberoCell18:
                     frameCounter = 0;
                     if (AlberoMuscoloso == null)
-                    {
-                        //enabled = false;
-                        //enabled = true;
-                        
-                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 2,2f);
+                    {                        
+                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
+                            StaticLocations.alberoDist, StaticLocations.alberoAlt);
                         //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
                             //StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
-                            if (frameCounter < 360) //wait for obj creation
+                            /*if (frameCounter < 360) //wait for obj creation
                             {
                                 frameCounter++;
                                 return;
-                            }
+                            }*/
 
                             DestroyAllObjExceptOne(AlberoMuscoloso);
                     }

@@ -6,52 +6,12 @@ ModelImporter:
   - first:
       74: -1498010087492872569
     second: BuddhaAnim
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: PM3D_Cube3D1_1
-    second: {fileID: 2100000, guid: 00e2ce164658b71a19883bde2e8354c7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: PM3D_Cube3D1_2
-    second: {fileID: 2100000, guid: 4f50fe547ed5dd9a5829b410c143d8fc, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: PM3D_Cube3D2_1
-    second: {fileID: 2100000, guid: 5a16d17c7e39a9812bc1eae4bec89101, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: PM3D_Sphere3D_2
-    second: {fileID: 2100000, guid: 90abef23c08bdcb90984bf432b7f49eb, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: buddha
-    second: {fileID: 2800000, guid: f9cf5489936bccbf0b9f0a62fc1f5421, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: lupo
-    second: {fileID: 2800000, guid: c165355a1f140bb3e825cfa17531a072, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: occhio
-    second: {fileID: 2800000, guid: c1246d81e3730d1a8af66495cbf51ae2, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: piume
-    second: {fileID: 2800000, guid: 6de3dc486b08484a1a683dec8bc7baae, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialSearch: 0
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

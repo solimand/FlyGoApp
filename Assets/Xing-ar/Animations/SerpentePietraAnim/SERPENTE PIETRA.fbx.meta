@@ -6,37 +6,12 @@ ModelImporter:
   - first:
       74: -1498010087492872569
     second: SerpentePietraAnimation
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Mat
-    second: {fileID: 2100000, guid: e156443ad1cc9ff1fb392e99320c4fe6, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: PolySphere1_1_Base_Color_1
-    second: {fileID: 2800000, guid: a8953bbd9e82a21e49bf6956878da9ae, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: PolySphere1_2_Base_Color
-    second: {fileID: 2800000, guid: 8a3b4aba55ba97b15b9b1e9c9a1e485f, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: PolySphere1_Base_Color
-    second: {fileID: 2800000, guid: 245333b727a16cdaea03c296b0d177bb, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: PolySphere_Base_Color
-    second: {fileID: 2800000, guid: 206bc095bd22484c5a7d12ccfe41dbfc, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialSearch: 0
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
