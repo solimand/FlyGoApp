@@ -795,19 +795,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87976c24d79b1d45bec7aa109f05e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alberoMuscolosoObj: {fileID: 1719314799}
-  ragnopalmaObj: {fileID: 0}
-  arciereObj: {fileID: 0}
-  chimeraObj: {fileID: 0}
-  chimera2Obj: {fileID: 0}
-  chimera3Obj: {fileID: 0}
-  scagliaPietraObj: {fileID: 0}
-  scagliaPietra2Obj: {fileID: 0}
-  pietreForateObj: {fileID: 0}
-  medusaObj: {fileID: 0}
-  spiritoFuocoObj: {fileID: 0}
-  serpentePietraObj: {fileID: 0}
-  buddhaObj: {fileID: 0}
+  alberoMuscolosoObj: {fileID: 1667002658}
+  arciereObj: {fileID: 1486095783}
+  chimeraObj: {fileID: 1821482682}
+  chimera2Obj: {fileID: 725539734}
+  chimera3Obj: {fileID: 630380750}
+  scagliaPietraObj: {fileID: 1867669166}
+  scagliaPietra2Obj: {fileID: 968950985}
+  pietreForateObj: {fileID: 1477537587}
+  medusaObj: {fileID: 544172274}
+  spiritoFuocoObj: {fileID: 1719314799}
+  serpentePietraObj: {fileID: 1955960273}
+  buddhaObj: {fileID: 359256370}
   FloatingOriginRange: 10
 --- !u!114 &388525037
 MonoBehaviour:

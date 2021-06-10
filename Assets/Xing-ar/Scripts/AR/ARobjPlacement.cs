@@ -18,8 +18,6 @@ public class ARobjPlacement : MonoBehaviour
     // Game Objects (use pulbic field for unity editor)-----------
     public GameObject alberoMuscolosoObj; //obj to place 
     public static GameObject AlberoMuscoloso { get; set; }
-    public GameObject ragnopalmaObj;
-    public static GameObject Ragnopalma { get; set; }
     public GameObject arciereObj;
     public static GameObject Arciere { get; set; }
     public GameObject chimeraObj;
@@ -121,10 +119,10 @@ public class ARobjPlacement : MonoBehaviour
             $" lon {LocationService.Instance.longitude}" +
             $" S2cell {s2geo.CellIdFromCoord(LocationService.Instance.latitude, LocationService.Instance.longitude,19)}");*/
 
-        //geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
-        //          LocationService.Instance.longitude, DESIRED_LVL);
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
-            LocationService.Instance.longitude, 17);
+                  LocationService.Instance.longitude, DESIRED_LVL);
+        /*geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
+            LocationService.Instance.longitude, 17);*/
 
         if (geoFenceCell == "N")    //out of geofence
         {            
@@ -136,7 +134,7 @@ public class ARobjPlacement : MonoBehaviour
             switch (geoFenceCell)
             {
                 // TODO update rotation in case of Front==true
-                case StaticLocations.alberoCell18:
+                case StaticLocations.alberoCell18:      //TESTING
                     frameCounter = 0;
                     if (AlberoMuscoloso == null)
                     {                        
@@ -144,29 +142,12 @@ public class ARobjPlacement : MonoBehaviour
                             StaticLocations.alberoDist, StaticLocations.alberoAlt);
                         //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
                             //StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
-                            /*if (frameCounter < 360) //wait for obj creation
-                            {
-                                frameCounter++;
-                                return;
-                            }*/
-
                             DestroyAllObjExceptOne(AlberoMuscoloso);
-                    }
-                    break;
-
-                case StaticLocations.ragnoCell18:
-                    if (Ragnopalma == null)
-                    {
-                        //enabled = false;
-                        //enabled = true;
-
-                        //Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, StaticLocations.ragnoDist, StaticLocations.ragnoAlt);
-                        Ragnopalma = InstantiateAt(this.arpm, this.ragnopalmaObj, 2, 2f);
-                        DestroyAllObjExceptOne(Ragnopalma);
                     }
                     break;
                 
                 case StaticLocations.AlberoMuscolosoCell18:
+                    frameCounter = 0;
                     if (AlberoMuscoloso == null)
                     {
                         AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
@@ -176,6 +157,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.ArciereCell18:
+                    frameCounter = 0;
                     if (Arciere == null)
                     {
                         Arciere = InstantiateAt(this.arpm, this.arciereObj, 
@@ -185,6 +167,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.ChimeraCell18:
+                    frameCounter = 0;
                     if (Chimera == null)
                     {
                         Chimera = InstantiateAt(this.arpm, this.chimeraObj, 
@@ -194,6 +177,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.Chimera2Cell18:
+                    frameCounter = 0;
                     if (Chimera2 == null)
                     {
                         Chimera2 = InstantiateAt(this.arpm, this.chimera2Obj, 
@@ -203,6 +187,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.Chimera3Cell18:
+                    frameCounter = 0;
                     if (Chimera3 == null)
                     {
                         Chimera3 = InstantiateAt(this.arpm, this.chimera3Obj, 
@@ -212,6 +197,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.ScagliaPietraCell18:
+                    frameCounter = 0;
                     if (ScagliaPietra == null)
                     {
                         ScagliaPietra = InstantiateAt(this.arpm, this.scagliaPietraObj, 
@@ -221,6 +207,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.ScagliaPietra2Cell18:
+                    frameCounter = 0;
                     if (ScagliaPietra2 == null)
                     {
                         ScagliaPietra2 = InstantiateAt(this.arpm, this.scagliaPietra2Obj, 
@@ -230,6 +217,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.PietreForateCell18:
+                    frameCounter = 0;
                     if (PietreForate == null)
                     {
                         PietreForate = InstantiateAt(this.arpm, this.pietreForateObj, 
@@ -239,6 +227,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.MedusaCell18:
+                    frameCounter = 0;
                     if (Medusa == null)
                     {
                         Medusa = InstantiateAt(this.arpm, this.medusaObj, 
@@ -248,6 +237,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.SpiritoFuocoCell18:
+                    frameCounter = 0;
                     if (SpiritoFuoco == null)
                     {
                         SpiritoFuoco = InstantiateAt(this.arpm, this.spiritoFuocoObj, 
@@ -257,6 +247,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.SerpentePietraCell18:
+                    frameCounter = 0;
                     if (SerpentePietra == null)
                     {
                         SerpentePietra = InstantiateAt(this.arpm, this.serpentePietraObj, 
@@ -266,6 +257,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 
                 case StaticLocations.BuddhaCell18:
+                    frameCounter = 0;
                     if (Buddha == null)
                     {
                         Buddha = InstantiateAt(this.arpm, this.buddhaObj, 
@@ -287,11 +279,6 @@ public class ARobjPlacement : MonoBehaviour
         {
             Destroy(AlberoMuscoloso);
             mLogger.Log(kTAG, $"obj {AlberoMuscoloso} destroyed");
-        }
-        if (Ragnopalma != null && Ragnopalma != goToSave)
-        {
-            Destroy(Ragnopalma);
-            mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
         }
         if (SerpentePietra != null && SerpentePietra != goToSave)
         {
@@ -356,11 +343,6 @@ public class ARobjPlacement : MonoBehaviour
         {
             Destroy(AlberoMuscoloso);
             mLogger.Log(kTAG, $"obj {AlberoMuscoloso} destroyed");
-        }
-        if (Ragnopalma != null)
-        {
-            Destroy(Ragnopalma);
-            mLogger.Log(kTAG, $"obj {Ragnopalma} destroyed");
         }
         if (SerpentePietra != null)
         {
