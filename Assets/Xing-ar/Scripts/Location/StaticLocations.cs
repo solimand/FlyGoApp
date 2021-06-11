@@ -5,7 +5,12 @@ using UnityEngine;
 public sealed class StaticLocations
 {
     // Allowed Geofence Areas
-    public static string[] fixedPos2mt = new string[2] { "477e2b3a1c", "477fd4ee0b"};
+    public static string[] fixedPos2mt = new string[14] { 
+        "477e2b3a1c", "477fd4ee0b",
+        "","","","",
+        "","","","",
+        "","","",""
+    };
     
     // TEST Parco Facolta 44.48754455426136, 11.329327606536179 // 44.4873723394221, 11.330171161228847
     public const float alberoLat = 44.48754455426136f; public const float alberoLon = 11.329327606536179f;
