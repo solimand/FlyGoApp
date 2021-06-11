@@ -7,6 +7,8 @@ class S2Geofence
 {
     private static ILogger mLogger = Debug.unityLogger;
     private const string kTAG = "S2Geofence";
+    private const int MIN_CELL_SIZE = 15;
+    private const int MAX_CELL_SIZE = 19;
 
     public S2Geofence()
     {
@@ -35,6 +37,20 @@ class S2Geofence
         }
         //Debug.Log($"You are in the cellid {currCell}");
         return "N";
+    }
+
+    // get cells from 15 to 19 (if one of these is a geofence of a GO, instantiate it)
+    public string[] AmIinGeoFence(double lat, double lon)
+    {
+        string[] result = null;
+        int count = 0;
+        for(int i=MIN_CELL_SIZE; i<MAX_CELL_SIZE; i++)
+        {
+            string currCell = CellIdFromCoord(lat, lon, i);
+            result[count] = currCell;
+            count++;
+        }
+        return result;
     }
 }
 

@@ -4,27 +4,22 @@ using UnityEngine;
 
 public sealed class StaticLocations
 {
-    // Allowed Geofence Areas
-    public static string[] fixedPos2mt = new string[14] { 
-        "477e2b3a1c", "477fd4ee0b",
+    // Allowed Geofence Single Cells
+    public static string[] fixedPos2mt = new string[14] {
+        "477e2b3a19", "477e2b3a1f",
         "","","","",
         "","","","",
         "","","",""
     };
-    
-    // TEST Parco Facolta 44.48754455426136, 11.329327606536179 // 44.4873723394221, 11.330171161228847
-    public const float alberoLat = 44.48754455426136f; public const float alberoLon = 11.329327606536179f;
-    public const string alberoCell19 = "477fd4ee07c"; public const string alberoCell18 = "477e2b3a1c"; 
-    public const float alberoAlt= 0f; public const int alberoDist = 3;
-    public const float ragnoLat = 44.4873723394221f; public const float ragnoLon = 11.330171161228847f;
-    public const string ragnoCell19 = "477fd4ee09c"; public const string ragnoCell18 = "477fd4ee0b";  
-    public const float ragnoAlt= 3f; public const int ragnoDist = 15;
 
-    // TEST TETTO HOME 44.482642 11.375178 477e2b3a1bc
-    /*public const float alberoLat = 44.48265275117313f; public const float alberoLon = 11.37513649267819f;
-    public const string alberoCell19 = "477e2b3a1ec"; public const string alberoCell18 = "477e2b3a1f";
-    public const float ragnoLat = 44.48277791763526f; public const float ragnoLon = 11.375424708611233f;
-    public const string ragnoCell19 = "477e2b3a1bc"; public const string ragnoCell18 = "477e2b3a1b";*/
+    // TEST 44.48256081468141, 11.375324649466517 (18-477e2b3a19) 
+        // 44.482987336249174, 11.375652415964774 (18-477e2b3a1f)
+    public const float testgo1Lat = 44.48256081468141f; public const float testgo1Lon = 11.375324649466517f;
+    public const string testgo1Cell18 = "477e2b3a19";
+    public const float testgo1Alt = 0f; public const int testgo1Dist = 3;
+    public const float testgo2Lat = 44.482987336249174f; public const float testgo2Lon = 11.375652415964774f;
+    public const string testgo2Cell18 = "477e2b3a1f";
+    public const float testgo2Alt = 3f; public const int testgo2Dist = 15;
 
     // ARCIERE    
     public const float ArciereLat = 44.499365736248f; public const float ArciereLon = 11.2823648750782f;
@@ -62,6 +57,9 @@ public sealed class StaticLocations
     public const float AlberoMuscolosoLat = 44.5023606292688f; public const float AlberoMuscolosoLon = 11.2877142056823f;
     public const string AlberoMuscolosoCell19 = "477fd410a04";
     public const string AlberoMuscolosoCell18 = "477fd410a1";
+    public string[] AlberoMuscolosoGeoFenceArea = {"477fd41098c","477fd410994","477fd4109f",
+        "477fd410a04","477fd410a1c","477fd410a24",
+        "477fd41a0ac","477fd41a754","477fd41a75c"};
     public const int AlberoMuscolosoDist = 2;
     public const int AlberoMuscolosoAlt = 0;
     public const bool AlberoMuscolosoFront = false;

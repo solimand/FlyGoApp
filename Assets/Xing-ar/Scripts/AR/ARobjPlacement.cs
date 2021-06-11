@@ -16,8 +16,12 @@ public class ARobjPlacement : MonoBehaviour
     private static ILogger mLogger = Debug.unityLogger;
 
     // Game Objects (use pulbic field for unity editor)-----------
-    public GameObject alberoMuscolosoObj; //obj to place 
-    public static GameObject AlberoMuscoloso { get; set; }
+    public GameObject testObj1; //obj to place 
+    public static GameObject TestGameObject1 { get; set; }
+    public GameObject testObj2; //obj to place 
+    public static GameObject TestGameObject2 { get; set; }
+    public GameObject alberoMuscolosoObj;
+    public static GameObject AlberoMuscoloso { get; set; }    
     public GameObject arciereObj;
     public static GameObject Arciere { get; set; }
     public GameObject chimeraObj;
@@ -134,24 +138,35 @@ public class ARobjPlacement : MonoBehaviour
             switch (geoFenceCell)
             {
                 // TODO update rotation in case of Front==true
-                case StaticLocations.alberoCell18:      //TESTING
+                //------------------TESTING----------------------------
+                case StaticLocations.testgo1Cell18:
                     frameCounter = 0;
-                    if (AlberoMuscoloso == null)
+                    if (TestGameObject1 == null)
                     {                        
-                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
-                            StaticLocations.alberoDist, StaticLocations.alberoAlt);
-                        //AlberoMuscoloso = InstantiateAtGPS(alberoMuscolosoObj,
-                            //StaticLocations.alberoLat, StaticLocations.alberoLon, StaticLocations.alberoAlt);
-                            DestroyAllObjExceptOne(AlberoMuscoloso);
+                        //TestGameObject1 = InstantiateAt(this.arpm, this.testObj1, 
+                            //StaticLocations.testgo1Dist, StaticLocations.testgo1Alt);
+                        TestGameObject1 = InstantiateAtGPS(testObj1,
+                            StaticLocations.testgo1Lat, StaticLocations.testgo1Lon, 0f);
+                        DestroyAllObjExceptOne(TestGameObject1);
                     }
                     break;
-                
+                case StaticLocations.testgo2Cell18:
+                    frameCounter = 0;
+                    if (TestGameObject2 == null)
+                    {
+                        TestGameObject2 = InstantiateAtGPS(testObj2,
+                            StaticLocations.testgo2Lat, StaticLocations.testgo2Lon, 0f);
+                        DestroyAllObjExceptOne(TestGameObject2);
+                    }
+                    break;
+                //------------------END_TESTING------------------------
+
                 case StaticLocations.AlberoMuscolosoCell18:
                     frameCounter = 0;
                     if (AlberoMuscoloso == null)
                     {
                         AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
-                            StaticLocations.alberoDist, StaticLocations.alberoAlt);
+                            StaticLocations.AlberoMuscolosoDist, StaticLocations.AlberoMuscolosoAlt);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
                     break;
@@ -405,17 +420,19 @@ public class ARobjPlacement : MonoBehaviour
         // reset maps origin before gps instantiation
         if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
             return null;
-
+        //reset the map service
+        MyMapsService = null;
+        MyMapsService = GetComponent<MapsService>();
         // set float origin 
         if (!MyMapsService.Projection.IsFloatingOriginSet)
         {
             MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
             LocationService.Instance.longitude));
         }
-        else
+        /*else
         {
             TryMoveFloatingOrigin();
-        }
+        }*/
         //mLogger.Log(kTAG, "My latlng floating origin updated");
 
         // convert coordinates
