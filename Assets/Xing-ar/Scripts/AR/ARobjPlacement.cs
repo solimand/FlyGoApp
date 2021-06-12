@@ -117,6 +117,20 @@ public class ARobjPlacement : MonoBehaviour
             frameCounter++;
             return;
         }
+        
+        if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
+            return;
+
+        // set float origin 
+        if (!MyMapsService.Projection.IsFloatingOriginSet)
+        {
+            MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
+            LocationService.Instance.longitude));
+        }
+        else
+        {
+            TryMoveFloatingOrigin();
+        }
 
         /*mLogger.Log(kTAG, $"My current location lat {LocationService.Instance.latitude}" +
             $" lon {LocationService.Instance.longitude}" +
@@ -289,6 +303,16 @@ public class ARobjPlacement : MonoBehaviour
 
     private void DestroyAllObjExceptOne(GameObject goToSave)
     {
+        if (TestGameObject1 != null && TestGameObject1 != goToSave)
+        {
+            Destroy(TestGameObject1);
+            mLogger.Log(kTAG, $"obj {TestGameObject1} destroyed");
+        }
+        if (TestGameObject2 != null && TestGameObject2 != goToSave)
+        {
+            Destroy(TestGameObject2);
+            mLogger.Log(kTAG, $"obj {TestGameObject2} destroyed");
+        }
         if (AlberoMuscoloso != null && AlberoMuscoloso != goToSave)
         {
             Destroy(AlberoMuscoloso);
@@ -353,6 +377,16 @@ public class ARobjPlacement : MonoBehaviour
 
     public static void DestroyAllObj()
     {
+        if (TestGameObject1 != null)
+        {
+            Destroy(TestGameObject1);
+            mLogger.Log(kTAG, $"obj {TestGameObject1} destroyed");
+        }
+        if (TestGameObject2 != null)
+        {
+            Destroy(TestGameObject2);
+            mLogger.Log(kTAG, $"obj {TestGameObject2} destroyed");
+        }
         if (AlberoMuscoloso != null)
         {
             Destroy(AlberoMuscoloso);
@@ -418,8 +452,7 @@ public class ARobjPlacement : MonoBehaviour
     {
         // reset maps origin before gps instantiation
         if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
-            return null;
-        
+            return null;        
         // set float origin 
         if (!MyMapsService.Projection.IsFloatingOriginSet)
         {
@@ -535,10 +568,9 @@ public class ARobjPlacement : MonoBehaviour
 
         // Reset the world's Floating Origin if (and only if) the Camera has moved far enough.
         //if (distance < FloatingOriginRange) 
-        if (distance < 2.0)
-        {
-            return;// false;
-        }
+        if (distance < 2.0f)
+            return;
+
         // The Camera's current position is given to MapsService's MoveFloatingOrigin function,
         // along with any GameObjects to move along with the world (which will at least be the the
         // Camera itself). This is so that the world, the Camera, and any extra GameObjects can all be
@@ -559,8 +591,6 @@ public class ARobjPlacement : MonoBehaviour
         mLogger.Log(kTAG, $"Floating Origin moved: world moved by {originOffset}, " +
             //$"with distance {distance} and range {FloatingOriginRange}");
             $"with distance {distance}");
-
-        //return true;
     }
     
 }
