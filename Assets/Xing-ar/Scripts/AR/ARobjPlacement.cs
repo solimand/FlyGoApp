@@ -451,6 +451,7 @@ public class ARobjPlacement : MonoBehaviour
     private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon, float alt)
     {
         // reset maps origin before gps instantiation
+        /*
         if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
             return null;        
         // set float origin 
@@ -464,6 +465,7 @@ public class ARobjPlacement : MonoBehaviour
             TryMoveFloatingOrigin();
         }
         //mLogger.Log(kTAG, "My latlng floating origin updated");
+        */
 
         // convert coordinates
         LatLng worldPos = new LatLng(lat, lon);
@@ -578,11 +580,11 @@ public class ARobjPlacement : MonoBehaviour
         // function automatically moves all geometry loaded by the Maps Service.
         Vector3 originOffset =
             //new origin based on GetCameraPositionOnGroundPlane
-            //MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
+            MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
 
             //new origin based on location service
-            MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
-                LocationService.Instance.longitude), AdditionalGameObjects);
+            /*MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
+                LocationService.Instance.longitude), AdditionalGameObjects);*/
         // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
         // moved away from this new origin, and the world needs to be recentered again.
         FloatingOrigin = newFloatingOrigin;
