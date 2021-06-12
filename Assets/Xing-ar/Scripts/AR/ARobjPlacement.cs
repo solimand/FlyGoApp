@@ -98,7 +98,6 @@ public class ARobjPlacement : MonoBehaviour
         arpm = GetComponent<ARPlaneManager>();
         // Store the initial position of the Camera on the ground plane.
         FloatingOrigin = GetCameraPositionOnGroundPlane();
-        //mLogger.Log(kTAG, $"My floating origin {FloatingOrigin}");
 
         // If no additional GameObjects have been set (to be moved when the world's Floating Origin is
         // recentered), set this array to be just Camera.main's GameObject. This is so that, by
@@ -420,19 +419,17 @@ public class ARobjPlacement : MonoBehaviour
         // reset maps origin before gps instantiation
         if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
             return null;
-        //reset the map service
-        MyMapsService = null;
-        MyMapsService = GetComponent<MapsService>();
+        
         // set float origin 
         if (!MyMapsService.Projection.IsFloatingOriginSet)
         {
             MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
             LocationService.Instance.longitude));
         }
-        /*else
+        else
         {
             TryMoveFloatingOrigin();
-        }*/
+        }
         //mLogger.Log(kTAG, "My latlng floating origin updated");
 
         // convert coordinates
@@ -530,7 +527,8 @@ public class ARobjPlacement : MonoBehaviour
         return result;
     }
 
-    private bool TryMoveFloatingOrigin(/*Vector3 moveAmount*/)
+    //private bool TryMoveFloatingOrigin(/*Vector3 moveAmount*/)
+    private void TryMoveFloatingOrigin(/*Vector3 moveAmount*/)
     {
         Vector3 newFloatingOrigin = GetCameraPositionOnGroundPlane();
         float distance = Vector3.Distance(FloatingOrigin, newFloatingOrigin);
@@ -539,7 +537,7 @@ public class ARobjPlacement : MonoBehaviour
         //if (distance < FloatingOriginRange) 
         if (distance < 2.0)
         {
-            return false;
+            return;// false;
         }
         // The Camera's current position is given to MapsService's MoveFloatingOrigin function,
         // along with any GameObjects to move along with the world (which will at least be the the
@@ -547,18 +545,22 @@ public class ARobjPlacement : MonoBehaviour
         // moved together, until the Camera is over the origin again. Note that the MoveFloatingOrigin
         // function automatically moves all geometry loaded by the Maps Service.
         Vector3 originOffset =
-            MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
-            //MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
-                //LocationService.Instance.longitude), AdditionalGameObjects);
+            //new origin based on GetCameraPositionOnGroundPlane
+            //MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
+
+            //new origin based on location service
+            MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
+                LocationService.Instance.longitude), AdditionalGameObjects);
         // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
         // moved away from this new origin, and the world needs to be recentered again.
         FloatingOrigin = newFloatingOrigin;
 
         // Optionally print a debug message, saying how much the Floating Origin was moved by.
         mLogger.Log(kTAG, $"Floating Origin moved: world moved by {originOffset}, " +
-            $"with distance {distance} and range {FloatingOriginRange}");
+            //$"with distance {distance} and range {FloatingOriginRange}");
+            $"with distance {distance}");
 
-        return true;
+        //return true;
     }
     
 }
