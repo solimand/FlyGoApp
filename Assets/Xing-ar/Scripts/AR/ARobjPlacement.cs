@@ -152,15 +152,16 @@ public class ARobjPlacement : MonoBehaviour
             {
                 // TODO update rotation in case of Front==true
                 //------------------TESTING----------------------------
-                case StaticLocations.testgo1Cell18:
+                case StaticLocations.testgo1Cell17:
                     frameCounter = 0;
                     if (TestGameObject1 == null)
-                    {                        
-                        TestGameObject1 = InstantiateAt(this.arpm, this.testObj1, 
-                            StaticLocations.testgo1Dist, StaticLocations.testgo1Alt);
-                        //TestGameObject1 = InstantiateAtGPS(testObj1,
-                            //StaticLocations.testgo1Lat, StaticLocations.testgo1Lon, 0f);
-                        TestGameObject1.transform.localScale += new Vector3(10f, 10f, 10f);
+                    {
+                        TestGameObject1 = InstantiateAtandRotate(this.arpm, this.testObj1, 
+                            StaticLocations.MedusaDist, StaticLocations.MedusaAlt);
+
+                        //TestGameObject1 = InstantiateAtGPS(testObj1,StaticLocations.testgo1Lat,
+                        //StaticLocations.testgo1Lon, 0f);
+                        //TestGameObject1.transform.localScale += new Vector3(20f, 20f, 20f);
                         DestroyAllObjExceptOne(TestGameObject1);
                     }
                     break;
@@ -178,7 +179,7 @@ public class ARobjPlacement : MonoBehaviour
                     break;
                 //------------------END_TESTING------------------------
 
-                case StaticLocations.AlberoMuscolosoCell18:
+                case StaticLocations.AlberoMuscolosoCell17:
                     frameCounter = 0;
                     if (AlberoMuscoloso == null)
                     {
@@ -188,107 +189,113 @@ public class ARobjPlacement : MonoBehaviour
                     }
                     break;
                 
-                case StaticLocations.ArciereCell18:
+                case StaticLocations.ArciereCell17:
                     frameCounter = 0;
                     if (Arciere == null)
                     {
-                        Arciere = InstantiateAt(this.arpm, this.arciereObj, 
+                        Arciere = InstantiateAtandRotate(this.arpm, this.arciereObj, 
                             StaticLocations.ArciereDist, StaticLocations.ArciereAlt);
+                        Arciere.transform.localScale += new Vector3(30f, 30f, 30f);
                         DestroyAllObjExceptOne(Arciere);
                     }
                     break;
                 
-                case StaticLocations.ChimeraCell18:
+                case StaticLocations.ChimeraCell17:
                     frameCounter = 0;
                     if (Chimera == null)
                     {
-                        Chimera = InstantiateAt(this.arpm, this.chimeraObj, 
+                        Chimera = InstantiateAtandRotate(this.arpm, this.chimeraObj, 
                             StaticLocations.ChimeraDist, StaticLocations.ChimeraAlt);
                         DestroyAllObjExceptOne(Chimera);
                     }
                     break;
                 
-                case StaticLocations.Chimera2Cell18:
+                case StaticLocations.Chimera2Cell17:
                     frameCounter = 0;
                     if (Chimera2 == null)
                     {
-                        Chimera2 = InstantiateAt(this.arpm, this.chimera2Obj, 
+                        Chimera2 = InstantiateAtandRotate(this.arpm, this.chimera2Obj, 
                             StaticLocations.Chimera2Dist, StaticLocations.Chimera2Alt);
                         DestroyAllObjExceptOne(Chimera2);
                     }
                     break;
                 
-                case StaticLocations.Chimera3Cell18:
+                case StaticLocations.Chimera3Cell17:
                     frameCounter = 0;
                     if (Chimera3 == null)
                     {
-                        Chimera3 = InstantiateAt(this.arpm, this.chimera3Obj, 
+                        Chimera3 = InstantiateAtandRotate(this.arpm, this.chimera3Obj, 
                             StaticLocations.Chimera3Dist, StaticLocations.Chimera3Alt);
                         DestroyAllObjExceptOne(Chimera3);
                     }
                     break;
                 
-                case StaticLocations.ScagliaPietraCell18:
+                case StaticLocations.ScagliaPietraCell17:
                     frameCounter = 0;
                     if (ScagliaPietra == null)
                     {
                         ScagliaPietra = InstantiateAt(this.arpm, this.scagliaPietraObj, 
                             StaticLocations.ScagliaPietraDist, StaticLocations.ScagliaPietraAlt);
+                        ScagliaPietra.transform.localScale += new Vector3(30f, 30f, 30f);
                         DestroyAllObjExceptOne(ScagliaPietra);
                     }
                     break;
                 
-                case StaticLocations.ScagliaPietra2Cell18:
+                case StaticLocations.ScagliaPietra2Cell17:
                     frameCounter = 0;
                     if (ScagliaPietra2 == null)
                     {
                         ScagliaPietra2 = InstantiateAt(this.arpm, this.scagliaPietra2Obj, 
                             StaticLocations.ScagliaPietra2Dist, StaticLocations.ScagliaPietra2Alt);
+                        ScagliaPietra2.transform.localScale += new Vector3(30f, 30f, 30f);
                         DestroyAllObjExceptOne(ScagliaPietra2);
                     }
                     break;
                 
-                case StaticLocations.PietreForateCell18:
+                case StaticLocations.PietreForateCell17:
                     frameCounter = 0;
                     if (PietreForate == null)
                     {
                         PietreForate = InstantiateAt(this.arpm, this.pietreForateObj, 
                             StaticLocations.PietreForateDist, StaticLocations.PietreForateAlt);
+                        PietreForate.transform.localScale += new Vector3(10f, 10f, 10f);
                         DestroyAllObjExceptOne(PietreForate);
                     }
                     break;
                 
-                case StaticLocations.MedusaCell18:
+                case StaticLocations.MedusaCell17:
                     frameCounter = 0;
                     if (Medusa == null)
                     {
-                        Medusa = InstantiateAt(this.arpm, this.medusaObj, 
+                        Medusa = InstantiateAtandRotate(this.arpm, this.medusaObj, 
                             StaticLocations.MedusaDist, StaticLocations.MedusaAlt);
                         DestroyAllObjExceptOne(Medusa);
                     }
                     break;
                 
-                case StaticLocations.SpiritoFuocoCell18:
+                case StaticLocations.SpiritoFuocoCell17:
                     frameCounter = 0;
                     if (SpiritoFuoco == null)
                     {
-                        SpiritoFuoco = InstantiateAt(this.arpm, this.spiritoFuocoObj, 
+                        SpiritoFuoco = InstantiateAtandRotate(this.arpm, this.spiritoFuocoObj, 
                             StaticLocations.SpiritoFuocoDist, StaticLocations.SpiritoFuocoAlt);
+                        SpiritoFuoco.transform.localScale += new Vector3(20f, 20f, 20f);
                         DestroyAllObjExceptOne(SpiritoFuoco);
                     }
                     break;
                 
-                case StaticLocations.SerpentePietraCell18:
+                case StaticLocations.SerpentePietraCell17:
                     frameCounter = 0;
                     if (SerpentePietra == null)
                     {
                         SerpentePietra = InstantiateAt(this.arpm, this.serpentePietraObj, 
                             StaticLocations.SerpentePietraDist, StaticLocations.SerpentePietraAlt);
+                        SerpentePietra.transform.localScale += new Vector3(20f, 20f, 20f);
                         DestroyAllObjExceptOne(SerpentePietra);
                     }
                     break;
                 
-                case StaticLocations.BuddhaCell18:
+                case StaticLocations.BuddhaCell17:
                     frameCounter = 0;
                     if (Buddha == null)
                     {
@@ -504,7 +511,6 @@ public class ARobjPlacement : MonoBehaviour
             var forward = Camera.main.transform.position
                 + Camera.main.transform.forward * meters
                 + Camera.main.transform.up * altitude;
-            //forward += new Vector3(0, 1f, 0);
             //forward += new Vector3(0, altitude, 0);
             
             //detect plane to trigger the placement
@@ -515,10 +521,8 @@ public class ARobjPlacement : MonoBehaviour
                 break;
             
             //place object at X meters
-            result = Instantiate(objRef, forward, 
+            result = Instantiate(objRef, forward,
                 transform.rotation * Quaternion.identity) as GameObject;
-                //Quaternion.identity) as GameObject;
-                //result.transform.LookAt(Camera.main.transform);
             // Add an ARAnchor component if it doesn't have one already
             if (result.GetComponent<ARAnchor>() == null)
             {
@@ -541,7 +545,51 @@ public class ARobjPlacement : MonoBehaviour
             return null;
         }
     }
-   
+
+    private GameObject InstantiateAtandRotate(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
+    {
+        GameObject result;
+        if (arpm)
+        {
+            //Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * meters;
+            var forward = Camera.main.transform.position
+                + Camera.main.transform.forward * meters
+                + Camera.main.transform.up * altitude;
+            //forward += new Vector3(0, altitude, 0);
+
+            //detect plane to trigger the placement
+            if (arpm.trackables.count == 0)
+                return null;
+
+            foreach (var plane in arpm.trackables)
+                break;
+
+            //place object at X meters
+            result = Instantiate(objRef, forward,
+                transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
+            // Add an ARAnchor component if it doesn't have one already
+            if (result.GetComponent<ARAnchor>() == null)
+            {
+                result.AddComponent<ARAnchor>();
+            }
+            mLogger.Log(kTAG, $"Obj {objRef} placed at {forward}" +
+                $" with anchor {result.GetComponent<ARAnchor>()}");
+
+            AudioSource audioSource = result.GetComponent<AudioSource>();
+            if (audioSource != null)
+                audioSource.Play(0);
+            mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+                $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
+
+            return result;
+        }
+        else
+        {
+            mLogger.Log(kTAG, "ARPlanemanager problems");
+            return null;
+        }
+    }
+
     public void SetAdditionalGameObjects(ICollection<GameObject> objects)
     {
         // Check to see if the main Camera's GameObject is already a part of this given set of

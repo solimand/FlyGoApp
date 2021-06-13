@@ -139,17 +139,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 80fe289fb4b34ec4485c398936aea74a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80fe289fb4b34ec4485c398936aea74a,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80fe289fb4b34ec4485c398936aea74a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80fe289fb4b34ec4485c398936aea74a,
         type: 3}
@@ -1089,13 +1089,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87976c24d79b1d45bec7aa109f05e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testObj1: {fileID: 1667002658}
+  testObj1: {fileID: 544172274}
   testObj2: {fileID: 1486095783}
   alberoMuscolosoObj: {fileID: 1667002658}
   arciereObj: {fileID: 1486095783}
-  chimeraObj: {fileID: 0}
-  chimera2Obj: {fileID: 0}
-  chimera3Obj: {fileID: 0}
+  chimeraObj: {fileID: 223974226}
+  chimera2Obj: {fileID: 1308034610}
+  chimera3Obj: {fileID: 222009350}
   scagliaPietraObj: {fileID: 1867669166}
   scagliaPietra2Obj: {fileID: 968950985}
   pietreForateObj: {fileID: 1477537587}
@@ -1361,12 +1361,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9da0be569bcf9b092993efb9f0cd6d50,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 3.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9da0be569bcf9b092993efb9f0cd6d50,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.663
+      value: -2.089
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9da0be569bcf9b092993efb9f0cd6d50,
         type: 3}
@@ -1412,6 +1412,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MEDUSA
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 9da0be569bcf9b092993efb9f0cd6d50,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 9da0be569bcf9b092993efb9f0cd6d50,
         type: 3}
@@ -1543,17 +1548,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 241e8cdd20081f44e802ed141eac266d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 241e8cdd20081f44e802ed141eac266d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 241e8cdd20081f44e802ed141eac266d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 241e8cdd20081f44e802ed141eac266d,
         type: 3}
@@ -1824,17 +1829,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9dd4c99b6fbc5ac43a7ebc1448a4af59,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9dd4c99b6fbc5ac43a7ebc1448a4af59,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9dd4c99b6fbc5ac43a7ebc1448a4af59,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9dd4c99b6fbc5ac43a7ebc1448a4af59,
         type: 3}
@@ -2164,7 +2169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9117d03548c9eb46924a3aeb6d76ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BackButton: {fileID: 0}
 --- !u!1 &1206814396
 GameObject:
   m_ObjectHideFlags: 0
