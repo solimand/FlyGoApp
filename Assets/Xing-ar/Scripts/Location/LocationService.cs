@@ -23,7 +23,7 @@ public class LocationService : MonoBehaviour
     /// Using higher value like 500 usually does not require to turn GPS chip on and thus saves battery power. 
     /// Values like 5-10 could be used for getting best accuracy. Default value is 10 meters.
     /// </summary>
-    private const float desiredAccuracyInMeters = 7f;
+    private const float desiredAccuracyInMeters = 5f;
     /// <summary>
     /// minimum distance (measured in meters) a device must move laterally before Input.location property is updated. 
     /// Higher values like 500 imply less overhead. Default is 10 meters

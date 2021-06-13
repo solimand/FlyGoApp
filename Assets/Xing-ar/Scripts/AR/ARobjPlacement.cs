@@ -67,7 +67,7 @@ public class ARobjPlacement : MonoBehaviour
     public static MapsService MyMapsService { get; set; }
     private S2Geofence s2geo;
     public static string geoFenceCell;
-    private const int DESIRED_LVL = 18; // S2Cell precision level
+    private const int DESIRED_LVL = 17; // S2Cell precision level
 
     //FLOATING ORIGIN-----------
     ///Distance in meters the Camera should move before the world's Floating Origin is reset
@@ -139,7 +139,7 @@ public class ARobjPlacement : MonoBehaviour
         geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
                   LocationService.Instance.longitude, DESIRED_LVL);
         /*geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
-            LocationService.Instance.longitude, 17);*/
+            LocationService.Instance.longitude, 18);*/
 
         if (geoFenceCell == "N")    //out of geofence
         {            
@@ -156,10 +156,10 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (TestGameObject1 == null)
                     {                        
-                        //TestGameObject1 = InstantiateAt(this.arpm, this.testObj1, 
-                            //StaticLocations.testgo1Dist, StaticLocations.testgo1Alt);
-                        TestGameObject1 = InstantiateAtGPS(testObj1,
-                            StaticLocations.testgo1Lat, StaticLocations.testgo1Lon, 0f);
+                        TestGameObject1 = InstantiateAt(this.arpm, this.testObj1, 
+                            StaticLocations.testgo1Dist, StaticLocations.testgo1Alt);
+                        //TestGameObject1 = InstantiateAtGPS(testObj1,
+                            //StaticLocations.testgo1Lat, StaticLocations.testgo1Lon, 0f);
                         TestGameObject1.transform.localScale += new Vector3(10f, 10f, 10f);
                         DestroyAllObjExceptOne(TestGameObject1);
                     }
@@ -168,8 +168,11 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (TestGameObject2 == null)
                     {
-                        TestGameObject2 = InstantiateAtGPS(testObj2,
-                            StaticLocations.testgo2Lat, StaticLocations.testgo2Lon, 0f);
+                        //TestGameObject2 = InstantiateAtGPS(testObj2,
+                            //StaticLocations.testgo2Lat, StaticLocations.testgo2Lon, 0f);
+                        TestGameObject2 = InstantiateAt(this.arpm, testObj2,
+                            StaticLocations.testgo2Dist, StaticLocations.testgo2Alt);
+                        TestGameObject2.transform.localScale += new Vector3(10f, 10f, 10f);
                         DestroyAllObjExceptOne(TestGameObject2);
                     }
                     break;
