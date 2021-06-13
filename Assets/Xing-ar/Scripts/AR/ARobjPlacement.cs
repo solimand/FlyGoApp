@@ -160,6 +160,7 @@ public class ARobjPlacement : MonoBehaviour
                             //StaticLocations.testgo1Dist, StaticLocations.testgo1Alt);
                         TestGameObject1 = InstantiateAtGPS(testObj1,
                             StaticLocations.testgo1Lat, StaticLocations.testgo1Lon, 0f);
+                        TestGameObject1.transform.localScale += new Vector3(10f, 10f, 10f);
                         DestroyAllObjExceptOne(TestGameObject1);
                     }
                     break;

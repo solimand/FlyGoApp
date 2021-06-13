@@ -6,7 +6,7 @@ public class BackButton : MonoBehaviour
     //LOGGER
     private const string kTAG = "BackButton";
     private static ILogger mLogger = Debug.unityLogger;
-    
+
     [SerializeField]
     GameObject m_BackButton;
     public GameObject backButton
@@ -27,9 +27,7 @@ public class BackButton : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            BackButtonPressed();
-        }
+            Application.Quit();
     }
 
     public void ReloadButtonPressed()
