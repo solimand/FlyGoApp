@@ -9,7 +9,7 @@ using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARRaycastManager))]
 [RequireComponent(typeof(MapsService))]
-public class ARobjPlacement : MonoBehaviour
+public class ARobjPlacementGPS : MonoBehaviour
 {
     //LOGGER-----------
     private const string kTAG = "ARobjPlacement";
@@ -156,8 +156,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (TestGameObject1 == null)
                     {
-                        TestGameObject1 = InstantiateAtandRotate(this.arpm, this.testObj1, 
-                            StaticLocations.MedusaDist, StaticLocations.MedusaAlt);
+                        TestGameObject1 = InstantiateAtGPSandRotate(this.testObj1, 
+                            StaticLocations.testgo1Lat, StaticLocations.testgo1Lon, StaticLocations.MedusaAlt);
 
                         //TestGameObject1 = InstantiateAtGPS(testObj1,StaticLocations.testgo1Lat,
                         //StaticLocations.testgo1Lon, 0f);
@@ -169,10 +169,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (TestGameObject2 == null)
                     {
-                        //TestGameObject2 = InstantiateAtGPS(testObj2,
-                            //StaticLocations.testgo2Lat, StaticLocations.testgo2Lon, 0f);
-                        TestGameObject2 = InstantiateAt(this.arpm, testObj2,
-                            StaticLocations.testgo2Dist, StaticLocations.testgo2Alt);
+                        TestGameObject2 = InstantiateAtGPSandRotate(this.testObj1,
+                            StaticLocations.testgo2Lat, StaticLocations.testgo2Lon, StaticLocations.ArciereAlt);
                         TestGameObject2.transform.localScale += new Vector3(10f, 10f, 10f);
                         DestroyAllObjExceptOne(TestGameObject2);
                     }
@@ -183,8 +181,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (AlberoMuscoloso == null)
                     {
-                        AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
-                            StaticLocations.AlberoMuscolosoDist, StaticLocations.AlberoMuscolosoAlt);
+                        AlberoMuscoloso = InstantiateAtGPS(this.alberoMuscolosoObj, 
+                            StaticLocations.AlberoMuscolosoLat, StaticLocations.AlberoMuscolosoLon, StaticLocations.AlberoMuscolosoAlt);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
                     break;
@@ -193,8 +191,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (Arciere == null)
                     {
-                        Arciere = InstantiateAtandRotate(this.arpm, this.arciereObj, 
-                            StaticLocations.ArciereDist, StaticLocations.ArciereAlt);
+                        Arciere = InstantiateAtGPSandRotate(this.arciereObj, 
+                            StaticLocations.ArciereLat, StaticLocations.ArciereLon, StaticLocations.ArciereAlt);
                         Arciere.transform.localScale += new Vector3(30f, 30f, 30f);
                         DestroyAllObjExceptOne(Arciere);
                     }
@@ -204,8 +202,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (Chimera == null)
                     {
-                        Chimera = InstantiateAtandRotate(this.arpm, this.chimeraObj, 
-                            StaticLocations.ChimeraDist, StaticLocations.ChimeraAlt);
+                        Chimera = InstantiateAtGPSandRotate(this.chimeraObj, 
+                            StaticLocations.ChimeraLat, StaticLocations.ChimeraLon, StaticLocations.ChimeraAlt);
                         DestroyAllObjExceptOne(Chimera);
                     }
                     break;
@@ -214,8 +212,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (Chimera2 == null)
                     {
-                        Chimera2 = InstantiateAtandRotate(this.arpm, this.chimera2Obj, 
-                            StaticLocations.Chimera2Dist, StaticLocations.Chimera2Alt);
+                        Chimera2 = InstantiateAtGPSandRotate(this.chimera2Obj, 
+                            StaticLocations.Chimera2Lat, StaticLocations.Chimera2Lon, StaticLocations.Chimera2Alt);
                         DestroyAllObjExceptOne(Chimera2);
                     }
                     break;
@@ -224,8 +222,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (Chimera3 == null)
                     {
-                        Chimera3 = InstantiateAtandRotate(this.arpm, this.chimera3Obj, 
-                            StaticLocations.Chimera3Dist, StaticLocations.Chimera3Alt);
+                        Chimera3 = InstantiateAtGPSandRotate(this.chimera3Obj, 
+                            StaticLocations.Chimera3Lat, StaticLocations.Chimera3Lon, StaticLocations.Chimera3Alt);
                         DestroyAllObjExceptOne(Chimera3);
                     }
                     break;
@@ -234,8 +232,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (ScagliaPietra == null)
                     {
-                        ScagliaPietra = InstantiateAt(this.arpm, this.scagliaPietraObj, 
-                            StaticLocations.ScagliaPietraDist, StaticLocations.ScagliaPietraAlt);
+                        ScagliaPietra = InstantiateAtGPS(this.scagliaPietraObj, 
+                            StaticLocations.ScagliaPietraLat, StaticLocations.ScagliaPietraLon, StaticLocations.ScagliaPietraAlt);
                         ScagliaPietra.transform.localScale += new Vector3(30f, 30f, 30f);
                         DestroyAllObjExceptOne(ScagliaPietra);
                     }
@@ -245,8 +243,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (ScagliaPietra2 == null)
                     {
-                        ScagliaPietra2 = InstantiateAt(this.arpm, this.scagliaPietra2Obj, 
-                            StaticLocations.ScagliaPietra2Dist, StaticLocations.ScagliaPietra2Alt);
+                        ScagliaPietra2 = InstantiateAtGPS(this.scagliaPietra2Obj, 
+                            StaticLocations.ScagliaPietra2Lat, StaticLocations.ScagliaPietra2Lon, StaticLocations.ScagliaPietra2Alt);
                         ScagliaPietra2.transform.localScale += new Vector3(30f, 30f, 30f);
                         DestroyAllObjExceptOne(ScagliaPietra2);
                     }
@@ -256,8 +254,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (PietreForate == null)
                     {
-                        PietreForate = InstantiateAt(this.arpm, this.pietreForateObj, 
-                            StaticLocations.PietreForateDist, StaticLocations.PietreForateAlt);
+                        PietreForate = InstantiateAtGPS(this.pietreForateObj, 
+                            StaticLocations.PietreForateLat, StaticLocations.PietreForateLon, StaticLocations.PietreForateAlt);
                         PietreForate.transform.localScale += new Vector3(10f, 10f, 10f);
                         DestroyAllObjExceptOne(PietreForate);
                     }
@@ -267,8 +265,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (Medusa == null)
                     {
-                        Medusa = InstantiateAtandRotate(this.arpm, this.medusaObj, 
-                            StaticLocations.MedusaDist, StaticLocations.MedusaAlt);
+                        Medusa = InstantiateAtGPSandRotate(this.medusaObj, 
+                            StaticLocations.MedusaLat, StaticLocations.MedusaLon, StaticLocations.MedusaAlt);
                         DestroyAllObjExceptOne(Medusa);
                     }
                     break;
@@ -277,8 +275,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (SpiritoFuoco == null)
                     {
-                        SpiritoFuoco = InstantiateAtandRotate(this.arpm, this.spiritoFuocoObj, 
-                            StaticLocations.SpiritoFuocoDist, StaticLocations.SpiritoFuocoAlt);
+                        SpiritoFuoco = InstantiateAtGPSandRotate(this.spiritoFuocoObj, 
+                            StaticLocations.SpiritoFuocoLat, StaticLocations.SpiritoFuocoLon, StaticLocations.SpiritoFuocoAlt);
                         SpiritoFuoco.transform.localScale += new Vector3(20f, 20f, 20f);
                         DestroyAllObjExceptOne(SpiritoFuoco);
                     }
@@ -288,8 +286,8 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (SerpentePietra == null)
                     {
-                        SerpentePietra = InstantiateAt(this.arpm, this.serpentePietraObj, 
-                            StaticLocations.SerpentePietraDist, StaticLocations.SerpentePietraAlt);
+                        SerpentePietra = InstantiateAtGPS(this.serpentePietraObj, 
+                            StaticLocations.SerpentePietraLat, StaticLocations.SerpentePietraLon, StaticLocations.SerpentePietraAlt);
                         SerpentePietra.transform.localScale += new Vector3(20f, 20f, 20f);
                         DestroyAllObjExceptOne(SerpentePietra);
                     }
@@ -461,23 +459,6 @@ public class ARobjPlacement : MonoBehaviour
     }        
     private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon, float alt)
     {
-        // reset maps origin before gps instantiation
-        /*
-        if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
-            return null;        
-        // set float origin 
-        if (!MyMapsService.Projection.IsFloatingOriginSet)
-        {
-            MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
-            LocationService.Instance.longitude));
-        }
-        else
-        {
-            TryMoveFloatingOrigin();
-        }
-        //mLogger.Log(kTAG, "My latlng floating origin updated");
-        */
-
         // convert coordinates
         LatLng worldPos = new LatLng(lat, lon);
         Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
@@ -498,6 +479,32 @@ public class ARobjPlacement : MonoBehaviour
             audioSource.Play(0);
         mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
             $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
+
+        return result;
+    }
+    
+    private GameObject InstantiateAtGPSandRotate(GameObject objRef, float lat, float lon, float alt)
+    {
+        // convert coordinates
+        LatLng worldPos = new LatLng(lat, lon);
+        Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
+        //unityPos -= new Vector3(0, 0.5f, 0);
+        unityPos += new Vector3(0, alt, 0);
+        GameObject result = Instantiate(objRef, unityPos, transform.rotation * Quaternion.Euler(0f, 180f, 0f)) 
+            as GameObject;
+
+        if (result.GetComponent<ARAnchor>() == null)
+        {
+            result.AddComponent<ARAnchor>();
+        }
+        mLogger.Log(kTAG, $"Obj {objRef} placed at {unityPos}" +
+                          $" with anchor {result.GetComponent<ARAnchor>()}");
+        
+        AudioSource audioSource = result.GetComponent<AudioSource>();
+        if (audioSource != null)
+            audioSource.Play(0);
+        mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
+                          $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
 
         return result;
     }
@@ -632,11 +639,11 @@ public class ARobjPlacement : MonoBehaviour
         // function automatically moves all geometry loaded by the Maps Service.
         Vector3 originOffset =
             //new origin based on GetCameraPositionOnGroundPlane
-            MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
+            //MyMapsService.MoveFloatingOrigin(newFloatingOrigin, AdditionalGameObjects);
 
             //new origin based on location service
-            /*MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
-                LocationService.Instance.longitude), AdditionalGameObjects);*/
+            MyMapsService.MoveFloatingOrigin(new LatLng(LocationService.Instance.latitude,
+                LocationService.Instance.longitude), AdditionalGameObjects);
         // Set the new Camera origin. This ensures that we can accurately tell when the Camera has
         // moved away from this new origin, and the world needs to be recentered again.
         FloatingOrigin = newFloatingOrigin;
