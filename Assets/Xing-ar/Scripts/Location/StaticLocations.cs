@@ -15,7 +15,7 @@ public sealed class StaticLocations
     // TEST 44.48256081468141, 11.375324649466517 (18-477e2b3a19) ; 44.48316908981307, 11.37570335190113 (18-477e2b39f5)
     // 44.48737759542787, 11.330448004800237 (17-477fd4ee74) ; 44.487504223125164, 11.329400995370172 (17-477fd4ee04)
     public const float testgo1Lat = 44.48737759542787f; public const float testgo1Lon = 11.330448004800237f;
-    public const string testgo1Cell18 = "477e2b3a1b"; public const string testgo1Cell17 = "477fd4ee74";
+    public const string testgo1Cell18 = "477e2b3a1b"; public const string testgo1Cell17 = "477e2b3a1c";
     public const float testgo1Alt = 0f; public const int testgo1Dist = 3;
     public const float testgo2Lat = 44.487504223125164f; public const float testgo2Lon = 11.329400995370172f;
     public const string testgo2Cell18 = "477e2b39f5"; public const string testgo2Cell17 = "477fd4ee04";
@@ -58,7 +58,7 @@ public sealed class StaticLocations
     public const float AlberoMuscolosoLat = 44.5023606292688f; public const float AlberoMuscolosoLon = 11.2877142056823f;
     public const string AlberoMuscolosoCell18 = "477fd410a1";
     public const string AlberoMuscolosoCell17 = "477fd4109c";
-    public const int AlberoMuscolosoDist = 2;
+    public const int AlberoMuscolosoDist = 5;
     public const float AlberoMuscolosoAlt = 0.0f;
     public const bool AlberoMuscolosoFront = false;
 

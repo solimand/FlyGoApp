@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Google.Common.Geometry;
-using System.Linq; //for ToArray()
+using System.Linq;
 
 class S2Geofence
 {
@@ -39,7 +39,7 @@ class S2Geofence
         return "N";
     }
 
-    // get cells from 15 to 19 (if one of these is a geofence of a GO, instantiate it)
+    // get cells from MIN to MAX (if one of these is a geofence of a GO, instantiate it)
     public string[] AmIinGeoFence(double lat, double lon)
     {
         string[] result = null;

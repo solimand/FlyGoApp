@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44658822, g: 0.49642307, b: 0.5748253, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87976c24d79b1d45bec7aa109f05e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testObj1: {fileID: 544172274}
+  testObj1: {fileID: 1667002658}
   testObj2: {fileID: 1486095783}
   alberoMuscolosoObj: {fileID: 1667002658}
   arciereObj: {fileID: 1486095783}

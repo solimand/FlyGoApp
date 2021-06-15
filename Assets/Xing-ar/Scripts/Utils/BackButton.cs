@@ -7,25 +7,10 @@ public class BackButton : MonoBehaviour
     private const string kTAG = "BackButton";
     private static ILogger mLogger = Debug.unityLogger;
 
-    /*
-    [SerializeField]
-    GameObject m_BackButton;
-    public GameObject backButton
-    {
-        get => m_BackButton;
-        set => m_BackButton = value;
-    }
-    */
 
     void Start()
     {
         mLogger = new Logger(new MyLogHandler());
-       /*
-        if (Application.CanStreamedLevelBeLoaded("Menu"))
-        {
-            m_BackButton.SetActive(true);
-        }
-       */
     }
 
     void Update()

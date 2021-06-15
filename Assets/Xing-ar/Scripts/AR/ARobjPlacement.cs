@@ -156,9 +156,9 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (TestGameObject1 == null)
                     {
-                        TestGameObject1 = InstantiateAtandRotate(this.arpm, this.testObj1, 
-                            StaticLocations.MedusaDist, StaticLocations.MedusaAlt);
-
+                        TestGameObject1 = InstantiateAt(this.arpm, this.testObj1,
+                            StaticLocations.AlberoMuscolosoDist, StaticLocations.AlberoMuscolosoAlt);
+                        TestGameObject1.transform.localScale += new Vector3(5f, 5f, 5f);
                         //TestGameObject1 = InstantiateAtGPS(testObj1,StaticLocations.testgo1Lat,
                         //StaticLocations.testgo1Lon, 0f);
                         //TestGameObject1.transform.localScale += new Vector3(20f, 20f, 20f);
@@ -185,6 +185,7 @@ public class ARobjPlacement : MonoBehaviour
                     {
                         AlberoMuscoloso = InstantiateAt(this.arpm, this.alberoMuscolosoObj, 
                             StaticLocations.AlberoMuscolosoDist, StaticLocations.AlberoMuscolosoAlt);
+                        AlberoMuscoloso.transform.localScale += new Vector3(5f, 5f, 5f);
                         DestroyAllObjExceptOne(AlberoMuscoloso);
                     }
                     break;
