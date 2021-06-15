@@ -18,8 +18,8 @@ public class UpdateGPScamera : MonoBehaviour
     {
         coordinates.text = //"Lat: " + LocationService.Instance.latitude.ToString() +
                            //", Lon: " + LocationService.Instance.longitude.ToString() +
-                           " S2 Cell-vector: " + ARobjPlacement.geoFenceCell+
-                           " S2 Cell-gps: " + ARobjPlacementGPS.geoFenceCell;
+                            //" S2 Cell-gps: " + ARobjPlacementGPS.geoFenceCell +
+                            " S2 Cell: " + ARobjPlacement.geoFenceCell;
                            //" S2 Cell: " + S2Geofence.CellIdFromCoord(LocationService.Instance.latitude, LocationService.Instance.longitude,18);
             /*
             + ", Alt: " + LocationService.Instance.altitude.ToString() +
