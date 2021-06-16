@@ -141,7 +141,7 @@ public class ARobjPlacement : MonoBehaviour
         /*geoFenceCell = s2geo.AmIinCellId(LocationService.Instance.latitude,
             LocationService.Instance.longitude, 18);*/
 
-        if (geoFenceCell == "N")    //out of geofence
+        if (geoFenceCell == StaticLocations.NO_ZONE)    //out of geofence
         {            
             DestroyAllObj();
             return;
@@ -159,9 +159,6 @@ public class ARobjPlacement : MonoBehaviour
                         TestGameObject1 = InstantiateAt(this.arpm, this.testObj1,
                             StaticLocations.AlberoMuscolosoDist, StaticLocations.AlberoMuscolosoAlt);
                         TestGameObject1.transform.localScale += new Vector3(5f, 5f, 5f);
-                        //TestGameObject1 = InstantiateAtGPS(testObj1,StaticLocations.testgo1Lat,
-                        //StaticLocations.testgo1Lon, 0f);
-                        //TestGameObject1.transform.localScale += new Vector3(20f, 20f, 20f);
                         DestroyAllObjExceptOne(TestGameObject1);
                     }
                     break;
@@ -169,8 +166,6 @@ public class ARobjPlacement : MonoBehaviour
                     frameCounter = 0;
                     if (TestGameObject2 == null)
                     {
-                        //TestGameObject2 = InstantiateAtGPS(testObj2,
-                            //StaticLocations.testgo2Lat, StaticLocations.testgo2Lon, 0f);
                         TestGameObject2 = InstantiateAt(this.arpm, testObj2,
                             StaticLocations.testgo2Dist, StaticLocations.testgo2Alt);
                         TestGameObject2.transform.localScale += new Vector3(10f, 10f, 10f);
@@ -460,49 +455,7 @@ public class ARobjPlacement : MonoBehaviour
             mLogger.Log(kTAG, $"obj {Arciere} destroyed");
         }
     }        
-    private GameObject InstantiateAtGPS(GameObject objRef, float lat, float lon, float alt)
-    {
-        // reset maps origin before gps instantiation
-        /*
-        if (LocationService.Instance.latitude == 0 || LocationService.Instance.longitude == 0) //not set yet
-            return null;        
-        // set float origin 
-        if (!MyMapsService.Projection.IsFloatingOriginSet)
-        {
-            MyMapsService.InitFloatingOrigin(new LatLng(LocationService.Instance.latitude,
-            LocationService.Instance.longitude));
-        }
-        else
-        {
-            TryMoveFloatingOrigin();
-        }
-        //mLogger.Log(kTAG, "My latlng floating origin updated");
-        */
-
-        // convert coordinates
-        LatLng worldPos = new LatLng(lat, lon);
-        Vector3 unityPos = MyMapsService.Projection.FromLatLngToVector3(worldPos);
-        //unityPos -= new Vector3(0, 0.5f, 0);
-        unityPos += new Vector3(0, alt, 0);
-        GameObject result = Instantiate(objRef, unityPos, transform.rotation * Quaternion.identity) 
-            as GameObject;
-
-        if (result.GetComponent<ARAnchor>() == null)
-        {
-            result.AddComponent<ARAnchor>();
-        }
-        mLogger.Log(kTAG, $"Obj {objRef} placed at {unityPos}" +
-            $" with anchor {result.GetComponent<ARAnchor>()}");
-        
-        AudioSource audioSource = result.GetComponent<AudioSource>();
-        if (audioSource != null)
-            audioSource.Play(0);
-        mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
-            $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
-
-        return result;
-    }
-
+    
     private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
     {
         GameObject result;

@@ -36,7 +36,8 @@ class S2Geofence
             return currCell;
         }
         //Debug.Log($"You are in the cellid {currCell}");
-        return "N";
+        //return "N";
+        return StaticLocations.NO_ZONE;
     }
 
     // get cells from MIN to MAX (if one of these is a geofence of a GO, instantiate it)

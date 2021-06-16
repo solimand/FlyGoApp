@@ -12,6 +12,8 @@ public sealed class StaticLocations
         ScagliaPietraCell17, ScagliaPietra2Cell17, "",
     };
 
+    public static string NO_ZONE = "----------";
+
     // TEST 44.48256081468141, 11.375324649466517 (18-477e2b3a19) ; 44.48316908981307, 11.37570335190113 (18-477e2b39f5)
     // 44.48737759542787, 11.330448004800237 (17-477fd4ee74) ; 44.487504223125164, 11.329400995370172 (17-477fd4ee04)
     public const float testgo1Lat = 44.48737759542787f; public const float testgo1Lon = 11.330448004800237f;

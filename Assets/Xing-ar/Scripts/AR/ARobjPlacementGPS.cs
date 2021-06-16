@@ -297,8 +297,8 @@ public class ARobjPlacementGPS : MonoBehaviour
                     frameCounter = 0;
                     if (Buddha == null)
                     {
-                        Buddha = InstantiateAt(this.arpm, this.buddhaObj, 
-                            StaticLocations.BuddhaDist, StaticLocations.BuddhaAlt);
+                        Buddha = InstantiateAtGPS(this.buddhaObj, 
+                            StaticLocations.BuddhaLat, StaticLocations.BuddhaLon, StaticLocations.BuddhaAlt);
                         DestroyAllObjExceptOne(Buddha);
                     }
                     break;
@@ -509,94 +509,7 @@ public class ARobjPlacementGPS : MonoBehaviour
         return result;
     }
 
-    private GameObject InstantiateAt(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
-    {
-        GameObject result;
-        if (arpm)
-        {
-            //Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * meters;
-            var forward = Camera.main.transform.position
-                + Camera.main.transform.forward * meters
-                + Camera.main.transform.up * altitude;
-            //forward += new Vector3(0, altitude, 0);
-            
-            //detect plane to trigger the placement
-            if (arpm.trackables.count == 0)
-                return null;
-            
-            foreach (var plane in arpm.trackables)
-                break;
-            
-            //place object at X meters
-            result = Instantiate(objRef, forward,
-                transform.rotation * Quaternion.identity) as GameObject;
-            // Add an ARAnchor component if it doesn't have one already
-            if (result.GetComponent<ARAnchor>() == null)
-            {
-                result.AddComponent<ARAnchor>();
-            }
-            mLogger.Log(kTAG, $"Obj {objRef} placed at {forward}" +
-                $" with anchor {result.GetComponent<ARAnchor>()}");
-
-            AudioSource audioSource = result.GetComponent<AudioSource>();
-            if (audioSource != null)
-                audioSource.Play(0);
-            mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
-                $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
-            
-            return result;
-        }
-        else
-        {
-            mLogger.Log(kTAG, "ARPlanemanager problems");
-            return null;
-        }
-    }
-
-    private GameObject InstantiateAtandRotate(ARPlaneManager arpm, GameObject objRef, int meters, float altitude)
-    {
-        GameObject result;
-        if (arpm)
-        {
-            //Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * meters;
-            var forward = Camera.main.transform.position
-                + Camera.main.transform.forward * meters
-                + Camera.main.transform.up * altitude;
-            //forward += new Vector3(0, altitude, 0);
-
-            //detect plane to trigger the placement
-            if (arpm.trackables.count == 0)
-                return null;
-
-            foreach (var plane in arpm.trackables)
-                break;
-
-            //place object at X meters
-            result = Instantiate(objRef, forward,
-                transform.rotation * Quaternion.Euler(0f, 180f, 0f)) as GameObject;
-            // Add an ARAnchor component if it doesn't have one already
-            if (result.GetComponent<ARAnchor>() == null)
-            {
-                result.AddComponent<ARAnchor>();
-            }
-            mLogger.Log(kTAG, $"Obj {objRef} placed at {forward}" +
-                $" with anchor {result.GetComponent<ARAnchor>()}");
-
-            AudioSource audioSource = result.GetComponent<AudioSource>();
-            if (audioSource != null)
-                audioSource.Play(0);
-            mLogger.Log(kTAG, $"Audio Started with rolloff mode  {audioSource.rolloffMode}" +
-                $" maxdist {audioSource.maxDistance} and mindist {audioSource.minDistance} ");
-
-            return result;
-        }
-        else
-        {
-            mLogger.Log(kTAG, "ARPlanemanager problems");
-            return null;
-        }
-    }
-
+    
     public void SetAdditionalGameObjects(ICollection<GameObject> objects)
     {
         // Check to see if the main Camera's GameObject is already a part of this given set of
