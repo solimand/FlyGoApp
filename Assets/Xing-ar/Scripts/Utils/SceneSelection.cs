@@ -64,7 +64,7 @@ public class SceneSelection : MonoBehaviour
 #endif
 #if UNITY_IOS
         mLogger.Log(kTAG, "IOS deployment");
-        LoadScene(MainSceneName);
+        LoadScene(MAIN_SCENE);
 #endif
     }
 
