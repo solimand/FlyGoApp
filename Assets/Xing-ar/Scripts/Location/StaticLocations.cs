@@ -5,14 +5,14 @@ using UnityEngine;
 public sealed class StaticLocations
 {
     // Allowed Geofence Single Cells
-    public static string[] fixedPos2mt = new string[14] {
+    public static string[] fixedPos2mt = new string[15] {
         testgo1Cell17, testgo2Cell17,
         ArciereCell17, AlberoMuscolosoCell17, ChimeraCell17, Chimera2Cell17, Chimera3Cell17, 
         MedusaCell17, SerpentePietraCell17, SpiritoFuocoCell17, BuddhaCell17,
-        ScagliaPietraCell17, ScagliaPietra2Cell17, "",
+        ScagliaPietraCell17, ScagliaPietra2Cell17, PietreForateCell17, PietreForateCell17_2
     };
 
-    public static string NO_ZONE = "----------";
+    public static string NO_ZONE = "XXXXXXXXXX";
 
     // TEST 44.48256081468141, 11.375324649466517 (18-477e2b3a19) ; 44.48316908981307, 11.37570335190113 (18-477e2b39f5)
     // 44.48737759542787, 11.330448004800237 (17-477fd4ee74) ; 44.487504223125164, 11.329400995370172 (17-477fd4ee04)
@@ -52,6 +52,7 @@ public sealed class StaticLocations
     public const float PietreForateLat = 44.50102928390615f; public const float PietreForateLon = 11.285103906468683f;
     public const string PietreForateCell18 = "477fd41991";
     public const string PietreForateCell17 = "477fd4198c";
+    public const string PietreForateCell17_2 = "477fd419c4";
     public const int PietreForateDist = 8; 
     public const float PietreForateAlt = 3.0f;
     public const bool PietreForateFront = false;

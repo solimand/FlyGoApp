@@ -258,6 +258,16 @@ public class ARobjPlacement : MonoBehaviour
                         DestroyAllObjExceptOne(PietreForate);
                     }
                     break;
+                case StaticLocations.PietreForateCell17_2:
+                    frameCounter = 0;
+                    if (PietreForate == null)
+                    {
+                        PietreForate = InstantiateAt(this.arpm, this.pietreForateObj, 
+                            StaticLocations.PietreForateDist, StaticLocations.PietreForateAlt);
+                        PietreForate.transform.localScale += new Vector3(10f, 10f, 10f);
+                        DestroyAllObjExceptOne(PietreForate);
+                    }
+                    break;
                 
                 case StaticLocations.MedusaCell17:
                     frameCounter = 0;
