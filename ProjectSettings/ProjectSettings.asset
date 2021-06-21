@@ -152,7 +152,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.peng.flyGo
     Standalone: com.xunibo.xing-ar-test
-    iPhone: com.xunibo.xing-ar-test
+    iPhone: com.peng.flyGo
   buildNumber:
     Standalone: 0
     iPhone: 0
